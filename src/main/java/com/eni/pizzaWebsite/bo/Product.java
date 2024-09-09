@@ -1,4 +1,4 @@
 package com.eni.pizzaWebsite.bo;
 
-public class Produit {
+public class Product {
 }
