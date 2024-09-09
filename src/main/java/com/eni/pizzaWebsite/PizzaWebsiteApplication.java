@@ -8,6 +8,11 @@ public class PizzaWebsiteApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PizzaWebsiteApplication.class, args);
+
+
+		System.out.println("Pizza Website Application Started");
+
+
 	}
 
 }
