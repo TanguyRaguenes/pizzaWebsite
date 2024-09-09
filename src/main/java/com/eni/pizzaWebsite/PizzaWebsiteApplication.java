@@ -10,7 +10,7 @@ public class PizzaWebsiteApplication {
 		SpringApplication.run(PizzaWebsiteApplication.class, args);
 
 
-		System.out.println("Pizza Website Application Started");
+		System.out.println("Salut Bertrand !");
 
 
 	}
