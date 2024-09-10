@@ -1,51 +1,51 @@
-<!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{base}">
-
 <head>
     <meta charset="UTF-8">
-    <title>Add or modify product</title>
-    <link rel="stylesheet" href="/css/pizza-theme.css">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 <body>
 <main>
-<section layout:fragment="content">
-<form th:object="${product}" method="post" th:action="@{/product-form}">
+    <section layout:fragment="content">
+        <form th:object="${product}" method="post" th:action="@{/product-form}">
 
-    <div><!-- pour l'id pour le moment : un champ -->
-        <label for="id_product">Product ID</label>
-        <input th:field="*{id_product}" name="id_produit" type="number" placeholder="Product ID if any">
-    </div>
-    <!--   Nom du produit -->
-    <div>
-        <label for="name">Product name:</label>
-        <input th:field="*{name}" class="uk-input" type="text" placeholder="Enter pizza name">
-    </div>
-    <!-- Description de la pizza -->
-    <div>
-        <label for="description">Description :</label>
-        <textarea th:field="*{description}" name="description" rows="3" placeholder="Description de la pizza"
-                  required></textarea>
-    </div>
-    <!-- Prix de la pizza -->
-    <div>
-        <label for="prix">Prix (€) :</label>
-        <input th:field="*{price}" name="prix" step="0.01" placeholder="Prix de la pizza" type="number">
-    </div>
-    <!--  &lt;!&ndash; Image URL  &ndash;&gt;-->
-    <!--  <label for="image_url">URL de l'image (facultatif) :</label>-->
-    <!--  <input type="url" id="image_url" name="image_url" placeholder="url de l'image">-->
+            <div><!-- pour l'id pour le moment : un champ -->
+                <label for="id_product">Product ID</label>
+                <input th:field="*{id_product}" name="id_product" type="number" placeholder="Product ID if any">
+            </div>
+            <!--   Nom du produit -->
+            <div>
+                <label for="name">Product name:</label>
+                <input th:field="*{name}" name="name" class="uk-input" type="text" placeholder="Enter pizza name">
+            </div>
+             Description de la pizza
+            <div>
+                <label for="description">Description :</label>
+                <textarea th:field="*{description}" name="description" rows="3" placeholder="Description de la pizza"
+                          required></textarea>
+            </div>
+            <!-- Prix de la pizza -->
+            <div>
+                <label for="prix">Prix (€) :</label>
+                <input th:field="*{price}" name="price"  placeholder="Prix de la pizza" type="number">
+            </div>
+              <!-- Image URL  -->
+              <label for="image_url">Image URL (optional) :</label>
+              <input  th:field="*{image_url}" name="image_url" type="url" placeholder="Image url">
 
-    <!-- Taille du produit -->
-    <div>
-        <label for="size_product">Taille de produit :</label>
-        <select th:field="*{size}">
-            <option th:each="cat:${size}" th:value="${size.id}" th:text="${size.name}"></option>
-        </select>
-    </div>
-    <button type="submit">Send</button>
-</form>
-</section>
+            <div>
+                <label for="size_product">Taille de produit :</label>
+
+                    <input th:field="*{size}" name="size" placeholder="Pizza size" type="number">
+
+            </div>
+            <button type="submit">Send</button>
+        </form>
+    </section>
 </main>
 </body>
 </html>
