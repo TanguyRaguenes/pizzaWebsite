@@ -9,6 +9,10 @@ public class Product {
     private String image_url ;
     private Long size ;
 
+    public Product() {
+        super();
+    }
+
     public Product(Long id_product, String name, String description, float price, String image_url, Long size) {
         this.id_product = id_product;
         this.name = name;

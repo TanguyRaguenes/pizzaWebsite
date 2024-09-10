@@ -8,12 +8,12 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 
-@Component
+@Repository
 @Profile("sql")
 public class DAOProductMySQL implements  IDAOProduct{
 
@@ -21,7 +21,10 @@ public class DAOProductMySQL implements  IDAOProduct{
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-
+    public DAOProductMySQL(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
     @Override
     public List<Product> getProductsList() {
 
@@ -30,7 +33,6 @@ public class DAOProductMySQL implements  IDAOProduct{
 
         List<Product> productList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Product>(Product.class));
         return productList;
-//        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Product>(Product.class));
         
     }
 
