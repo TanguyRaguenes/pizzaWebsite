@@ -5,15 +5,35 @@ import com.eni.pizzaWebsite.dao.IDAOProduct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class ProductManager implements IProductManager {
 
-    @Autowired
     private IDAOProduct productDAO;
 
+    public ProductManager(IDAOProduct productDAO) {
+        this.productDAO = productDAO;
+    }
 
 
-    public void save(Product product) {
-        productDAO.save(product);
+    @Override
+    public List<Product> getProductsList() {
+
+        return productDAO.getProductsList();
+
+    }
+
+    @Override
+    public void addProductToList(Product product) {
+
+        productDAO.addProductToList(product);
+    }
+
+    @Override
+    public void deleteProductFromList(Product product) {
+
+        productDAO.deleteProductFromList(product);
+
     }
 }
