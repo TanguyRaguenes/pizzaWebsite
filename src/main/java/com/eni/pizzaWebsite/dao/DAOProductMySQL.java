@@ -28,7 +28,9 @@ public class DAOProductMySQL implements  IDAOProduct{
 
         String sql = "SELECT * FROM product";
 
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Product>(Product.class));
+        List<Product> productList = jdbcTemplate.query(sql, new BeanPropertyRowMapper<Product>(Product.class));
+        return productList;
+//        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<Product>(Product.class));
         
     }
 
