@@ -42,18 +42,17 @@ public class DAOProductMySQL implements  IDAOProduct{
     public void addProductToList(Product product) {
 
         if(product.getId_product()!=null && getProductById(product.getId_product())!=null){
-            jdbcTemplate.update("update product set name=?,description=?,price=?,image_url=?,size=? where id_product=?",product.getName(),product.getDescription(),product.getPrice(),product.getImage_url(),product.getSize(),product.getId_product());
+            jdbcTemplate.update("update product set name=?,description=?,price=?,image_url=? where id_product=?",product.getName(),product.getDescription(),product.getPrice(),product.getImage_url(),product.getId_product());
             return;
         }
 
 
-        String sql="INSERT INTO product (name,description,price,image_url,size) VALUES (:name, :description, :price, :image_url,:size)";
+        String sql="INSERT INTO product (name,description,price,image_url) VALUES (:name, :description, :price, :image_url)";
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("name", product.getName());
         mapSqlParameterSource.addValue("description", product.getDescription());
         mapSqlParameterSource.addValue("price", product.getPrice());
         mapSqlParameterSource.addValue("image_url", product.getImage_url());
-        mapSqlParameterSource.addValue("size", product.getSize());
 
         namedParameterJdbcTemplate.update(sql,mapSqlParameterSource);
 

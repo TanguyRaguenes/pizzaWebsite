@@ -7,19 +7,17 @@ public class Product {
     private String description ;
     private float price ;
     private String image_url ;
-    private Long size ;
 
     public Product() {
         super();
     }
 
-    public Product(Long id_product, String name, String description, float price, String image_url, Long size) {
+    public Product(Long id_product, String name, String description, float price, String image_url) {
         this.id_product = id_product;
         this.name = name;
         this.description = description;
         this.price = price;
         this.image_url = image_url;
-        this.size = size;
     }
 
     public Long getId_product() {
@@ -60,13 +58,5 @@ public class Product {
 
     public void setImage_url(String image_url) {
         this.image_url = image_url;
-    }
-
-    public Long getSize() {
-        return size;
-    }
-
-    public void setSize(Long size) {
-        this.size = size;
     }
 }
