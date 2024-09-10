@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,32 +8,37 @@
     <link rel="stylesheet" href="/css/pizza-theme.css">
 </head>
 <body>
+<main>
+    <h1>List of Products</h1>
+    <section layout:fragment="content">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.id_product}">Product id</td>
+                <td th:text="${product.name}">Product name</td>
+                <td th:text="${product.description}">Product description</td>
+                <td th:text="${product.price}">Product price</td>
+                <td>
+                    <a th:href="@{/cart/add/{id}(id=${product.id_product})}">Add to cart</a>
+                </td>
+                <td>
+                    <a th:href="@{/products-list/delete/{id}(id=${product.id_product})}"
+                       onclick="return confirm('Are you sure ?')">Delete item</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-<h1>List of Products</h1>
-
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Size</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="product : ${products}">
-        <td th:text="${product.id_product}">Product id</td>
-        <td th:text="${product.name}">Product name</td>
-        <td th:text="${product.description}">Product description</td>
-        <td th:text="${product.price}">Product price</td>
-        <td th:text="${product.size}">Product size</td>
-        <td>
-            <a th:href="@{/products-list/delete/{id}(id=${product.id_product})}" onclick="return confirm('Are you sure ?')">Dany deleto</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
-
+        <a th:href="@{/cart}">Show Cart</a>
+    </section>
+</main>
 </body>
 </html>

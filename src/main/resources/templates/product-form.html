@@ -6,7 +6,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Form</title>
 </head>
 <body>
 <main>
@@ -22,10 +22,10 @@
                 <label for="name">Product name:</label>
                 <input th:field="*{name}" name="name" class="uk-input" type="text" placeholder="Enter pizza name">
             </div>
-             Description de la pizza
+
             <div>
                 <label for="description">Description :</label>
-                <textarea th:field="*{description}" name="description" rows="3" placeholder="Description de la pizza"
+                <textarea th:field="*{description}" name="description" rows="3" placeholder="Pizza "
                           required></textarea>
             </div>
             <!-- Prix de la pizza -->
@@ -34,15 +34,9 @@
                 <input th:field="*{price}" name="price"  placeholder="Prix de la pizza" type="number">
             </div>
               <!-- Image URL  -->
-              <label for="image_url">Image URL (optional) :</label>
+              <label for="image_url">Image URL:</label>
               <input  th:field="*{image_url}" name="image_url" type="url" placeholder="Image url">
 
-            <div>
-                <label for="size_product">Taille de produit :</label>
-
-                    <input th:field="*{size}" name="size" placeholder="Pizza size" type="number">
-
-            </div>
             <button type="submit">Send</button>
         </form>
     </section>

@@ -1,3 +1,10 @@
+/*.navbar {*/
+/*    flex-direction: row;*/
+
+
+
+
+/*}*/
 form {
     max-width: 400px;
     margin: auto;
@@ -19,3 +26,4 @@ button {
 button:hover {
     background-color: #45a049;
 }
+

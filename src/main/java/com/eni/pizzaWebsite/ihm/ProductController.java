@@ -46,7 +46,7 @@ public class ProductController {
         System.out.println(product);
         productManager.addProductToList(product);
 
-        return "redirect:/";
+        return "redirect:/products-list";
     }
     @GetMapping("/products-list/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id_product) {

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+
+    <title></title>
+</head>
+<body>
+<main>
+    <section layout:fragment="content">
+        <h1>Your Cart</h1>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${cartItems}">
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.description}"></td>
+                <td th:text="${product.price}">€</td>
+                <td>
+                    <a th:href="@{/cart/remove/{id}(id=${product.id_product})}">Delete from cart</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <a th:href="@{/cart/clear}">Clear cart</a>
+        <a th:href="@{/products-list}">Go back to shopping</a>
+    </section>
+</main>
+</body>
+</html>
