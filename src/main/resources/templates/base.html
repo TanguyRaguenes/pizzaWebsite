@@ -1,11 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{base}">
+<html lang="fr" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizza Website</title>
+    <link rel="stylesheet" href="/css/pizza-theme.css">
 </head>
 <body>
+
+<!-- Barre de navigation -->
+<header>
+    <nav>
+        <ul>
+            <li><a th:href="@{/}">Accueil</a></li>
+            <li><a th:href="@{/product-form}">Add a product</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <!-- Ici le contenu spécifique de chaque page sera injecté -->
+    <section layout:fragment="content">
+        <!-- Contenu par défaut si aucune page ne remplace ce fragment -->
+        <h2>Bienvenue sur le site de commande de pizzas !</h2>
+    </section>
+</main>
+
+<footer>
+    <p>Pizza Website © 2024</p>
+</footer>
 
 </body>
 </html>
