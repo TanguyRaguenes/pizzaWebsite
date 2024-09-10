@@ -19,22 +19,17 @@ public class ProductManager implements IProductManager {
 
     @Override
     public List<Product> getProductsList() {
-
         return productDAO.getProductsList();
-
     }
 
     @Override
     public void addProductToList(Product product) {
-
         productDAO.addProductToList(product);
     }
 
     @Override
-    public void deleteProductFromList(Product product) {
-
-        productDAO.deleteProductFromList(product);
-
+    public void deleteProductFromList(Long id_product) {
+        productDAO.deleteProductFromList(id_product);
     }
 
     @Override
@@ -42,3 +37,4 @@ public class ProductManager implements IProductManager {
         return productDAO.getProductById(id);
     }
 }
+

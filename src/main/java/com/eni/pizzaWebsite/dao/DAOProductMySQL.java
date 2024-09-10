@@ -47,8 +47,6 @@ public class DAOProductMySQL implements  IDAOProduct{
         }
 
 
-
-
         String sql="INSERT INTO product (name,description,price,image_url,size) VALUES (:name, :description, :price, :image_url,:size)";
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("name", product.getName());
@@ -61,16 +59,14 @@ public class DAOProductMySQL implements  IDAOProduct{
 
 
     }
-
-    @Override
-    public void deleteProductFromList(Product product) {
+    
+    public void deleteProductFromList(Long id_product) {
 
         String sql = "DELETE FROM product WHERE id_product=:id_product";
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
-        mapSqlParameterSource.addValue("id_product", product.getId_product());
+        mapSqlParameterSource.addValue("id_product", id_product);
 
-        namedParameterJdbcTemplate.update(sql,mapSqlParameterSource);
-
+        namedParameterJdbcTemplate.update(sql, mapSqlParameterSource);
     }
 
     @Override

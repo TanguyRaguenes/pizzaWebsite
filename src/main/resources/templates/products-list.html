@@ -1,11 +1,38 @@
 <!DOCTYPE html>
-
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Produits</title>
+    <link rel="stylesheet" href="/css/pizza-theme.css">
 </head>
 <body>
 
-</main>
+<h1>List of Products</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Size</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="product : ${products}">
+        <td th:text="${product.id_product}">Product id</td>
+        <td th:text="${product.name}">Product name</td>
+        <td th:text="${product.description}">Product description</td>
+        <td th:text="${product.price}">Product price</td>
+        <td th:text="${product.size}">Product size</td>
+        <td>
+            <a th:href="@{/products-list/delete/{id}(id=${product.id_product})}" onclick="return confirm('Are you sure ?')">Dany deleto</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>
