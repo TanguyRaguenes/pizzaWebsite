@@ -1,4 +1,4 @@
-package com.example.pizzaWebsite;
+package com.eni.pizzaWebsite;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
