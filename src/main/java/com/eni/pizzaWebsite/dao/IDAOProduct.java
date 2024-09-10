@@ -11,4 +11,6 @@ public interface IDAOProduct {
     public abstract void addProductToList(Product product);
 
     public abstract void deleteProductFromList(Product product);
+
+    public abstract Product getProductById(Long id_product );
 }

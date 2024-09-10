@@ -36,4 +36,9 @@ public class ProductManager implements IProductManager {
         productDAO.deleteProductFromList(product);
 
     }
+
+    @Override
+    public Product getProductById(Long id) {
+        return productDAO.getProductById(id);
+    }
 }

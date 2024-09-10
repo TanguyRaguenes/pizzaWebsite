@@ -25,6 +25,8 @@ public class DAOProductMySQL implements  IDAOProduct{
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
+
+
     @Override
     public List<Product> getProductsList() {
 
@@ -38,6 +40,14 @@ public class DAOProductMySQL implements  IDAOProduct{
 
     @Override
     public void addProductToList(Product product) {
+
+        if(product.getId_product()!=null && getProductById(product.getId_product())!=null){
+            jdbcTemplate.update("update product set name=?,description=?,price=?,image_url=?,size=? where id_product=?",product.getName(),product.getDescription(),product.getPrice(),product.getImage_url(),product.getSize(),product.getId_product());
+            return;
+        }
+
+
+
 
         String sql="INSERT INTO product (name,description,price,image_url,size) VALUES (:name, :description, :price, :image_url,:size)";
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
@@ -55,12 +65,19 @@ public class DAOProductMySQL implements  IDAOProduct{
     @Override
     public void deleteProductFromList(Product product) {
 
-
         String sql = "DELETE FROM product WHERE id_product=:id_product";
         MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
         mapSqlParameterSource.addValue("id_product", product.getId_product());
 
         namedParameterJdbcTemplate.update(sql,mapSqlParameterSource);
+
+    }
+
+    @Override
+    public Product getProductById(Long id_product ) {
+
+        List<Product> productList = jdbcTemplate.query("SELECT FROM product WHERE id_product=?", new BeanPropertyRowMapper<Product>(Product.class),id_product );
+        return productList.get(0);
 
     }
 }
