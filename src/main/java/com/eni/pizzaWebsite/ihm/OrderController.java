@@ -1,5 +1,6 @@
 package com.eni.pizzaWebsite.ihm;
 
+import com.eni.pizzaWebsite.bll.IOrderManager;
 import com.eni.pizzaWebsite.bll.IProductManager;
 import com.eni.pizzaWebsite.bo.Order;
 import com.eni.pizzaWebsite.bo.OrderDetail;
@@ -11,10 +12,13 @@ import org.springframework.web.bind.annotation.*;
 
 @SessionAttributes("order")
 @Controller
-public class CommandController {
+public class OrderController {
 
     @Autowired
     private IProductManager productManager;
+
+    @Autowired
+    private IOrderManager orderManager;
 
 
     @ModelAttribute("order")
@@ -28,14 +32,23 @@ public class CommandController {
         return "cart";
     }
 
+//    @PostMapping("/cart/add/{id}")
+//    public String addProductToCart(@PathVariable("id") Long id,
+//                                   @RequestParam("quantity") int quantity,
+//                                   @RequestParam("size") int size,
+//                                   @ModelAttribute("order") Order order) {
+//        Product product = productManager.getProductById(id);
+//        //orderM.addItemToOrder(id,1)
+//        order.getOrderDetails().add(new OrderDetail(order.getId_order(), product, quantity));
+//        return "redirect:/products-list";
+//    }
+
     @PostMapping("/cart/add/{id}")
-    public String addProductToCart(@PathVariable("id") Long id,
-                                   @RequestParam("quantity") int quantity,
-                                   @RequestParam("size") int size,
-                                   @ModelAttribute("order") Order order) {
+    public String addProductToCart(@PathVariable("id") Long id){
         Product product = productManager.getProductById(id);
-        //orderM.addItemToOrder(id,1)
-        order.getOrderDetails().add(new OrderDetail(order.getId_order(), product, quantity));
+        System.out.println(product);
+        orderManager.addProductToOrder(product,1L);
+
         return "redirect:/products-list";
     }
 

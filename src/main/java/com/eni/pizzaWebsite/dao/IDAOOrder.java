@@ -5,7 +5,7 @@ import com.eni.pizzaWebsite.bo.Product;
 
 public interface IDAOOrder {
 
-    public abstract void addOrder(Order order);
+    public abstract void addProductToOrder(Product product,Long idClient);
     public abstract Order getOrderById(Long id_order );
 
 }
