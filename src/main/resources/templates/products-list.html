@@ -30,7 +30,7 @@
                 <td th:text="${product.price}">€</td>
 
                 <td>
-                    <form th:action="@{/cart/add}" method="post">
+                    <form th:action="@{/cart/add/{id_product}(id_product=${product.getId_product()})}" method="post">
                         <input type="hidden" name="id_product" th:value="${product.id_product}">
 
 
