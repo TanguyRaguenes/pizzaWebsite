@@ -13,7 +13,8 @@
     <section layout:fragment="content">
         <form th:object="${product}" method="post" th:action="@{/product-form}">
 
-            <div><!-- pour l'id pour le moment : un champ -->
+            <!-- Condition pour masquer le champ ID si un ID existe déjà -->
+            <div th:if="${product.id_product == null}">
                 <label for="id_product">Product ID</label>
                 <input th:field="*{id_product}" name="id_product" type="number" placeholder="Product ID if any">
             </div>
@@ -25,17 +26,18 @@
 
             <div>
                 <label for="description">Description :</label>
-                <textarea th:field="*{description}" name="description" rows="3" placeholder="Pizza "
-                          required></textarea>
+                <textarea th:field="*{description}" name="description" rows="3" placeholder="Pizza description" required></textarea>
             </div>
 
             <div>
-                <label for="prix">Prix (€) :</label>
-                <input th:field="*{price}" name="price" placeholder="Prix de la pizza" type="number">
+                <label for="price">Price (€):</label>
+                <input th:field="*{price}" name="price" placeholder="Price of the pizza" type="number">
             </div>
 
-            <label for="image_url">Image URL:</label>
-            <input th:field="*{image_url}" name="image_url" type="url" placeholder="Image url">
+            <div>
+                <label for="image_url">Image URL:</label>
+                <input th:field="*{image_url}" name="image_url" type="url" placeholder="Image URL">
+            </div>
 
             <button type="submit">Send</button>
         </form>

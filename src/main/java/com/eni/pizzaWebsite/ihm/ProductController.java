@@ -41,13 +41,23 @@ public class ProductController {
         return "product-form";
     }
 
-    @PostMapping("product-form")
-    public String postProductForm(@ModelAttribute Product product, BindingResult bindingResult) {
-        System.out.println(product);
-        productManager.addProductToList(product);
+    @GetMapping("/product-form/{id}")
+    public String editProductForm(@PathVariable("id") Long id, Model model) {
+        Product product = productManager.getProductById(id);
+        model.addAttribute("product", product);
+        return "product-form";
+    }
 
+    @PostMapping("/product-form")
+    public String postProductForm(@ModelAttribute Product product, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "product-form"; // Si erreur, retour formulaire
+        }
+
+        productManager.addProductToList(product);
         return "redirect:/products-list";
     }
+
     @GetMapping("/products-list/delete/{id}")
     public String deleteProduct(@PathVariable("id") Long id_product) {
         productManager.deleteProductFromList(id_product);
