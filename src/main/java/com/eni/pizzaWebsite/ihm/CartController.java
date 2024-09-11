@@ -3,7 +3,7 @@ package com.eni.pizzaWebsite.ihm;
 import com.eni.pizzaWebsite.bll.IProductManager;
 import com.eni.pizzaWebsite.bll.ProductManager;
 import com.eni.pizzaWebsite.bo.Product;
-import com.eni.pizzaWebsite.model.Cart;
+import com.eni.pizzaWebsite.bo.Cart;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
