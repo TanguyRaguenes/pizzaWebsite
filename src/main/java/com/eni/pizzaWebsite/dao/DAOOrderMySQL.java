@@ -57,7 +57,7 @@ public class DAOOrderMySQL implements IDAOOrder {
 
             mapSqlParameterSource.addValue("id_order", idClient);
             mapSqlParameterSource.addValue("id_product", product.getId_product());
-            mapSqlParameterSource.addValue("quantity", 1);
+            mapSqlParameterSource.addValue("quantity", quantity);
 
             namedParameterJdbcTemplate.update(sql, mapSqlParameterSource);
 
