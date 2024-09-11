@@ -11,21 +11,24 @@ import java.util.List;
 @SessionScope
 public class Cart {
 
-    private List<Product> products = new ArrayList<>();
+    private List<CartItem> items = new ArrayList<>();
 
-    public List<Product> getProducts() {
-        return products;
+    public List<CartItem> getItems() {
+        return items;
     }
 
-    public void addProduct(Product product) {
-        products.add(product);
+
+    public void addProduct(Product product, int quantity, int size) {
+        items.add(new CartItem(product, quantity, size));
     }
+
 
     public void removeProductById(Long id_product) {
-        products.removeIf(product -> product.getId_product().equals(id_product));
+        items.removeIf(item -> item.getProduct().getId_product().equals(id_product));
     }
 
+
     public void clearCart() {
-        products.clear();
+        items.clear();
     }
 }

@@ -2,42 +2,52 @@
 <html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{base}">
 <head>
-
-    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
 </head>
 <body>
 <main>
     <section layout:fragment="content">
         <h1>Your Cart</h1>
+
+        <!-- Message si le panier est vide -->
         <div th:if="${#lists.isEmpty(cartItems)}">
-            <p>Votre panier est vide. <a th:href="@{/products-list}">Keep shopping</a>.</p>
+            <p>Your cart is empty. <a th:href="@{/products-list}">Keep shopping</a>.</p>
         </div>
 
+        <!-- Si le panier contient des articles -->
         <div th:if="${!#lists.isEmpty(cartItems)}">
             <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="product : ${cartItems}">
-                <td th:text="${product.name}"></td>
-                <td th:text="${product.description}"></td>
-                <td th:text="${product.price}">€</td>
-                <td>
-                    <a th:href="@{/cart/remove/{id}(id=${product.id_product})}">Delete from cart</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-            <a th:href="@{/cart/clear}">Clear cart</a>
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Size</th>
+                    <th>Unit Price</th>
+                    <th>Total Price</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${cartItems}">
+                    <td th:text="${item.product.name}"></td>
+                    <td th:text="${item.product.description}"></td>
+                    <td th:text="${item.quantity}"></td>
+                    <td th:text="${item.size == 1 ? 'Small' : 'Medium'}"></td>
+                    <td th:text="${item.product.price}">€</td>
+                    <td th:text="${item.getTotalPrice()}">€</td>
+                    <td>
+                        <a th:href="@{/cart/remove/{id}(id=${item.product.id_product})}">Remove</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <a th:href="@{/cart/clear}">Clear Cart</a>
         </div>
-        <a th:href="@{/cart/clear}">Clear cart</a>
-        <a th:href="@{/products-list}">Keep Shopping*</a>
 
+        <a th:href="@{/products-list}">Keep Shopping</a>
     </section>
 </main>
 </body>
