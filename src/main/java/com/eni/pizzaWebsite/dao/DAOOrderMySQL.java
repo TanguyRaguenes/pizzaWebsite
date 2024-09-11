@@ -5,10 +5,13 @@ import com.eni.pizzaWebsite.bo.OrderDetail;
 import com.eni.pizzaWebsite.bo.Product;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -75,14 +78,26 @@ public class DAOOrderMySQL implements IDAOOrder {
 
     }
 
+    static final RowMapper<OrderDetail> ORDERDETAIL_ROW_MAPPER = new RowMapper<OrderDetail>() {
+
+        public OrderDetail mapRow(ResultSet rs, int rowNum) throws SQLException {
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setId_order(rs.getLong("id_order"));
+            orderDetail.setProduct(new Product(rs.getLong("id_product"),rs.getString("name"),rs.getString("description"),rs.getFloat("price"),rs.getString("image_url")));
+            orderDetail.setQuantity(rs.getInt("quantity"));
+
+            return orderDetail;
+        }
+    };
+
     @Override
     public List<OrderDetail> getOrderDetail(Long id_client) {
         Order order = getClientOrderId(id_client);
         if (order != null) {
 
-            String sql = "SELECT * FROM order_details WHERE id_order=?";
+            String sql = "SELECT * FROM order_details AS o INNER JOIN product AS p ON o.id_product = p.id_product WHERE id_order=?";
 
-            List<OrderDetail> orderDetails = jdbcTemplate.query(sql, new BeanPropertyRowMapper<OrderDetail>(OrderDetail.class),order.getId_order());
+            List<OrderDetail> orderDetails = jdbcTemplate.query(sql, ORDERDETAIL_ROW_MAPPER,order.getId_order());
             return orderDetails;
 
         }
