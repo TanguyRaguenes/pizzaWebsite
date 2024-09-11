@@ -80,9 +80,9 @@ public class DAOOrderMySQL implements IDAOOrder {
         Order order = getClientOrderId(id_client);
         if (order != null) {
 
-            String sql = "SELECT * FROM order_details WHERE id_order=1";
+            String sql = "SELECT * FROM order_details WHERE id_order=?";
 
-            List<OrderDetail> orderDetails = jdbcTemplate.query(sql, new BeanPropertyRowMapper<OrderDetail>(OrderDetail.class));
+            List<OrderDetail> orderDetails = jdbcTemplate.query(sql, new BeanPropertyRowMapper<OrderDetail>(OrderDetail.class),order.getId_order());
             return orderDetails;
 
         }
