@@ -13,7 +13,6 @@
     <section layout:fragment="content">
         <form th:object="${product}" method="post" th:action="@{/product-form}">
 
-            <!-- Condition pour masquer le champ ID si un ID existe déjà -->
             <div th:if="${product.id_product == null}">
                 <label for="id_product">Product ID</label>
                 <input th:field="*{id_product}" name="id_product" type="number" placeholder="Product ID if any">
@@ -31,7 +30,7 @@
 
             <div>
                 <label for="price">Price (€):</label>
-                <input th:field="*{price}" name="price" placeholder="Price of the pizza" type="number">
+                <input th:field="*{price}" name="price" placeholder="Price of the pizza" type="number" step="0.01">
             </div>
 
             <div>

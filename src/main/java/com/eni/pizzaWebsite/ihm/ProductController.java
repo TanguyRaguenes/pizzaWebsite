@@ -51,10 +51,11 @@ public class ProductController {
     @PostMapping("/product-form")
     public String postProductForm(@ModelAttribute Product product, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "product-form"; // Si erreur, retour formulaire
+            return "product-form";
         }
-
+        System.out.println("Product submitted: " +  product.toString());
         productManager.addProductToList(product);
+
         return "redirect:/products-list";
     }
 
