@@ -4,5 +4,5 @@ import com.eni.pizzaWebsite.bo.Product;
 
 public interface IOrderManager {
 
-    public abstract void addProductToOrder(Product product,Long idClient, int quantity);
+    public abstract void addProductToOrder(Product product,Long idClient, Long quantity);
 }
