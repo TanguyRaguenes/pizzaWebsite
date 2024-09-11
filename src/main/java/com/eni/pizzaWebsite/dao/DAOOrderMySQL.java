@@ -1,6 +1,7 @@
 package com.eni.pizzaWebsite.dao;
 
 import com.eni.pizzaWebsite.bo.Order;
+import com.eni.pizzaWebsite.bo.OrderDetail;
 import com.eni.pizzaWebsite.bo.Product;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,9 +25,9 @@ public class DAOOrderMySQL implements IDAOOrder {
 
 
     @Override
-    public void addProductToOrder(Product product, Long idClient, Long quantity) {
+    public void addProductToOrder(Product product, Long id_client, Long quantity) {
 
-        if (getClientOrderId(idClient) == null) {
+        if (getClientOrderId(id_client) == null) {
 
             //Ajout de données dans order
 
@@ -34,7 +35,7 @@ public class DAOOrderMySQL implements IDAOOrder {
                     "VALUES (:id_client, :id_user, :id_state, :is_in_delivery, :delivery_datetime, :total_price, :is_paid)";
             MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 
-            mapSqlParameterSource.addValue("id_client", idClient);
+            mapSqlParameterSource.addValue("id_client", id_client);
             mapSqlParameterSource.addValue("id_user", 0);
             mapSqlParameterSource.addValue("id_state", 1);
             mapSqlParameterSource.addValue("is_in_delivery", false);
@@ -48,14 +49,14 @@ public class DAOOrderMySQL implements IDAOOrder {
 
         //Ajout de données dans order_details
 
-//        if (getClientOrderId(idClient) != null) {
+//        if (getClientOrderId(id_client) != null) {
 
             String sql = "INSERT INTO order_details (id_order, id_product, quantity) " +
                     "VALUES (:id_order, :id_product, :quantity)";
 
             MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 
-            mapSqlParameterSource.addValue("id_order", idClient);
+            mapSqlParameterSource.addValue("id_order", id_client);
             mapSqlParameterSource.addValue("id_product", product.getId_product());
             mapSqlParameterSource.addValue("quantity", quantity);
 
@@ -72,5 +73,21 @@ public class DAOOrderMySQL implements IDAOOrder {
         List<Order> orderList = jdbcTemplate.query("SELECT * FROM `order` WHERE id_client=? AND id_state=?", new BeanPropertyRowMapper<Order>(Order.class), id_client, 1);
         return orderList.get(0);
 
+    }
+
+    @Override
+    public List<OrderDetail> getOrderDetail(Long id_client) {
+
+        if (getClientOrderId(id_client) == null) {
+
+            String sql = "SELECT * FROM order_details";
+
+            List<OrderDetail> orderDetails = jdbcTemplate.query(sql, new BeanPropertyRowMapper<OrderDetail>(OrderDetail.class));
+            return orderDetails;
+
+        }
+
+
+        return List.of();
     }
 }

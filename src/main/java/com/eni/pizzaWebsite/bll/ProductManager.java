@@ -33,8 +33,8 @@ public class ProductManager implements IProductManager {
     }
 
     @Override
-    public Product getProductById(Long id) {
-        return productDAO.getProductById(id);
+    public Product getProductById(Long id_product) {
+        return productDAO.getProductById(id_product);
     }
 }
 
