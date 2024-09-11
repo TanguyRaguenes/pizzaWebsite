@@ -6,6 +6,6 @@ import com.eni.pizzaWebsite.bo.Product;
 public interface IDAOOrder {
 
     public abstract void addProductToOrder(Product product,Long idClient);
-    public abstract Order getOrderById(Long id_order );
+    public abstract Order getClientOrderId(Long id_client );
 
 }
