@@ -13,7 +13,7 @@
 
         <!-- Message si la commande est vide -->
         <div th:if="${#lists.isEmpty(order.getOrderDetails())}">
-            <p>Your order is empty. <a th:href="@{/products-list}">Keep shopping</a>.</p>
+            <p>Your order is empty. <a th:href="@{/products-list}">Return</a>.</p>
         </div>
 
         <!-- Si la commande contient des articles -->

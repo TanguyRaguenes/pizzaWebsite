@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+
 @SessionAttributes("order")
 @Controller
 public class OrderController {
@@ -28,18 +31,23 @@ public class OrderController {
 
     @GetMapping("/cart")
     public String viewCart(Model model, @ModelAttribute("order") Order order) {
-        model.addAttribute("orderDetails", order.getOrderDetails());
+        List<OrderDetail> orderDetails=orderManager.getOrderDetail(1L);
+        model.addAttribute("orderDetails",orderDetails);
         return "cart";
     }
+
+
 
     @PostMapping("/cart/add/{id}")
     public String addProductToCart(@PathVariable("id") Long id,
                                    @RequestParam("quantity") Long quantity) {
         Product product = productManager.getProductById(id);
         System.out.println(product);
-        orderManager.addProductToOrder(product, 1L, quantity); // Ajout de la quantité
+        orderManager.addProductToOrder(product, 1L, quantity);
         return "redirect:/products-list";
-    };
+    }
+
+
 
     @GetMapping("/cart/remove/{id}")
     public String removeProductFromCart(@PathVariable("id") Long id, @ModelAttribute("order") Order order) {

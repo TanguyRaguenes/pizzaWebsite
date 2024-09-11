@@ -26,8 +26,8 @@ public class DAOOrderMySQL implements IDAOOrder {
 
     @Override
     public void addProductToOrder(Product product, Long id_client, Long quantity) {
-
-        if (getClientOrderId(id_client) == null) {
+        Order order = getClientOrderId(id_client);
+        if (order == null) {
 
             //Ajout de données dans order
 
@@ -56,7 +56,7 @@ public class DAOOrderMySQL implements IDAOOrder {
 
             MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 
-            mapSqlParameterSource.addValue("id_order", id_client);
+            mapSqlParameterSource.addValue("id_order", order.getId_order());
             mapSqlParameterSource.addValue("id_product", product.getId_product());
             mapSqlParameterSource.addValue("quantity", quantity);
 
@@ -77,10 +77,10 @@ public class DAOOrderMySQL implements IDAOOrder {
 
     @Override
     public List<OrderDetail> getOrderDetail(Long id_client) {
+        Order order = getClientOrderId(id_client);
+        if (order != null) {
 
-        if (getClientOrderId(id_client) == null) {
-
-            String sql = "SELECT * FROM order_details";
+            String sql = "SELECT * FROM order_details WHERE id_order=1";
 
             List<OrderDetail> orderDetails = jdbcTemplate.query(sql, new BeanPropertyRowMapper<OrderDetail>(OrderDetail.class));
             return orderDetails;
@@ -88,6 +88,6 @@ public class DAOOrderMySQL implements IDAOOrder {
         }
 
 
-        return List.of();
+        return null;
     }
 }

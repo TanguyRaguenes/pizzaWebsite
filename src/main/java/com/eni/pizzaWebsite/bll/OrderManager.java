@@ -24,7 +24,7 @@ public class OrderManager implements IOrderManager{
 
     @Override
     public List<OrderDetail> getOrderDetail(Long id_client) {
-        return List.of();
+        return orderDao.getOrderDetail(id_client);
     }
 
 }

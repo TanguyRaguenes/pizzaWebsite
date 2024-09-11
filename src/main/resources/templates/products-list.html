@@ -45,6 +45,13 @@
                 </td>
 
                 <td>
+
+                    <a th:href="@{/product-form/{id}(id=${product.id_product})}">
+                        <button type="button">Modify</button>
+                    </a>
+                </td>
+
+                <td>
                     <a th:href="@{/products-list/delete/{id}(id=${product.id_product})}"
                        onclick="return confirm('Are you sure ?')">Delete item</a>
                 </td>
