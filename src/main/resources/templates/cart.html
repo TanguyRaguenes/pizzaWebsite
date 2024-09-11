@@ -4,47 +4,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cart</title>
+    <title>Your Order</title>
 </head>
 <body>
 <main>
     <section layout:fragment="content">
-        <h1>Your Cart</h1>
+        <h1>Your Order</h1>
 
-        <!-- Message si le panier est vide -->
-        <div th:if="${#lists.isEmpty(cartItems)}">
-            <p>Your cart is empty. <a th:href="@{/products-list}">Keep shopping</a>.</p>
+        <!-- Message si la commande est vide -->
+        <div th:if="${#lists.isEmpty(orderDetails)}">
+            <p>Your order is empty. <a th:href="@{/products-list}">Keep shopping</a>.</p>
         </div>
 
-        <!-- Si le panier contient des articles -->
-        <div th:if="${!#lists.isEmpty(cartItems)}">
+        <!-- Si la commande contient des articles -->
+        <div th:if="${!#lists.isEmpty(orderDetails)}">
             <table>
                 <thead>
                 <tr>
                     <th>Name</th>
                     <th>Description</th>
                     <th>Quantity</th>
-                    <th>Size</th>
                     <th>Unit Price</th>
                     <th>Total Price</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="item : ${cartItems}">
+                <tr th:each="item : ${orderDetails}">
                     <td th:text="${item.product.name}"></td>
                     <td th:text="${item.product.description}"></td>
-                    <td th:text="${item.quantity}"></td>
-                    <td th:text="${item.size == 1 ? 'Small' : 'Medium'}"></td>
+
+                    <!-- Gestion de la quantité avec boutons + et - -->
+                    <td>
+                        <a th:href="@{/cart/decreaseQuantity/{id}(id=${item.product.id_product})}">-</a>
+                        <span th:text="${item.quantity}"></span>
+                        <a th:href="@{/cart/increaseQuantity/{id}(id=${item.product.id_product})}">+</a>
+                    </td>
+
                     <td th:text="${item.product.price}">€</td>
-                    <td th:text="${item.getTotalPrice()}">€</td>
+                    <td th:text="${item.quantity * item.product.price}">€</td>
                     <td>
                         <a th:href="@{/cart/remove/{id}(id=${item.product.id_product})}">Remove</a>
                     </td>
                 </tr>
                 </tbody>
             </table>
-            <a th:href="@{/cart/clear}">Clear Cart</a>
+
+            <a th:href="@{/cart/clear}">Clear Order</a>
         </div>
 
         <a th:href="@{/products-list}">Keep Shopping</a>
