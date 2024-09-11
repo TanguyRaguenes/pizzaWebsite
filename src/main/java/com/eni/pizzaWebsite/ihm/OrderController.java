@@ -32,12 +32,22 @@ public class OrderController {
         return "cart";
     }
 
-    @PostMapping("/cart/add/{id}")
-    public String addProductToCart(@PathVariable("id") Long id,
-                                   @RequestParam("quantity") int quantity) {
-        Product product = productManager.getProductById(id);
-        System.out.println(product);
-        orderManager.addProductToOrder(product, 1L, quantity); // Ajout de la quantité
+//    @PostMapping("/cart/add/{id}")
+//    public String addProductToCart(@PathVariable("id") Long id,
+//                                   @RequestParam("quantity") int quantity) {
+//        Product product = productManager.getProductById(id);
+//        System.out.println(product);
+//        orderManager.addProductToOrder(product, 1L, quantity);
+//        return "redirect:/products-list";
+//    }
+
+    @PostMapping("/cart/add")
+    public String addProductToCart(@RequestParam("id_product") Long idProduct,
+                                   @RequestParam("quantity") Long quantity,
+                                   @RequestParam("size") int size,
+                                   @ModelAttribute("order") Order order) {
+        Product product = productManager.getProductById(idProduct);
+        order.getOrderDetails().add(new OrderDetail(order.getId_order(), product, quantity));
         return "redirect:/products-list";
     }
 

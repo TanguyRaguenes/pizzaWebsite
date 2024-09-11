@@ -12,12 +12,12 @@
         <h1>Your Order</h1>
 
         <!-- Message si la commande est vide -->
-        <div th:if="${#lists.isEmpty(orderDetails)}">
+        <div th:if="${#lists.isEmpty(order.getOrderDetails())}">
             <p>Your order is empty. <a th:href="@{/products-list}">Keep shopping</a>.</p>
         </div>
 
         <!-- Si la commande contient des articles -->
-        <div th:if="${!#lists.isEmpty(orderDetails)}">
+        <div th:if="${!#lists.isEmpty(order.getOrderDetails())}">
             <table>
                 <thead>
                 <tr>
@@ -30,9 +30,10 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="item : ${orderDetails}">
+                <tr th:each="item : ${order.getOrderDetails()}">
                     <td th:text="${item.product.name}"></td>
                     <td th:text="${item.product.description}"></td>
+                    <td th:text="${item.quantity}"></td>
                     <td th:text="${item.product.price}">€</td>
                     <td th:text="${item.quantity * item.product.price}">€</td>
                     <td>

@@ -14,7 +14,7 @@ public class OrderManager implements IOrderManager{
     }
 
     @Override
-    public void addProductToOrder(Product product, Long idClient) {
+    public void addProductToOrder(Product product, Long idClient,int quantity ) {
         orderDao.addProductToOrder(product, idClient);
     }
 }
