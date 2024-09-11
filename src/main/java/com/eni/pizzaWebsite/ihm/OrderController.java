@@ -32,23 +32,12 @@ public class OrderController {
         return "cart";
     }
 
-//    @PostMapping("/cart/add/{id}")
-//    public String addProductToCart(@PathVariable("id") Long id,
-//                                   @RequestParam("quantity") int quantity,
-//                                   @RequestParam("size") int size,
-//                                   @ModelAttribute("order") Order order) {
-//        Product product = productManager.getProductById(id);
-//        //orderM.addItemToOrder(id,1)
-//        order.getOrderDetails().add(new OrderDetail(order.getId_order(), product, quantity));
-//        return "redirect:/products-list";
-//    }
-
     @PostMapping("/cart/add/{id}")
-    public String addProductToCart(@PathVariable("id") Long id){
+    public String addProductToCart(@PathVariable("id") Long id,
+                                   @RequestParam("quantity") int quantity) {
         Product product = productManager.getProductById(id);
         System.out.println(product);
-        orderManager.addProductToOrder(product,1L);
-
+        orderManager.addProductToOrder(product, 1L, quantity); // Ajout de la quantité
         return "redirect:/products-list";
     }
 
@@ -63,31 +52,5 @@ public class OrderController {
         order.getOrderDetails().clear();
         return "redirect:/";
     }
-    // Augmenter la quantité d'un produit dans le panier
-    @GetMapping("/cart/increaseQuantity/{id}")
-    public String increaseProductQuantity(@PathVariable("id") Long id, @ModelAttribute("order") Order order) {
-        for (OrderDetail detail : order.getOrderDetails()) {
-            if (detail.getProduct().getId_product().equals(id)) {
-                detail.setQuantity(detail.getQuantity() + 1); // Augmenter la quantité
-                break;
-            }
-        }
-        return "redirect:/cart";
-    }
 
-    // Diminuer la quantité d'un produit dans le panier
-    @GetMapping("/cart/decreaseQuantity/{id}")
-    public String decreaseProductQuantity(@PathVariable("id") Long id, @ModelAttribute("order") Order order) {
-        for (OrderDetail detail : order.getOrderDetails()) {
-            if (detail.getProduct().getId_product().equals(id)) {
-                if (detail.getQuantity() > 1) {
-                    detail.setQuantity(detail.getQuantity() - 1); // Diminuer la quantité
-                } else {
-                    order.getOrderDetails().remove(detail); // Retirer l'élément si la quantité est 1
-                }
-                break;
-            }
-        }
-        return "redirect:/cart";
-    }
 }

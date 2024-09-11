@@ -33,14 +33,6 @@
                 <tr th:each="item : ${orderDetails}">
                     <td th:text="${item.product.name}"></td>
                     <td th:text="${item.product.description}"></td>
-
-                    <!-- Gestion de la quantité avec boutons + et - -->
-                    <td>
-                        <a th:href="@{/cart/decreaseQuantity/{id}(id=${item.product.id_product})}">-</a>
-                        <span th:text="${item.quantity}"></span>
-                        <a th:href="@{/cart/increaseQuantity/{id}(id=${item.product.id_product})}">+</a>
-                    </td>
-
                     <td th:text="${item.product.price}">€</td>
                     <td th:text="${item.quantity * item.product.price}">€</td>
                     <td>
