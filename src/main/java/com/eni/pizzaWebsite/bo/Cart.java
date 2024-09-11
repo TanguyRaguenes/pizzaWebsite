@@ -1,6 +1,6 @@
-package com.eni.pizzaWebsite.model;
+package com.eni.pizzaWebsite.bo;
 
-import com.eni.pizzaWebsite.bo.Product;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 

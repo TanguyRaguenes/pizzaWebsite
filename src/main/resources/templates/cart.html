@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
 <head>
 
     <title></title>
@@ -8,8 +9,12 @@
 <main>
     <section layout:fragment="content">
         <h1>Your Cart</h1>
+        <div th:if="${#lists.isEmpty(cartItems)}">
+            <p>Votre panier est vide. <a th:href="@{/products-list}">Keep shopping</a>.</p>
+        </div>
 
-        <table>
+        <div th:if="${!#lists.isEmpty(cartItems)}">
+            <table>
             <thead>
             <tr>
                 <th>Name</th>
@@ -28,8 +33,11 @@
             </tr>
             </tbody>
         </table>
+            <a th:href="@{/cart/clear}">Clear cart</a>
+        </div>
         <a th:href="@{/cart/clear}">Clear cart</a>
-        <a th:href="@{/products-list}">Go back to shopping</a>
+        <a th:href="@{/products-list}">Keep Shopping*</a>
+
     </section>
 </main>
 </body>
