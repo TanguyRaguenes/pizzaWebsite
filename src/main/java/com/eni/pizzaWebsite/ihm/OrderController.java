@@ -34,7 +34,7 @@ public class OrderController {
 
     @PostMapping("/cart/add/{id}")
     public String addProductToCart(@PathVariable("id") Long id,
-                                   @RequestParam("quantity") int quantity) {
+                                   @RequestParam("quantity") Long quantity) {
         Product product = productManager.getProductById(id);
         System.out.println(product);
         orderManager.addProductToOrder(product, 1L, quantity); // Ajout de la quantité

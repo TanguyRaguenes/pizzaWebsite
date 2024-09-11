@@ -24,7 +24,7 @@ public class DAOOrderMySQL implements IDAOOrder {
 
 
     @Override
-    public void addProductToOrder(Product product, Long idClient) {
+    public void addProductToOrder(Product product, Long idClient, Long quantity) {
 
         if (getClientOrderId(idClient) == null) {
 
@@ -38,7 +38,7 @@ public class DAOOrderMySQL implements IDAOOrder {
             mapSqlParameterSource.addValue("id_user", 0);
             mapSqlParameterSource.addValue("id_state", 1);
             mapSqlParameterSource.addValue("is_in_delivery", false);
-            mapSqlParameterSource.addValue("delivery_datetime", LocalDateTime.now());
+            mapSqlParameterSource.addValue("delivery_datetime", LocalDateTime.now().plusMinutes(30));
             mapSqlParameterSource.addValue("total_price", 0);
             mapSqlParameterSource.addValue("is_paid", false);
 
@@ -64,6 +64,7 @@ public class DAOOrderMySQL implements IDAOOrder {
 
 //        }
     }
+
 
     @Override
     public Order getClientOrderId(Long id_client) {
