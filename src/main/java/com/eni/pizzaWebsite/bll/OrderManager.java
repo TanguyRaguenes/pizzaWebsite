@@ -18,9 +18,8 @@ public class OrderManager implements IOrderManager{
     }
 
     @Override
-
-    public void addProductToOrder(Product product, Long id_client, Long quantity) {
-        orderDao.addProductToOrder(product, id_client, quantity);
+    public void addProductToOrder(Product product, Long id_client, Long quantity,Long size) {
+        orderDao.addProductToOrder(product, id_client, quantity, size);
     }
 
     @Override
@@ -29,8 +28,8 @@ public class OrderManager implements IOrderManager{
     }
 
     @Override
-    public void removeProductFromOrder(Long id_product, Long id_client) {
-        orderDao.removeProductFromOrder(id_product, id_client);
+    public void removeProductFromOrder(Long id_product, Long id_client, Long id_size) {
+        orderDao.removeProductFromOrder(id_product, id_client, id_size);
     }
 
 }

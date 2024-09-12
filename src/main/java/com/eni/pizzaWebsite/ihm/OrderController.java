@@ -37,21 +37,10 @@ public class OrderController {
     }
 
 
-    //utiliser ce controller pour modifier la quantité d'un produit dans le panier
-    @PostMapping("/cart/add/{id}")
-    public String addProductToCart(@PathVariable("id") Long id,
-                                   @RequestParam("quantity") Long quantity) {
-        Product product = productManager.getProductById(id);
-        System.out.println(product);
-        orderManager.addProductToOrder(product, 1L, quantity);
-        return "redirect:/products-list";
-    }
-
-
     @PostMapping("/cart/add/{id}")
     public String addProductToCart(@PathVariable("id") Long id,
                                    @RequestParam("quantity") Long quantity,
-                                   @RequestParam("size")String size){
+                                   @RequestParam("size")Long size){
         Product product = productManager.getProductById(id);
         System.out.println(product);
         orderManager.addProductToOrder(product, 1L, quantity, size);
@@ -60,8 +49,8 @@ public class OrderController {
 
     @GetMapping("/cart/remove/{id}")
     public String removeProductFromCart(@PathVariable("id") Long id_product,
-                                        @RequestParam("id_client") Long id_client) {
-        orderManager.removeProductFromOrder(id_product, id_client);
+                                        @RequestParam("size")Long size) {
+        orderManager.removeProductFromOrder(id_product, 1L, size);
         return "redirect:/cart";
     }
 
