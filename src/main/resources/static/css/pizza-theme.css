@@ -1,3 +1,14 @@
+
+
+
+
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .navbar {
     list-style-type: none;
     margin: 0;
@@ -20,6 +31,15 @@
 .navbar li a:hover {
     background-color: #111;
 }
+
+
+
+
+
+
+/* ========= FORMULAIRES ==========*/
+
+
 form {
     max-width: 400px;
     margin: auto;
@@ -36,17 +56,6 @@ select {
     padding: 2px 5px;
 }
 
-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    cursor: pointer;
-}
-button:hover {
-    background-color: #45a049;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -60,4 +69,19 @@ th, td {
 
 th {
     background-color: #f4f4f4;
+}
+
+
+
+/* ========== BUTTONS ========== */
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #45a049;
 }

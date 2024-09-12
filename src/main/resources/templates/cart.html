@@ -35,17 +35,21 @@
                     <td th:text="${item.product.name}"></td>
                     <td th:text="${item.product.description}"></td>
                     <td>
-                        <!-- form modifier la qté -->
-                        <form th:action="@{/cart/add/{id_product}(id_product=${item.product.id_product})}" method="post">
+                        <!-- form modifier la qté et la taille -->
+                        <form th:action="@{/cart/add/{id_product}(id_product=${item.product.id_product})}"
+                              method="post">
                             <input type="number" name="quantity" min="1" th:value="${item.quantity}">
                             <input type="hidden" name="id_product" th:value="${item.product.id_product}">
-                            <button type="submit">Update Quantity</button>
+                            <p th:text="${item.size}"></p>
+                            <button type="submit">Update Quantity & Size</button>
                         </form>
                     </td>
 
+
                     <td>Size placeholder</td>
 
-                    <td th:text="${item.product.price}">€</td>
+                    <!--                    <td th:text="${item.product.price}">€</td>-->
+                    <td th:text="${#numbers.formatDecimal(item.product.price, 1, 'COMMA', 2, 'POINT')} + ' €'">€</td>
 
                     <td>Total Price placeholder</td>
 

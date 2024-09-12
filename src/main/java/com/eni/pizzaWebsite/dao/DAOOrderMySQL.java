@@ -69,7 +69,7 @@ public class DAOOrderMySQL implements IDAOOrder {
 
         }else{
 
-            sql = "UPDATE `order` SET id_client= :id_client,id_user= :id_user,id_state= :id_state,is_in_delivery= :is_in_delivery,delivery_datetime= :delivery_datetime ,total_price= :total_price,is_paid= :is_paid";
+            sql = "UPDATE `order` SET id_client= :id_client,id_user= :id_user,id_state= :id_state,is_in_delivery= :is_in_delivery,delivery_datetime= :delivery_datetime ,total_price= :total_price,is_paid= :is_paid WHERE id_order= :id_order";
 
         }
 
@@ -82,6 +82,9 @@ public class DAOOrderMySQL implements IDAOOrder {
         orderMapSqlParameterSource.addValue("delivery_datetime", LocalDateTime.now().plusMinutes(30));
         orderMapSqlParameterSource.addValue("total_price", 0);
         orderMapSqlParameterSource.addValue("is_paid", false);
+        if (order != null) {
+            orderMapSqlParameterSource.addValue("id_order", order.getId_order());
+        }
 
         namedParameterJdbcTemplate.update(sql, orderMapSqlParameterSource);
 
@@ -95,7 +98,7 @@ public class DAOOrderMySQL implements IDAOOrder {
                     "VALUES (:id_order, :id_product, :id_size, :quantity)";
 
         }else{
-            sql = "UPDATE order_details SET id_order= :id_order, id_product= :id_product, id_size= :id_size, quantity= :quantity";
+            sql = "UPDATE order_details SET id_order= :id_order, id_product= :id_product, id_size= :id_size, quantity= :quantity WHERE id_order= :id_order AND id_product= :id_product AND id_size= :id_size";
         }
 
         MapSqlParameterSource orderDetailmapSqlParameterSource = new MapSqlParameterSource();
@@ -125,7 +128,7 @@ public class DAOOrderMySQL implements IDAOOrder {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setId_order(rs.getLong("id_order"));
             orderDetail.setProduct(new Product(rs.getLong("id_product"), rs.getString("name"), rs.getString("description"), rs.getFloat("price"), rs.getString("image_url")));
-            orderDetail.setQuantity(rs.getInt("id_size"));
+            orderDetail.setSize(rs.getInt("id_size"));
             orderDetail.setQuantity(rs.getInt("quantity"));
 
             return orderDetail;
