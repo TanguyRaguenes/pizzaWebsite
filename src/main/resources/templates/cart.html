@@ -11,12 +11,12 @@
     <section layout:fragment="content">
         <h1>Your Order</h1>
 
-        <!-- Message si la commande est vide -->
+        <!-- Si la commande est vide -->
         <div th:if="${#lists.isEmpty(orderDetails)}">
             <p>Your order is empty. <a th:href="@{/products-list}">Return</a>.</p>
         </div>
 
-        <!-- Si la commande contient des articles -->
+        <!-- Sinon -->
         <div th:if="${!#lists.isEmpty(orderDetails)}">
             <table>
                 <thead>
@@ -24,8 +24,10 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Quantity</th>
+                    <th>Size</th>
                     <th>Unit Price</th>
-
+                    <th>Total Price</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,11 +35,19 @@
                     <td th:text="${item.product.name}"></td>
                     <td th:text="${item.product.description}"></td>
                     <td th:text="${item.quantity}"></td>
-                    <td th:text="${item.product.price}">€</td>
-<!--                    <td th:text="${item.quantity*item.product.price}">€</td>-->
-                    <td>
-                        <a th:href="@{/cart/remove/{id_product}(id_product=${item.product.id_product}, id_client=1)}">Remove</a>
 
+<!--                    &lt;!&ndash; Affichage de la taille comme String &ndash;&gt;-->
+<!--                    <td th:text="${item.size}"></td>-->
+                    <td>Size placeholder</td>
+
+                    <td th:text="${item.product.price}">€</td>
+
+<!--                    &lt;!&ndash; Prix total basé sur la taille et la quantité &ndash;&gt;-->
+<!--                    <td th:text="${(item.size == 'Small' ? item.product.price : item.product.price + 3) * item.quantity}">€</td>-->
+                    <td>Total Price placeholder</td>
+
+                    <td>
+                        <a th:href="@{/cart/remove/{id_product}(id_product=${item.product.id_product})}">Remove</a>
                     </td>
                 </tr>
                 </tbody>

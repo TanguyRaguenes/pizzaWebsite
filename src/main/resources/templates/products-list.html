@@ -18,7 +18,7 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Price</th>
-                <th>Quantity</th>
+                <th>Quantity & Size</th>
                 <th>Action</th>
             </tr>
             </thead>
@@ -34,15 +34,23 @@
                         <input type="hidden" name="id_product" th:value="${product.id_product}">
 
 
-                        <input type="number" name="quantity" min="1" value="1">
 
+                        <div>
+                            <button type="submit" name="quantity" value="1">-</button>
+                            <span>1</span>
+                            <button type="submit" name="quantity" value="1">+</button>
+                        </div>
 
-                        <input type="hidden" name="size" value="1">
+                        <select name="size">
+                            <option value="1">Small</option>
+                            <option value="2">Medium</option>
+                            <option value="3">Premium++</option>
+                        </select>
 
-
-                        <button type="submit">Add to cart</button>
+                        <button type="submit" class="Addbutton">Add to cart</button>
                     </form>
                 </td>
+
                 <td>
                     <a th:href="@{/product-form/{id}(id=${product.id_product})}">
                         Modify

@@ -31,7 +31,12 @@ label, input, select, textarea {
     padding: 10px;
     box-sizing: border-box;
 }
-button {
+select {
+    font-size: 0.9rem;
+    padding: 2px 5px;
+}
+
+.Addbutton {
     background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
@@ -41,6 +46,7 @@ button {
 button:hover {
     background-color: #45a049;
 }
+
 table {
     width: 100%;
     border-collapse: collapse;
