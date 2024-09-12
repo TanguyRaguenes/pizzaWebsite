@@ -30,30 +30,31 @@ public class OrderController {
     }
 
     @GetMapping("/cart")
-    public String viewCart(Model model, @ModelAttribute("order") Order order) {
-        List<OrderDetail> orderDetails=orderManager.getOrderDetail(1L);
-        model.addAttribute("orderDetails",orderDetails);
+    public String viewCart(Model model, @ModelAttribute("orderDetail") OrderDetail orderDetail) {
+        List<OrderDetail> orderDetails = orderManager.getOrderDetail(1L);
+        model.addAttribute("orderDetails", orderDetails);
         return "cart";
     }
 
 
-
+    //utiliser ce controller pour modifier la quantité d'un produit dans le panier
     @PostMapping("/cart/add/{id}")
     public String addProductToCart(@PathVariable("id") Long id,
-                                   @RequestParam("quantity") Long quantity) {
+                                   @RequestParam("quantity") Long quantity,
+                                    @RequestParam("size")Long size){
         Product product = productManager.getProductById(id);
         System.out.println(product);
-        orderManager.addProductToOrder(product, 1L, quantity);
+        orderManager.addProductToOrder(product, 1L, quantity, size);
         return "redirect:/products-list";
     }
 
-
-
     @GetMapping("/cart/remove/{id}")
-    public String removeProductFromCart(@PathVariable("id") Long id, @ModelAttribute("order") Order order) {
-        order.getOrderDetails().removeIf(item -> item.getProduct().getId_product().equals(id));
+    public String removeProductFromCart(@PathVariable("id") Long id_product,
+                                        @RequestParam("id_client") Long id_client) {
+        orderManager.removeProductFromOrder(id_product, id_client);
         return "redirect:/cart";
     }
+
 
     @GetMapping("/cart/clear")
     public String clearCart(@ModelAttribute("order") Order order) {

@@ -12,12 +12,12 @@
         <h1>Your Order</h1>
 
         <!-- Message si la commande est vide -->
-        <div th:if="${#lists.isEmpty(order.getOrderDetails())}">
+        <div th:if="${#lists.isEmpty(orderDetails)}">
             <p>Your order is empty. <a th:href="@{/products-list}">Return</a>.</p>
         </div>
 
         <!-- Si la commande contient des articles -->
-        <div th:if="${!#lists.isEmpty(order.getOrderDetails())}">
+        <div th:if="${!#lists.isEmpty(orderDetails)}">
             <table>
                 <thead>
                 <tr>
@@ -25,19 +25,19 @@
                     <th>Description</th>
                     <th>Quantity</th>
                     <th>Unit Price</th>
-                    <th>Total Price</th>
-                    <th>Action</th>
+
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="item : ${order.getOrderDetails()}">
+                <tr th:each="item : ${orderDetails}">
                     <td th:text="${item.product.name}"></td>
                     <td th:text="${item.product.description}"></td>
                     <td th:text="${item.quantity}"></td>
                     <td th:text="${item.product.price}">€</td>
-                    <td th:text="${item.quantity * item.product.price}">€</td>
+<!--                    <td th:text="${item.quantity*item.product.price}">€</td>-->
                     <td>
-                        <a th:href="@{/cart/remove/{id}(id=${item.product.id_product})}">Remove</a>
+                        <a th:href="@{/cart/remove/{id_product}(id_product=${item.product.id_product}, id_client=1)}">Remove</a>
+
                     </td>
                 </tr>
                 </tbody>
