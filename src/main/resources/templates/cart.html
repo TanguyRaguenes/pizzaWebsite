@@ -40,27 +40,31 @@
                               method="post">
                             <input type="number" name="quantity" min="1" th:value="${item.quantity}">
                             <input type="hidden" name="id_product" th:value="${item.product.id_product}">
-                            <p th:text="${item.size}"></p>
-                            <button type="submit">Update Quantity & Size</button>
+                            <input type="hidden" name="size" th:value="${item.size}">
+                            <button type="submit">Update Quantity</button>
                         </form>
                     </td>
 
-
-                    <td>Size placeholder</td>
-
+                    <td>
+                             <span th:switch="${item.size}">
+                            <span th:case="'1'">Small</span>
+                            <span th:case="'2'">Medium</span>
+                            <span th:case="'3'">Large</span>
+                            </span>
+                        <input type="hidden" name="size" th:value="${item.size}">
+                    </td>
                     <!--                    <td th:text="${item.product.price}">€</td>-->
                     <td th:text="${#numbers.formatDecimal(item.product.price, 1, 'COMMA', 2, 'POINT')} + ' €'">€</td>
 
-                    <td>Total Price placeholder</td>
-
+                    <td th:text="${#numbers.formatDecimal(item.quantity * item.product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
                     <td>
-                        <a th:href="@{/cart/remove/{id_product}(id_product=${item.product.id_product})}">Remove</a>
+                        <a th:href="@{/cart/remove/{id}(id=${item.product.id_product}, size=${item.size})}">Remove</a>
                     </td>
 
                 </tr>
                 </tbody>
             </table>
-
+            <p th:text="'Prix total : '+${totalPrice} + ' €'"></p>
             <a th:href="@{/cart/clear}">Clear Order</a>
         </div>
 

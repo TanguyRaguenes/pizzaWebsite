@@ -31,8 +31,13 @@ public class OrderController {
 
     @GetMapping("/cart")
     public String viewCart(Model model, @ModelAttribute("orderDetail") OrderDetail orderDetail) {
+
         List<OrderDetail> orderDetails = orderManager.getOrderDetail(1L);
         model.addAttribute("orderDetails", orderDetails);
+
+        Float totalPrice = orderManager.getOrderTotalPrice(1L);
+        model.addAttribute("totalPrice", totalPrice);
+
         return "cart";
     }
 
@@ -44,7 +49,7 @@ public class OrderController {
         Product product = productManager.getProductById(id);
         System.out.println(product);
         orderManager.addProductToOrder(product, 1L, quantity, size);
-        return "redirect:/products-list";
+           return "redirect:/products-list";
     }
 
     @GetMapping("/cart/remove/{id}")
