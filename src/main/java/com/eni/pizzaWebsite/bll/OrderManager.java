@@ -37,4 +37,9 @@ public class OrderManager implements IOrderManager{
         return orderDao.getOrderTotalPrice(id_client);
     }
 
+    @Override
+    public void checkout(Long id_client) {
+        orderDao.checkout(id_client);
+    }
+
 }

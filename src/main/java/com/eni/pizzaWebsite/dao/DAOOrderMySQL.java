@@ -178,4 +178,15 @@ public class DAOOrderMySQL implements IDAOOrder {
 
         return 0f;
     }
+
+    @Override
+    public void checkout(Long id_client) {
+        Order order = getOrder(id_client);
+
+        if (order != null) {
+            String sql = "UPDATE `order` SET id_state =? WHERE id_order=?";
+
+            jdbcTemplate.update(sql, 2, order.getId_order());
+        }
+    }
 }
