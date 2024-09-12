@@ -34,21 +34,25 @@
                 <tr th:each="item : ${orderDetails}">
                     <td th:text="${item.product.name}"></td>
                     <td th:text="${item.product.description}"></td>
-                    <td th:text="${item.quantity}"></td>
+                    <td>
+                        <!-- form modifier la qté -->
+                        <form th:action="@{/cart/add/{id_product}(id_product=${item.product.id_product})}" method="post">
+                            <input type="number" name="quantity" min="1" th:value="${item.quantity}">
+                            <input type="hidden" name="id_product" th:value="${item.product.id_product}">
+                            <button type="submit">Update Quantity</button>
+                        </form>
+                    </td>
 
-<!--                    &lt;!&ndash; Affichage de la taille comme String &ndash;&gt;-->
-<!--                    <td th:text="${item.size}"></td>-->
                     <td>Size placeholder</td>
 
                     <td th:text="${item.product.price}">€</td>
 
-<!--                    &lt;!&ndash; Prix total basé sur la taille et la quantité &ndash;&gt;-->
-<!--                    <td th:text="${(item.size == 'Small' ? item.product.price : item.product.price + 3) * item.quantity}">€</td>-->
                     <td>Total Price placeholder</td>
 
                     <td>
                         <a th:href="@{/cart/remove/{id_product}(id_product=${item.product.id_product})}">Remove</a>
                     </td>
+
                 </tr>
                 </tbody>
             </table>

@@ -24,42 +24,35 @@
             </thead>
             <tbody>
             <tr th:each="product : ${products}">
-                <td th:text="${product.id_product}">Product id</td>
-                <td th:text="${product.name}">Product name</td>
-                <td th:text="${product.description}">Product description</td>
-                <td th:text="${product.price}">€</td>
+                <td th:text="${product.id_product}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.description}"></td>
+                <td th:text="${product.price} +' €'"></td>
 
                 <td>
                     <form th:action="@{/cart/add/{id_product}(id_product=${product.getId_product()})}" method="post">
+
                         <input type="hidden" name="id_product" th:value="${product.id_product}">
 
-
-
-                        <div>
-                            <button type="submit" name="quantity" value="1">-</button>
-                            <span>1</span>
-                            <button type="submit" name="quantity" value="1">+</button>
-                        </div>
+                             <input type="number" name="quantity" min="1" value="1">
 
                         <select name="size">
-                            <option value="1">Small</option>
-                            <option value="2">Medium</option>
-                            <option value="3">Premium++</option>
+                            <option value="Small">Small</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Premium++">Premium++</option>
                         </select>
 
-                        <button type="submit" class="Addbutton">Add to cart</button>
+                        <button type="submit">Add to cart</button>
                     </form>
                 </td>
 
                 <td>
-                    <a th:href="@{/product-form/{id}(id=${product.id_product})}">
-                        Modify
-                    </a>
+                    <a th:href="@{/product-form/{id}(id=${product.id_product})}">Modify</a>
                 </td>
 
                 <td>
                     <a th:href="@{/products-list/delete/{id}(id=${product.id_product})}"
-                       onclick="return confirm('Are you sure ?')">Delete item</a>
+                       onclick="return confirm('You are about to delete this item, confirm ?')">Delete item</a>
                 </td>
             </tr>
             </tbody>
