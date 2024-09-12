@@ -32,4 +32,9 @@ public class OrderManager implements IOrderManager{
         orderDao.removeProductFromOrder(id_product, id_client, id_size);
     }
 
+    @Override
+    public Float getOrderTotalPrice(Long id_client) {
+        return orderDao.getOrderTotalPrice(id_client);
+    }
+
 }

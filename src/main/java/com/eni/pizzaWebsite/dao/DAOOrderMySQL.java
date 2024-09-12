@@ -111,8 +111,7 @@ public class DAOOrderMySQL implements IDAOOrder {
         namedParameterJdbcTemplate.update(sql, orderDetailmapSqlParameterSource);
 
 
-        //Recalcul du total_price
-
+        //Calcul du total_price
         Float total_price = getOrderTotalPrice(id_client);
 
         sql = "UPDATE `order` SET total_price =? WHERE id_order=?";
