@@ -11,5 +11,6 @@ public interface IDAOOrder {
     public abstract void addProductToOrder(Product product,Long id_client,Long quantity);
     public abstract Order getClientOrderId(Long id_client );
     public abstract List<OrderDetail> getOrderDetail(Long id_client);
+    public abstract void removeProductFromOrder(Long id_product,Long id_client);
 
 }

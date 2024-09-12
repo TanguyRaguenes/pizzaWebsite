@@ -26,6 +26,14 @@ public class DAOOrderMySQL implements IDAOOrder {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
+    @Override
+    public Order getClientOrderId(Long id_client) {
+
+        List<Order> orderList = jdbcTemplate.query("SELECT * FROM `order` WHERE id_client=? AND id_state=?", new BeanPropertyRowMapper<Order>(Order.class), id_client, 1);
+        return orderList.get(0);
+
+    }
+
 
     @Override
     public void addProductToOrder(Product product, Long id_client, Long quantity) {
@@ -70,14 +78,6 @@ public class DAOOrderMySQL implements IDAOOrder {
     }
 
 
-    @Override
-    public Order getClientOrderId(Long id_client) {
-
-        List<Order> orderList = jdbcTemplate.query("SELECT * FROM `order` WHERE id_client=? AND id_state=?", new BeanPropertyRowMapper<Order>(Order.class), id_client, 1);
-        return orderList.get(0);
-
-    }
-
     static final RowMapper<OrderDetail> ORDERDETAIL_ROW_MAPPER = new RowMapper<OrderDetail>() {
 
         public OrderDetail mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -102,7 +102,21 @@ public class DAOOrderMySQL implements IDAOOrder {
 
         }
 
-
         return null;
+    }
+
+    @Override
+    public void removeProductFromOrder(Long id_product, Long id_client) {
+
+        Order order = getClientOrderId(id_client);
+
+        if (order != null) {
+
+            String sql = "DELETE FROM order_details WHERE id_order=? AND id_product=?";
+
+            jdbcTemplate.update(sql,order.getId_order(),id_product);
+
+        }
+
     }
 }

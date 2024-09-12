@@ -13,6 +13,7 @@ public class OrderManager implements IOrderManager{
     private IDAOOrder orderDao;
 
     public OrderManager(IDAOOrder orderDao) {
+
         this.orderDao = orderDao;
     }
 
@@ -25,6 +26,11 @@ public class OrderManager implements IOrderManager{
     @Override
     public List<OrderDetail> getOrderDetail(Long id_client) {
         return orderDao.getOrderDetail(id_client);
+    }
+
+    @Override
+    public void removeProductFromOrder(Long id_product, Long id_client) {
+        orderDao.removeProductFromOrder(id_product, id_client);
     }
 
 }
