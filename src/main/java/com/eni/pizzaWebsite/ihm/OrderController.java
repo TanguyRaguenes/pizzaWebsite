@@ -45,25 +45,33 @@ public class OrderController {
     @PostMapping("/cart/add/{id}")
     public String addProductToCart(@PathVariable("id") Long id,
                                    @RequestParam("quantity") Long quantity,
-                                   @RequestParam("size")Long size){
+                                   @RequestParam("size") Long size) {
         Product product = productManager.getProductById(id);
         System.out.println(product);
         orderManager.addProductToOrder(product, 1L, quantity, size);
-           return "redirect:/products-list";
+        return "redirect:/products-list";
     }
 
     @GetMapping("/cart/remove/{id}")
     public String removeProductFromCart(@PathVariable("id") Long id_product,
-                                        @RequestParam("size")Long size) {
+                                        @RequestParam("size") Long size) {
         orderManager.removeProductFromOrder(id_product, 1L, size);
         return "redirect:/cart";
     }
 
+    @GetMapping("/cart/checkout")
+    public String checkout() {
+        orderManager.checkout(1L);
+        return "redirect:/cart";
+        //créer une page de validation de la commande ?
+    }
+
 
     @GetMapping("/cart/clear")
-   public String clearCart() {
+    public String clearCart() {
         orderManager.clearOrderForClient(1L);
         return "redirect:/cart";
     }
+
 
 }

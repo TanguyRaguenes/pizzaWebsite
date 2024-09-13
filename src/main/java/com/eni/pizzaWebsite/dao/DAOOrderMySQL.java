@@ -195,7 +195,7 @@ public class DAOOrderMySQL implements IDAOOrder {
 
         Order order = getOrder(id_client);
 
-        if (order != null) {
+        if (order != null && order.getId_state() == 1) {
 
             String sql = "DELETE FROM order_details WHERE id_order=?";
             jdbcTemplate.update(sql, order.getId_order());
