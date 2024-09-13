@@ -11,5 +11,6 @@ public interface IOrderManager {
     public abstract List<OrderDetail> getOrderDetail(Long id_client);
     public abstract void removeProductFromOrder(Long id_product,Long id_client,Long id_size);
     public abstract Float getOrderTotalPrice(Long id_client);
+    public abstract void checkout(Long id_client);
     public abstract void clearOrderForClient(Long id_client);
 }

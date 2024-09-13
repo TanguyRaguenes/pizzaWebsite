@@ -38,6 +38,11 @@ public class OrderManager implements IOrderManager{
     }
 
     @Override
+    public void checkout(Long id_client) {
+        orderDao.checkout(id_client);
+    }
+
+    @Override
     public void clearOrderForClient(Long id_client) {
         orderDao.clearOrderForClient(id_client);
     }
