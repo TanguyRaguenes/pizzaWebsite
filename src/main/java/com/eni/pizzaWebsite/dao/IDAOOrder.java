@@ -3,6 +3,7 @@ package com.eni.pizzaWebsite.dao;
 import com.eni.pizzaWebsite.bo.Order;
 import com.eni.pizzaWebsite.bo.OrderDetail;
 import com.eni.pizzaWebsite.bo.Product;
+import com.eni.pizzaWebsite.bo.ProductSize;
 
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface IDAOOrder {
     public abstract void checkout(Long id_client);
 
     public abstract void clearOrderForClient(Long id_client);
+    public abstract List<ProductSize> getPriceByProductSize();
 }

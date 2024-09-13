@@ -3,6 +3,7 @@ package com.eni.pizzaWebsite.dao;
 import com.eni.pizzaWebsite.bo.Order;
 import com.eni.pizzaWebsite.bo.OrderDetail;
 import com.eni.pizzaWebsite.bo.Product;
+import com.eni.pizzaWebsite.bo.ProductSize;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -205,6 +206,13 @@ public class DAOOrderMySQL implements IDAOOrder {
 
         }
 
+    }
+
+    @Override
+    public List<ProductSize> getPriceByProductSize() {
+
+        List<ProductSize> productSizes = jdbcTemplate.query("SELECT * FROM product_size", new BeanPropertyRowMapper<ProductSize>(ProductSize.class) );
+        return productSizes;
     }
 
 

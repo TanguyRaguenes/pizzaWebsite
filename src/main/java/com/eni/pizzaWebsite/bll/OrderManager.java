@@ -2,6 +2,7 @@ package com.eni.pizzaWebsite.bll;
 
 import com.eni.pizzaWebsite.bo.OrderDetail;
 import com.eni.pizzaWebsite.bo.Product;
+import com.eni.pizzaWebsite.bo.ProductSize;
 import com.eni.pizzaWebsite.dao.IDAOOrder;
 import org.springframework.stereotype.Component;
 
@@ -46,5 +47,11 @@ public class OrderManager implements IOrderManager{
     public void clearOrderForClient(Long id_client) {
         orderDao.clearOrderForClient(id_client);
     }
+
+    @Override
+    public List<ProductSize> getPriceByProductSize() {
+        return orderDao.getPriceByProductSize();
+    }
+
 
 }

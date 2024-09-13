@@ -5,12 +5,14 @@ import com.eni.pizzaWebsite.bll.IProductManager;
 import com.eni.pizzaWebsite.bo.Order;
 import com.eni.pizzaWebsite.bo.OrderDetail;
 import com.eni.pizzaWebsite.bo.Product;
+import com.eni.pizzaWebsite.configuration.PriceConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @SessionAttributes("order")
@@ -22,7 +24,6 @@ public class OrderController {
 
     @Autowired
     private IOrderManager orderManager;
-
 
     @ModelAttribute("order")
     public Order createOrder() {
