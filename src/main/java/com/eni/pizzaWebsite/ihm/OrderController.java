@@ -60,10 +60,10 @@ public class OrderController {
     }
 
 
-//    @GetMapping("/cart/clear")
-//    public String clearCart(@ModelAttribute("order") Order order) {
-//        order.getOrderDetails().clear();
-//        return "redirect:/";
-//    }
+    @GetMapping("/cart/clear")
+   public String clearCart() {
+        orderManager.clearOrderForClient(1L);
+        return "redirect:/cart";
+    }
 
 }

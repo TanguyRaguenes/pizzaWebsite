@@ -178,4 +178,23 @@ public class DAOOrderMySQL implements IDAOOrder {
 
         return 0f;
     }
+
+    @Override
+    public void clearOrderForClient(Long id_client) {
+
+        Order order = getOrder(id_client);
+
+        if (order != null) {
+
+            String sql = "DELETE FROM order_details WHERE id_order=?";
+            jdbcTemplate.update(sql, order.getId_order());
+
+            sql ="DELETE FROM `order` WHERE id_order=?";
+            jdbcTemplate.update(sql, order.getId_order());
+
+        }
+
+    }
+
+
 }

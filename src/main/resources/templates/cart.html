@@ -35,7 +35,7 @@
                     <td th:text="${item.product.name}"></td>
                     <td th:text="${item.product.description}"></td>
                     <td>
-                        <!-- form modifier la qté et la taille -->
+                        <!-- form modifier la qté -->
                         <form th:action="@{/cart/add/{id_product}(id_product=${item.product.id_product})}"
                               method="post">
                             <input type="number" name="quantity" min="1" th:value="${item.quantity}">
@@ -46,11 +46,11 @@
                     </td>
 
                     <td>
-                             <span th:switch="${item.size}">
+                          <span th:switch="${item.size}">
                             <span th:case="'1'">Small</span>
                             <span th:case="'2'">Medium</span>
                             <span th:case="'3'">Large</span>
-                            </span>
+                          </span>
                         <input type="hidden" name="size" th:value="${item.size}">
                     </td>
                     <!--                    <td th:text="${item.product.price}">€</td>-->
@@ -64,7 +64,7 @@
                 </tr>
                 </tbody>
             </table>
-            <p th:text="'Prix total : '+${totalPrice} + ' €'"></p>
+            <p th:text="'Total : '+${totalPrice} + ' €'"></p>
             <a th:href="@{/cart/clear}">Clear Order</a>
         </div>
 
