@@ -2,6 +2,7 @@ package com.eni.pizzaWebsite.bll;
 
 import com.eni.pizzaWebsite.bo.OrderDetail;
 import com.eni.pizzaWebsite.bo.Product;
+import com.eni.pizzaWebsite.bo.ProductSize;
 
 import java.util.List;
 
@@ -13,4 +14,5 @@ public interface IOrderManager {
     public abstract Float getOrderTotalPrice(Long id_client);
     public abstract void checkout(Long id_client);
     public abstract void clearOrderForClient(Long id_client);
+    public abstract List<ProductSize> getPriceByProductSize();
 }
