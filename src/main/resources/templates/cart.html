@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Order</title>
+    <title>Your Cart</title>
 </head>
 <body>
 <main>
@@ -54,7 +54,7 @@
                         <input type="hidden" name="size" th:value="${item.size}">
                     </td>
                     <!--                    <td th:text="${item.product.price}">€</td>-->
-                    <td th:text="${#numbers.formatDecimal(item.product.price, 1, 'COMMA', 2, 'POINT')} + ' €'">€</td>
+                    <td th:text="${#numbers.formatDecimal(item.product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
 
                     <td th:text="${#numbers.formatDecimal(item.quantity * item.product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
                     <td>
@@ -65,8 +65,18 @@
                 </tbody>
             </table>
             <p th:text="'Total : '+${totalPrice} + ' €'"></p>
-            <a th:href="@{/cart/checkout}">Checkout</a>
-            <a th:href="@{/cart/clear}">Clear Order</a>
+
+
+            <div class="checkout-section">
+                <form th:action="@{/cart/checkout}" method="post">
+                    <label for="deliveryDatetime">Choose delivery date and time:</label>
+                    <input type="datetime-local" id="deliveryDatetime" name="deliveryDatetime" required
+                           min="[[${#dates.format(#dates.createNow(), 'yyyy-MM-dd\'T\'HH:mm')}]]">
+                    <!--                    gère la date minimum mais n'est pas sécurisé, il faut aussi (voir exclusivement) le faire coté serveur-->
+                    <button type="submit" class="checkout-btn">Checkout</button>
+                </form>
+                <a class="clear-btn" th:href="@{/cart/clear}">Clear Order</a>
+            </div>
         </div>
 
         <a th:href="@{/products-list}">Keep Shopping</a>

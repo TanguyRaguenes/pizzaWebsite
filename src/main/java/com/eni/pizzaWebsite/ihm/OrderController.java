@@ -68,6 +68,14 @@ public class OrderController {
         //créer une page de validation de la commande ?
     }
 
+//    @PostMapping("/cart/checkout")
+//    public String checkoutCart(@RequestParam("deliveryDatetime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime deliveryDatetime) {
+//        Long id_client = 1L;
+//        orderManager.checkout(id_client, deliveryDatetime);
+//        return "redirect:/cart";
+//    //créer une page de validation de la commande ?
+//    }
+
 
     @GetMapping("/cart/clear")
     public String clearCart() {

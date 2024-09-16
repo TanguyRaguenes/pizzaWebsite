@@ -85,3 +85,34 @@ button {
 button:hover {
     background-color: #45a049;
 }
+ /*========= CTA BUTTONS =========*/
+
+.checkout-section {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.checkout-btn, .clear-btn {
+    background-color: #28a745; /* Couleur verte pour Checkout */
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.checkout-btn:hover {
+    background-color: #218838; /* Couleur verte plus foncée au survol */
+}
+
+.clear-btn {
+    background-color: #dc3545; /* Couleur rouge pour Clear Order */
+}
+
+.clear-btn:hover {
+    background-color: #c82333; /* Rouge plus foncé au survol */
+}
