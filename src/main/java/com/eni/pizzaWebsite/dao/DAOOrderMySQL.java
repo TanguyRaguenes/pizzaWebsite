@@ -130,6 +130,7 @@ public class DAOOrderMySQL implements IDAOOrder {
             orderDetail.setProduct(new Product(rs.getLong("id_product"), rs.getString("name"), rs.getString("description"), rs.getFloat("price"), rs.getString("image_url")));
             orderDetail.setSize(rs.getInt("id_size"));
             orderDetail.setQuantity(rs.getInt("quantity"));
+            orderDetail.setPrice_difference(rs.getFloat("price_difference"));
 
             return orderDetail;
         }
@@ -140,7 +141,7 @@ public class DAOOrderMySQL implements IDAOOrder {
         Order order = getOrder(id_client);
         if (order != null) {
 
-            String sql = "SELECT * FROM order_details AS o INNER JOIN product AS p ON o.id_product = p.id_product WHERE id_order=?";
+            String sql = "SELECT * FROM order_details AS od INNER JOIN product AS p ON od.id_product = p.id_product INNER JOIN product_size AS ps ON od.id_size = ps.id_size WHERE id_order=?";
 
             List<OrderDetail> orderDetails = jdbcTemplate.query(sql, ORDERDETAIL_ROW_MAPPER, order.getId_order());
             return orderDetails;
@@ -181,13 +182,14 @@ public class DAOOrderMySQL implements IDAOOrder {
     }
 
     @Override
-    public void checkout(Long id_client) {
+    public void checkout(Long id_client, LocalDateTime delivery_datetime ) {
+
         Order order = getOrder(id_client);
 
         if (order != null) {
-            String sql = "UPDATE `order` SET id_state =? WHERE id_order=?";
+            String sql = "UPDATE `order` SET id_state =?, delivery_datetime=? WHERE id_order=?";
 
-            jdbcTemplate.update(sql, 2, order.getId_order());
+            jdbcTemplate.update(sql, 2, delivery_datetime,order.getId_order());
         }
     }
 

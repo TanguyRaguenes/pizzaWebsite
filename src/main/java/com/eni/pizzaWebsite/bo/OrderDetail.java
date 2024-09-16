@@ -6,16 +6,18 @@ public class OrderDetail {
     private Product product;
     private int size;
     private int quantity;
+    private float price_difference;
 
     public OrderDetail() {
         super();
     }
 
-    public OrderDetail(Long id_order, Product product, int size, int quantity) {
+    public OrderDetail(Long id_order, Product product, int size, int quantity, float price_difference) {
         this.id_order = id_order;
         this.product = product;
         this.size = size;
         this.quantity = quantity;
+        this.price_difference = price_difference;
     }
 
     public Long getId_order() {
@@ -54,5 +56,13 @@ public class OrderDetail {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public float getPrice_difference() {
+        return price_difference;
+    }
+
+    public void setPrice_difference(float price_difference) {
+        this.price_difference = price_difference;
     }
 }

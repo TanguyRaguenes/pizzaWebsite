@@ -6,6 +6,7 @@ import com.eni.pizzaWebsite.bo.ProductSize;
 import com.eni.pizzaWebsite.dao.IDAOOrder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -39,8 +40,8 @@ public class OrderManager implements IOrderManager{
     }
 
     @Override
-    public void checkout(Long id_client) {
-        orderDao.checkout(id_client);
+    public void checkout(Long id_client, LocalDateTime delivery_datetime) {
+        orderDao.checkout(id_client, delivery_datetime);
     }
 
     @Override

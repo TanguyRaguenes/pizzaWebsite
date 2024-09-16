@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -62,7 +63,7 @@ public class OrderController {
 
     @GetMapping("/cart/checkout")
     public String checkout() {
-        orderManager.checkout(1L);
+        orderManager.checkout(1L, LocalDateTime.now());
         return "redirect:/cart";
         //créer une page de validation de la commande ?
     }
