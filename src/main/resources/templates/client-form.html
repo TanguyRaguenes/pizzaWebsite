@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+  <title>Client Form</title>
+</head>
+<body>
+<main>
+  <section layout:fragment="content">
+    <form th:object="${client}" method="post" th:action="@{/client-form}">
+
+      <input th:field="*{id_client}">
+
+      <div>
+        <label for="firstName">First Name:</label>
+        <input th:field="*{firstName}" id="firstName" type="text" placeholder="Enter first name" required>
+      </div>
+
+      <div>
+        <label for="lastName">Last Name:</label>
+        <input th:field="*{lastName}" id="lastName" type="text" placeholder="Enter last name" required>
+      </div>
+
+      <div>
+        <label for="street">Street:</label>
+        <input th:field="*{street}" id="street" type="text" placeholder="Enter street address">
+      </div>
+
+      <div>
+        <label for="postalCode">Postal Code:</label>
+        <input th:field="*{postalCode}" id="postalCode" type="text" placeholder="Enter postal code">
+      </div>
+
+      <div>
+        <label for="city">City:</label>
+        <input th:field="*{city}" id="city" type="text" placeholder="Enter city">
+      </div>
+
+      <button type="submit">Send</button>
+    </form>
+  </section>
+</main>
+</body>
+</html>

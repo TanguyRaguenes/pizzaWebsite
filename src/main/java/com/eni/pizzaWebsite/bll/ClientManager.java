@@ -2,9 +2,11 @@ package com.eni.pizzaWebsite.bll;
 
 import com.eni.pizzaWebsite.bo.Client;
 import com.eni.pizzaWebsite.dao.IDAOClient;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class ClientManager implements IClientManager {
 
     private IDAOClient daoClient;

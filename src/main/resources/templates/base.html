@@ -1,20 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:fragment="title">Pizza Website</title>
     <link rel="stylesheet" href="/css/pizza-theme.css">
-<title></title>
 </head>
 <body>
-
 
 <header>
     <nav>
         <ul class="navbar">
             <li><a th:href="@{/}">Home</a></li>
-            <li><a th:href="@{/product-form}">Add a product</a></li>
             <li><a th:href="@{/products-list}">Menu</a></li>
+            <li><a th:href="@{/product-form}">Add a product</a></li>
+            <li><a th:href="@{/client-form}">Add a client</a></li>
+            <li><a th:href="@{/orders-list}">Orders</a></li>
+            <li><a th:href="@{/clients-list}">Clients</a></li>
         </ul>
     </nav>
 </header>

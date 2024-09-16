@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head>
+  <meta charset="UTF-8">
+  <title>Clients List</title>
+  <link rel="stylesheet" href="/css/pizza-theme.css">
+</head>
+<body>
+<main>
+  <section layout:fragment="content">
+    <h1>Clients List</h1>
+
+    <!-- nouveau client -->
+    <a th:href="@{/client-form}">Add New Client</a>
+
+
+    <table>
+      <thead>
+      <tr>
+        <th>Client ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Street</th>
+        <th>Postal Code</th>
+        <th>City</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="client : ${clients}">
+        <td th:text="${client.id_client}"></td>
+        <td th:text="${client.firstName}"></td>
+        <td th:text="${client.lastName}"></td>
+        <td th:text="${client.street}"></td>
+        <td th:text="${client.postalCode}"></td>
+        <td th:text="${client.city}"></td>
+        <td>
+
+<!--          &lt;!&ndash;  éditer client WIP &ndash;&gt;-->
+<!--          <a th:href="@{/client/edit/{id_client}(id_client=${client.id_client})}">Edit</a>-->
+<!--          &lt;!&ndash; supprimer client WIP&ndash;&gt;-->
+<!--          <a th:href="@{/client/delete/{id_client}(id_client=${client.id_client})}">Delete</a>-->
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+</main>
+</body>
+</html>
