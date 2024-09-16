@@ -40,6 +40,15 @@ public class securityConfig {
                                 .requestMatchers("/").hasAnyAuthority("ROLE_MANAGER", "ROLE_PIZZAMAKER", "ROLE_DELIVERYPERSON")
                                 .requestMatchers("/login").permitAll()
                                 .requestMatchers("/logout").authenticated()
+                                .requestMatchers("/products-list").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers("/cart/add/{id}").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers("/cart/remove/{id}").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers(HttpMethod.GET,"/cart/checkout").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers(HttpMethod.POST,"/cart/checkout").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers("/cart/clear").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers("/orders-list").hasAnyAuthority("ROLE_MANAGER")
+
+                                .requestMatchers("/cart").hasAnyAuthority("ROLE_MANAGER")
 
                                 .requestMatchers("/vendor/**").permitAll()
                                 .requestMatchers("/images/**").permitAll()
