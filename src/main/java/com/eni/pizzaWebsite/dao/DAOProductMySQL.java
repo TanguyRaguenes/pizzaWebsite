@@ -58,7 +58,8 @@ public class DAOProductMySQL implements  IDAOProduct{
 
 
     }
-    
+
+    @Override
     public void deleteProductFromList(Long id_product) {
 
         String sql = "DELETE FROM product WHERE id_product=:id_product";
