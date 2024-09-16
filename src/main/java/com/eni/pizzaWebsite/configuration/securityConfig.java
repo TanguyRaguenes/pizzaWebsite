@@ -43,18 +43,21 @@ public class securityConfig {
                                 .requestMatchers("/products-list").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/cart/add/{id}").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/cart/remove/{id}").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers(HttpMethod.GET,"/cart/checkout").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers(HttpMethod.POST,"/cart/checkout").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers(HttpMethod.GET, "/cart/checkout").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers(HttpMethod.POST, "/cart/checkout").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/cart/clear").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/orders-list").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/cart").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/products-list").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/product-form").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/product-form/**").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/products-list/delete/**").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/cart").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/cart/checkout").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/cart/clear").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers("/client-form").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers(HttpMethod.POST, "/client-form").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers("/clients-list").hasAnyAuthority("ROLE_MANAGER")
+
+
+
+
 
                                 .requestMatchers("/customLogin").permitAll()
 

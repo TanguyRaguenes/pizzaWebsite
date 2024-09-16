@@ -92,8 +92,13 @@ public class OrderController {
     }
 
     @GetMapping("/orders-list")
-    public String viewOrders(@RequestParam(name = "status", required = false, defaultValue = "0") Long id_state, Model model) {
+    public String showOrdersList(@RequestParam(value = "state", required = false) Long id_state, Model model) {
+        if (id_state == null) {
+            id_state = 0L;
+        }
         List<Order> orders = orderManager.getOrdersList(id_state);
+        System.out.println("Orders in controller : " + orders.size());
+
         model.addAttribute("orders", orders);
         return "orders-list";
     }

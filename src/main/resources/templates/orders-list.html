@@ -12,8 +12,8 @@
   <section layout:fragment="content">
     <h1>Orders List</h1>
 
-    <!-- Create order -->
-    <a th:href="@{/orders/create}">Create Order</a>
+    <!-- new order -->
+    <a th:href="@{/orders/create}" class="create-order-btn">Create Order</a>
 
     <table>
       <thead>
@@ -28,9 +28,9 @@
       <tbody>
       <tr th:each="order : ${orders}">
         <td th:text="${order.id_order}"></td>
-        <td th:text="${order.client.firstName + ' ' + order.client.lastName}"></td>
+        <td th:text="${order.client.firstName} + ' ' + ${order.client.lastName}"></td>
         <td th:text="${#dates.format(order.delivery_datetime, 'dd/MM/yyyy HH:mm')}"></td>
-        <td th:text="${order.id_state == 1 ? 'Pending' : order.id_state == 2 ? 'Ordered' : 'Delivered'}"></td>
+<!--        <td th:text="${order.id_state == 1 ? 'Pending' : (order.id_state == 2 ? 'Ordered' : 'Completed')}"></td>-->
         <td>
           <a th:href="@{/orders/edit/{id_order}(id_order=${order.id_order})}">Modify</a>
         </td>
