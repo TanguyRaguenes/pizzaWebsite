@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des Produits</title>
+    <title>Our Menu</title>
     <link rel="stylesheet" href="/css/pizza-theme.css">
 </head>
 <body>
 <main>
-    <h1>List of Products</h1>
+
     <section layout:fragment="content">
         <table>
             <thead>
@@ -27,14 +27,14 @@
                 <td th:text="${product.id_product}"></td>
                 <td th:text="${product.name}"></td>
                 <td th:text="${product.description}"></td>
-                <td th:text="${product.price} +' €'"></td>
+                <td th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
 
                 <td>
                     <form th:action="@{/cart/add/{id_product}(id_product=${product.getId_product()})}" method="post">
 
                         <input type="hidden" name="id_product" th:value="${product.id_product}">
 
-                             <input type="number" name="quantity" min="1" value="1">
+                        <input type="number" name="quantity" min="1" value="1">
 
                         <select name="size">
                             <option value="1">Small</option>
@@ -57,8 +57,9 @@
             </tr>
             </tbody>
         </table>
-
-        <a th:href="@{/cart}">Show Cart</a>
+        <div class="checkout-section">
+            <a class="checkout-btn" th:href="@{/cart}">Show Cart</a>
+        </div>
     </section>
 </main>
 </body>
