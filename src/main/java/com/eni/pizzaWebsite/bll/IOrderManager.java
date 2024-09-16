@@ -1,5 +1,6 @@
 package com.eni.pizzaWebsite.bll;
 
+import com.eni.pizzaWebsite.bo.Order;
 import com.eni.pizzaWebsite.bo.OrderDetail;
 import com.eni.pizzaWebsite.bo.Product;
 import com.eni.pizzaWebsite.bo.ProductSize;
@@ -16,4 +17,5 @@ public interface IOrderManager {
     public abstract void checkout(Long id_client, LocalDateTime delivery_datetime);
     public abstract void clearOrderForClient(Long id_client);
     public abstract List<ProductSize> getPriceByProductSize();
+    public abstract List<Order> getOrdersList(Long id_state);
 }

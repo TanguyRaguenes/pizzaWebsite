@@ -1,9 +1,6 @@
 package com.eni.pizzaWebsite.dao;
 
-import com.eni.pizzaWebsite.bo.Order;
-import com.eni.pizzaWebsite.bo.OrderDetail;
-import com.eni.pizzaWebsite.bo.Product;
-import com.eni.pizzaWebsite.bo.ProductSize;
+import com.eni.pizzaWebsite.bo.*;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -121,6 +118,38 @@ public class DAOOrderMySQL implements IDAOOrder {
 
     }
 
+    static final RowMapper<Order> ORDER_ROW_MAPPER = new RowMapper<Order>() {
+
+        public Order mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Order order = new Order();
+            order.setId_order(rs.getLong("id_order"));
+            order.setClient(new Client(rs.getLong("id_client"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("street"), rs.getString("postalCode"), rs.getString("city")));
+            order.setUser(new User(rs.getLong("id_user"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("email"),rs.getString("password")));
+            order.setId_state(rs.getLong("id_state"));
+            order.setIs_in_delivery(rs.getInt("is_in_delivery") == 1 ? true : false);
+            order.setDelivery_datetime(rs.getTimestamp("delivery_datetime").toLocalDateTime());
+            order.setTotal_price(rs.getFloat("total_price"));
+            order.setIs_paid(rs.getInt("is_paid") == 1 ? true : false);
+            return order;
+        }
+    };
+
+
+
+    @Override
+    public List<Order> getOrdersList(Long id_state) {
+        String sql="";
+        List<Order> ordersList =null;
+        if(id_state==0){
+            sql = "SELECT * FROM `order` as o INNER JOIN client as c ON o.id_client = c.id_client INNER JOIN state as s ON o.id_state = s.id_state INNER JOIN user as u ON o.id_user=u.id_user";
+            ordersList = jdbcTemplate.query(sql, ORDER_ROW_MAPPER);
+        }else{
+            sql="SELECT * FROM `order` as o INNER JOIN client as c ON o.id_client = c.id_client INNER JOIN state as s ON o.id_state = s.id_state INNER JOIN user as u ON o.id_user=u.id_user WHERE o.id_state=?";
+            ordersList = jdbcTemplate.query(sql, ORDER_ROW_MAPPER, id_state);
+        }
+
+        return ordersList;
+    }
 
     static final RowMapper<OrderDetail> ORDERDETAIL_ROW_MAPPER = new RowMapper<OrderDetail>() {
 

@@ -1,7 +1,6 @@
 package com.eni.pizzaWebsite.dao;
 
 import com.eni.pizzaWebsite.bo.Client;
-import com.eni.pizzaWebsite.bo.Product;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -13,6 +12,11 @@ public class DAOClient implements IDAOClient{
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    public DAOClient(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+    }
 
     @Override
     public List<Client> getClientsList() {

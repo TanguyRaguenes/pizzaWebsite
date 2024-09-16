@@ -20,4 +20,5 @@ public interface IDAOOrder {
 
     public abstract void clearOrderForClient(Long id_client);
     public abstract List<ProductSize> getPriceByProductSize();
+    public abstract List<Order> getOrdersList(Long id_state);
 }

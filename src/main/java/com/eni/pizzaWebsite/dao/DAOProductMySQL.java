@@ -70,7 +70,7 @@ public class DAOProductMySQL implements  IDAOProduct{
     }
 
     @Override
-    public Product getProductById(Long id_product ) {
+    public Product getProductById(Long id_product) {
 
         List<Product> productList = jdbcTemplate.query("SELECT * FROM product WHERE id_product=?", new BeanPropertyRowMapper<Product>(Product.class),id_product );
         return productList.get(0);

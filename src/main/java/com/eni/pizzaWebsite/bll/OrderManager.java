@@ -1,5 +1,6 @@
 package com.eni.pizzaWebsite.bll;
 
+import com.eni.pizzaWebsite.bo.Order;
 import com.eni.pizzaWebsite.bo.OrderDetail;
 import com.eni.pizzaWebsite.bo.Product;
 import com.eni.pizzaWebsite.bo.ProductSize;
@@ -52,6 +53,11 @@ public class OrderManager implements IOrderManager{
     @Override
     public List<ProductSize> getPriceByProductSize() {
         return orderDao.getPriceByProductSize();
+    }
+
+    @Override
+    public List<Order> getOrdersList(Long id_state) {
+        return orderDao.getOrdersList(id_state);
     }
 
 
