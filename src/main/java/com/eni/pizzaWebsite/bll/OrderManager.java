@@ -41,8 +41,8 @@ public class OrderManager implements IOrderManager{
     }
 
     @Override
-    public void checkout(Long id_client, LocalDateTime delivery_datetime) {
-        orderDao.checkout(id_client, delivery_datetime);
+    public void checkout(Long id_client, Long id_order, LocalDateTime delivery_datetime) {
+        orderDao.checkout(id_client, id_order, delivery_datetime);
     }
 
     @Override
@@ -60,5 +60,6 @@ public class OrderManager implements IOrderManager{
         return orderDao.getOrdersList(id_state);
     }
 
+    }
 
-}
+

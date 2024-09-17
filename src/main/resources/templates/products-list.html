@@ -30,12 +30,9 @@
                 <td th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
 
                 <td>
-                    <form th:action="@{/cart/add/{id_product}(id_product=${product.getId_product()})}" method="post">
-
+                    <form th:action="@{/cart/add/{id_product}(id_product=${product.id_product})}" method="post">
                         <input type="hidden" name="id_product" th:value="${product.id_product}">
-
                         <input type="number" name="quantity" min="1" value="1">
-
                         <select name="size">
                             <option value="1">Small</option>
                             <option value="2">Medium</option>
@@ -57,6 +54,7 @@
             </tr>
             </tbody>
         </table>
+
         <div class="checkout-section">
             <a class="checkout-btn" th:href="@{/cart}">Show Cart</a>
         </div>

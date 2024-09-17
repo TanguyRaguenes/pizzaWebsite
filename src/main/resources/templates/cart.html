@@ -72,11 +72,11 @@
                     <label for="deliveryDatetime">Choose delivery date and time:</label>
                     <input type="datetime-local" id="deliveryDatetime" name="deliveryDatetime" required
                            min="[[${#dates.format(#dates.createNow(), 'yyyy-MM-dd\'T\'HH:mm')}]]">
-                    <!--                    gère la date minimum mais n'est pas sécurisé, il faut aussi (voir exclusivement) le faire coté serveur-->
                     <button type="submit" class="checkout-btn">Checkout</button>
                 </form>
                 <a class="clear-btn" th:href="@{/cart/clear}">Clear Order</a>
             </div>
+
         </div>
 
         <a th:href="@{/products-list}">Keep Shopping</a>

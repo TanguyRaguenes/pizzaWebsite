@@ -1,43 +1,73 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{base}">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{base}">
 <head>
-  <meta charset="UTF-8">
-  <title>Orders List</title>
-  <link rel="stylesheet" href="/css/pizza-theme.css">
+    <meta charset="UTF-8">
+    <title>Orders List</title>
+    <link rel="stylesheet" href="/css/pizza-theme.css">
 </head>
 <body>
 <main>
-  <section layout:fragment="content">
-    <h1>Orders List</h1>
+    <section layout:fragment="content">
+        <h1>Orders List</h1>
 
-    <!-- new order -->
-    <a th:href="@{/orders/create}" class="create-order-btn">Create Order</a>
+        <div>
+            <form th:action="@{/orders-list/create}" method="post">
+                <label for="client">Select Client for New Order:</label>
+                <select id="client" name="id_client" required>
+                    <option value="" disabled selected>Select a client</option>
+                    <option th:each="client : ${clients}" th:value="${client.id_client}"
+                            th:text="${client.firstName} + ' ' + ${client.lastName}">
+                    </option>
+                </select>
+                <button type="submit">Create Order</button>
+            </form>
+        </div>
 
-    <table>
-      <thead>
-      <tr>
-        <th>Order ID</th>
-        <th>Client</th>
-        <th>Delivery Date</th>
-        <th>Status</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="order : ${orders}">
-        <td th:text="${order.id_order}"></td>
-        <td th:text="${order.client.firstName} + ' ' + ${order.client.lastName}"></td>
-        <td th:text="${#dates.format(order.delivery_datetime, 'dd/MM/yyyy HH:mm')}"></td>
-<!--        <td th:text="${order.id_state == 1 ? 'Pending' : (order.id_state == 2 ? 'Ordered' : 'Completed')}"></td>-->
-        <td>
-          <a th:href="@{/orders/edit/{id_order}(id_order=${order.id_order})}">Modify</a>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </section>
+        <a th:href="@{/client-form}" class="btn btn-primary">Add New Client</a>
+
+        <div th:if="${#lists.isEmpty(orders)}">
+            <p>No orders available</p>
+        </div>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Client</th>
+                <th>Delivery Date</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.id_order}"></td>
+                <td th:text="${order.client.firstName} + ' ' + ${order.client.lastName}"></td>
+                <td th:text="${#temporals.format(order.delivery_datetime, 'dd/MM/yyyy HH:mm')}"></td>
+                <td>
+                    <span th:switch="${order.id_state}">
+                        <span th:case="1">Cart</span>
+                        <span th:case="2">Confirmed</span>
+                        <span th:case="3">In Preparation</span>
+                        <span th:case="4">Ready</span>
+                        <span th:case="5">In Delivery</span>
+                        <span th:case="6">Delivered</span>
+                        <span th:case="7">Cancelled</span>
+                        <span th:case="*">Unknown</span>
+                    </span>
+                </td>
+                <td>
+                    <a th:href="@{/orders/edit/{id_order}(id_order=${order.id_order})}">Modify</a>
+
+                    <!-- Bouton Checkout si la commande est dans l'état "Cart" -->
+                    <form th:if="${order.id_state == 1}" th:action="@{/orders/checkout/{id_order}(id_order=${order.id_order})}" method="post">
+                        <button type="submit">Checkout</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </section>
 </main>
 </body>
 </html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head>
+  <meta charset="UTF-8">
+  <title>Modification de la commande</title>
+  <link rel="stylesheet" href="/css/pizza-theme.css">
+</head>
+<body>
+<main>
+  <section layout:fragment="content">
+    <h1>Modification de la commande</h1>
+
+    <div th:if="${order != null}">
+      <p>ID de la commande : <span th:text="${order.id_order}"></span></p>
+      <p>Client : <span th:text="${order.client.firstName} + ' ' + ${order.client.lastName}"></span></p>
+    </div>
+
+    <table>
+      <thead>
+      <tr>
+        <th>Produit</th>
+        <th>Quantité & Taille</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="product : ${products}">
+        <td th:text="${product.name}"></td>
+        <td>
+          <form th:action="@{/cart/add/{id_product}(id_product=${product.id_product})}" method="post">
+            <input type="number" name="quantity" min="1" value="1" required>
+            <select name="size">
+              <option value="1">Small</option>
+              <option value="2">Medium</option>
+              <option value="3">Large</option>
+            </select>
+            <input type="hidden" name="id_order" th:value="${order.id_order}">
+            <button type="submit">Ajouter à la commande</button>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <div>
+      <a th:href="@{/orders-list}">Retour à la liste des commandes</a>
+    </div>
+  </section>
+</main>
+</body>
+</html>
