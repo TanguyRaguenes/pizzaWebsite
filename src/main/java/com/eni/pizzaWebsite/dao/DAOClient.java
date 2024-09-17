@@ -34,7 +34,7 @@ public class DAOClient implements IDAOClient{
     public void addClientToList(Client client) {
 
         if(client.getId_client()!=null && getClientById(client.getId_client())!=null){
-            jdbcTemplate.update("update client set firstName=?,lastName=?,street=?,postalCode=? where city=?",client.getFirstName(),client.getLastName(),client.getStreet(),client.getPostalCode(),client.getCity() );
+            jdbcTemplate.update("update client set firstName=?,lastName=?,street=?,postalCode=?,city=? WHERE id_client=?",client.getFirstName(),client.getLastName(),client.getStreet(),client.getPostalCode(),client.getCity(),client.getId_client() );
             return;
         }
 
@@ -65,8 +65,8 @@ public class DAOClient implements IDAOClient{
     @Override
     public Client getClientById(Long id_client) {
 
-        List<Client> ClientsList = jdbcTemplate.query("SELECT * FROM client WHERE id_client=?", new BeanPropertyRowMapper<Client>(Client.class),id_client );
-        return ClientsList.get(0);
+        List<Client> clientsList = jdbcTemplate.query("SELECT * FROM client WHERE id_client=?", new BeanPropertyRowMapper<Client>(Client.class),id_client );
+        return clientsList.get(0);
 
     }
 }
