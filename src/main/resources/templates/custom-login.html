@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../css/output.css">
+    <link rel="icon" th:href="@{/images/favicon3.png}">
     <title>Login</title>
 </head>
 <body class="bg-orange-100">
@@ -89,14 +90,14 @@
                 </div>
 
                 <div class="flex items-center justify-between">
-                    <p class="text-sm text-gray-500">
-                        No account?
-                        <a class="underline" href="#">Sign up</a>
-                    </p>
+<!--                    <p class="text-sm text-gray-500">-->
+<!--                        No account?-->
+<!--                        <a class="underline" th:href="@{authForm}">Sign up</a>-->
+<!--                    </p>-->
 
                     <button
                             type="submit"
-                            class="inline-block rounded-lg bg-orange-400 px-5 py-3 text-sm font-medium text-white"
+                            class="inline-block rounded-lg border border-blue-300 bg-orange-400 px-5 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
                     >
                         Sign in
                     </button>
@@ -112,8 +113,6 @@
             />
         </div>
     </section>
-
-    <div th:if="${param.error}">Votre login ou mot de passe est incorrect</div>
 
 </body>
 

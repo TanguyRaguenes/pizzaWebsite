@@ -12,6 +12,17 @@ public class User {
         super();
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id_user=" + id_user +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     public User(Long id_user, String firstName, String lastName, String email, String password) {
         this.id_user = id_user;
         this.firstName = firstName;

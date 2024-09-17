@@ -39,9 +39,13 @@ public class securityConfig {
 
                                 .requestMatchers("/login").permitAll()
                                 .requestMatchers("/customLogin").permitAll()
+                                .requestMatchers("/authForm").permitAll()
                                 .requestMatchers("/logout").authenticated()
+                                .requestMatchers("/user").authenticated()
                                 .requestMatchers("/").authenticated()
                                 //.requestMatchers("/").hasAnyAuthority("ROLE_MANAGER", "ROLE_PIZZAMAKER", "ROLE_DELIVERYPERSON")
+                                .requestMatchers("/orders/checkout/{id_order}").hasAnyAuthority("ROLE_MANAGER")
+
 
 
                                 .requestMatchers("/products-list").hasAnyAuthority("ROLE_MANAGER")

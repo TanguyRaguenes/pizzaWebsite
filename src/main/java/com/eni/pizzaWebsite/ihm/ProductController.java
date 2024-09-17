@@ -4,6 +4,8 @@ import com.eni.pizzaWebsite.bll.IProductManager;
 import com.eni.pizzaWebsite.bll.ProductManager;
 import com.eni.pizzaWebsite.bo.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +22,6 @@ public class ProductController {
 
     @Autowired
     private IProductManager productManager;
-
-    @GetMapping("/")
-    public String home() {
-        return "index";
-    }
 
     @GetMapping("/products-list")
     public String productsList(Model model) {

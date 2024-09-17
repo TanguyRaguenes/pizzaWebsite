@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -49,7 +50,7 @@ public class DAOUser implements IDAOUser{
         mapSqlParameterSourceUser.addValue("firstName", user.getFirstName());
         mapSqlParameterSourceUser.addValue("lastName", user.getLastName());
         mapSqlParameterSourceUser.addValue("email", user.getEmail());
-        mapSqlParameterSourceUser.addValue("password", user.getPassword());
+        mapSqlParameterSourceUser.addValue("password", PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(user.getPassword()));
 
         namedParameterJdbcTemplate.update(sql,mapSqlParameterSourceUser);
 
