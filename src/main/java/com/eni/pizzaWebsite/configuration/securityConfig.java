@@ -37,9 +37,13 @@ public class securityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
 
-                                .requestMatchers("/").hasAnyAuthority("ROLE_MANAGER", "ROLE_PIZZAMAKER", "ROLE_DELIVERYPERSON")
                                 .requestMatchers("/login").permitAll()
+                                .requestMatchers("/customLogin").permitAll()
                                 .requestMatchers("/logout").authenticated()
+                                .requestMatchers("/").authenticated()
+                                //.requestMatchers("/").hasAnyAuthority("ROLE_MANAGER", "ROLE_PIZZAMAKER", "ROLE_DELIVERYPERSON")
+
+
                                 .requestMatchers("/products-list").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/cart/add/{id}").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/cart/remove/{id}").hasAnyAuthority("ROLE_MANAGER")
@@ -55,11 +59,10 @@ public class securityConfig {
                                 .requestMatchers(HttpMethod.POST, "/client-form").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/clients-list").hasAnyAuthority("ROLE_MANAGER")
 
+                                .requestMatchers("/orders-list/create").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers("/orders/edit/{id_order}").hasAnyAuthority("ROLE_MANAGER")
 
 
-
-
-                                .requestMatchers("/customLogin").permitAll()
 
 
                                 .requestMatchers("/vendor/**").permitAll()
@@ -76,24 +79,25 @@ public class securityConfig {
                 );
 
         //Pour utiliser le fonctionnement de login de Spring Security par défaut
-        http.formLogin(Customizer.withDefaults());
+
+        //http.formLogin(Customizer.withDefaults());
+
 
         //Route personnalisée définie dans notre Controller
-//        http.formLogin(form ->
-//                form.loginPage("/login").defaultSuccessUrl("/")
-//        );
+
+        http.formLogin(form ->
+                form.loginPage("/customLogin").defaultSuccessUrl("/")
+        );
 
 
-//        HeaderWriterLogoutHandler clearSiteData = new HeaderWriterLogoutHandler(new ClearSiteDataHeaderWriter(ClearSiteDataHeaderWriter.Directive.ALL));
-//
-//        http.logout((logout) -> logout
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
-//                //ici on passe juste un paramètre d'url indiqué par le ? qui peut s'appeler n'importe comment
-//                //on va juste s'en servir pour gérer des conditions dans notre page de login
-//                .logoutSuccessUrl("/login?logout")
-//                .addLogoutHandler(clearSiteData)
-//
-//        );
+        HeaderWriterLogoutHandler clearSiteData = new HeaderWriterLogoutHandler(new ClearSiteDataHeaderWriter(ClearSiteDataHeaderWriter.Directive.ALL));
+
+        http.logout((logout) -> logout
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+                .logoutSuccessUrl("/customLogin")
+                .addLogoutHandler(clearSiteData)
+
+        );
 
 
         // ...
