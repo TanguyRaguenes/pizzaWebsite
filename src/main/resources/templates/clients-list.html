@@ -15,37 +15,56 @@
     <!-- nouveau client -->
     <a th:href="@{/client-form}">Add New Client</a>
 
+  <div class="w-full pt-20">
+    <ul class="w-full divide-y divide-gray-200 dark:divide-gray-700">
+      <li th:each="client : ${clients}" class=" w-full pb-3 sm:pb-4">
+        <div class="items-center space-x-4 rtl:space-x-reverse">
+          <div class="inline-flex flex-shrink-0">
+            <img class="w-8 h-8 rounded-full" src="/images/user.jpg" alt="user image">
+          </div>
+          <div class="inline-flex items-center text-base text-gray-900 dark:text-white" th:text="${client.id_client}">
+          </div>
+          <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white" th:text="${client.firstName} + '_' +${client.lastName}">
+          </div>
+          <div class="inline-flex items-center text-base text-gray-900 dark:text-white" th:text="${client.street} +'_'+ ${client.postalCode} +'_'+ ${client.city}">
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
 
-    <table>
-      <thead>
-      <tr>
-        <th>Client ID</th>
-        <th>First Name</th>
-        <th>Last Name</th>
-        <th>Street</th>
-        <th>Postal Code</th>
-        <th>City</th>
-        <th>Actions</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="client : ${clients}">
-        <td th:text="${client.id_client}"></td>
-        <td th:text="${client.firstName}"></td>
-        <td th:text="${client.lastName}"></td>
-        <td th:text="${client.street}"></td>
-        <td th:text="${client.postalCode}"></td>
-        <td th:text="${client.city}"></td>
-        <td>
 
-<!--          &lt;!&ndash;  éditer client WIP &ndash;&gt;-->
-<!--          <a th:href="@{/client/edit/{id_client}(id_client=${client.id_client})}">Edit</a>-->
-<!--          &lt;!&ndash; supprimer client WIP&ndash;&gt;-->
-<!--          <a th:href="@{/client/delete/{id_client}(id_client=${client.id_client})}">Delete</a>-->
-        </td>
-      </tr>
-      </tbody>
-    </table>
+
+<!--    <table>-->
+<!--      <thead>-->
+<!--      <tr>-->
+<!--        <th>Client ID</th>-->
+<!--        <th>First Name</th>-->
+<!--        <th>Last Name</th>-->
+<!--        <th>Street</th>-->
+<!--        <th>Postal Code</th>-->
+<!--        <th>City</th>-->
+<!--        <th>Actions</th>-->
+<!--      </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      <tr th:each="client : ${clients}">-->
+<!--        <td th:text="${client.id_client}"></td>-->
+<!--        <td th:text="${client.firstName}"></td>-->
+<!--        <td th:text="${client.lastName}"></td>-->
+<!--        <td th:text="${client.street}"></td>-->
+<!--        <td th:text="${client.postalCode}"></td>-->
+<!--        <td th:text="${client.city}"></td>-->
+<!--        <td>-->
+
+<!--&lt;!&ndash;          &lt;!&ndash;  éditer client WIP &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          <a th:href="@{/client/edit/{id_client}(id_client=${client.id_client})}">Edit</a>&ndash;&gt;-->
+<!--&lt;!&ndash;          &lt;!&ndash; supprimer client WIP&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          <a th:href="@{/client/delete/{id_client}(id_client=${client.id_client})}">Delete</a>&ndash;&gt;-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--      </tbody>-->
+<!--    </table>-->
   </section>
 </main>
 </body>
