@@ -26,8 +26,8 @@ public class UserManager implements IUserManager{
     }
 
     @Override
-    public void addUserToList(User user, String user_role) {
-        userDao.addUserToList(user, user_role);
+    public void addUserToList(User user) {
+        userDao.addUserToList(user);
     }
 
     @Override

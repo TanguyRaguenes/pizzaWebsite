@@ -7,28 +7,19 @@ public class User {
     private String lastName;
     private String email;
     private String password;
+    private Long id_role;
 
     public User(){
         super();
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id_user=" + id_user +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
-
-    public User(Long id_user, String firstName, String lastName, String email, String password) {
+    public User(Long id_user, String firstName, String lastName, String email, String password, Long id_role) {
         this.id_user = id_user;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.id_role = id_role;
     }
 
     public Long getId_user() {
@@ -70,4 +61,25 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Long getId_role() {
+        return id_role;
+    }
+
+    public void setId_role(Long id_role) {
+        this.id_role = id_role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id_user=" + id_user +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", id_role=" + id_role +
+                '}';
+    }
+
 }

@@ -52,9 +52,8 @@ public class AuthController {
             System.out.println("Erreur de contrôle surface");
         }
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String userRole = auth.getAuthorities().toString();
-        userManager.addUserToList(user,userRole);
+
+        userManager.addUserToList(user);
 
         return "redirect:/authForm";
 
