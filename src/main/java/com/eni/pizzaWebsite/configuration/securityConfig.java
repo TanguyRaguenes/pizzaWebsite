@@ -27,7 +27,7 @@ public class securityConfig {
 
         jdbcUserDetailsManager.setUsersByUsernameQuery("SELECT email, password,1 FROM user WHERE email=?");
 
-        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT email, user_role FROM user_role WHERE email=?");
+        jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("SELECT u.email, ur.user_role FROM user as u INNER JOIN user_role as ur ON u.id_role=ur.id_role WHERE u.email=?");
 
         return jdbcUserDetailsManager;
     }

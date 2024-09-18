@@ -32,34 +32,26 @@ public class DAOUser implements IDAOUser{
 
 
     @Override
-    public void addUserToList(User user, String user_role) {
+    public void addUserToList(User user) {
 
         if(user.getId_user()!=null && getUserById(user.getId_user())!=null){
 
-            jdbcTemplate.update("update user set firstName=?,lastName=?,email=?,password=? where user_id=?",user.getFirstName(),user.getLastName(),user.getEmail(),user.getPassword(),user.getId_user() );
-
-            jdbcTemplate.update("update user_role set email=?,user_role=? where user_id=?",user.getEmail(),user_role,user.getId_user() );
+            jdbcTemplate.update("update user set firstName=?,lastName=?,email=?,password=?,id_role=? where user_id=?",user.getFirstName(),user.getLastName(),user.getEmail(),user.getPassword(),user.getId_role(),user.getId_user() );
 
             return;
         }
 
         String sql="";
 
-        sql="INSERT INTO user(firstName,lastName,email,password) VALUES (:firstName, :lastName, :email, :password)";
+        sql="INSERT INTO user(firstName,lastName,email,password,id_role) VALUES (:firstName, :lastName, :email, :password, :id_role)";
         MapSqlParameterSource mapSqlParameterSourceUser = new MapSqlParameterSource();
         mapSqlParameterSourceUser.addValue("firstName", user.getFirstName());
         mapSqlParameterSourceUser.addValue("lastName", user.getLastName());
         mapSqlParameterSourceUser.addValue("email", user.getEmail());
         mapSqlParameterSourceUser.addValue("password", PasswordEncoderFactories.createDelegatingPasswordEncoder().encode(user.getPassword()));
+        mapSqlParameterSourceUser.addValue("id_role", user.getId_role());
 
         namedParameterJdbcTemplate.update(sql,mapSqlParameterSourceUser);
-
-        sql="INSERT INTO user_role(email,user_role) VALUES (:email, :user_role)";
-        MapSqlParameterSource mapSqlParameterSourceUserRole = new MapSqlParameterSource();
-        mapSqlParameterSourceUserRole.addValue("email", user.getEmail());
-        mapSqlParameterSourceUserRole.addValue("user_role", user_role);
-
-        namedParameterJdbcTemplate.update(sql,mapSqlParameterSourceUserRole);
 
 
     }

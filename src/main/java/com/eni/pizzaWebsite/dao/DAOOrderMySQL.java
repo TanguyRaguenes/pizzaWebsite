@@ -128,7 +128,7 @@ public class DAOOrderMySQL implements IDAOOrder {
             Order order = new Order();
             order.setId_order(rs.getLong("id_order"));
             order.setClient(new Client(rs.getLong("id_client"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("street"), rs.getString("postalCode"), rs.getString("city")));
-            order.setUser(new User(rs.getLong("id_user"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("email"), rs.getString("password")));
+            order.setUser(new User(rs.getLong("id_user"), rs.getString("firstName"), rs.getString("lastName"), rs.getString("email"), rs.getString("password"), rs.getLong("id_role")));
             order.setId_state(rs.getLong("id_state"));
             order.setIs_in_delivery(rs.getInt("is_in_delivery") == 1 ? true : false);
             order.setDelivery_datetime(rs.getTimestamp("delivery_datetime").toLocalDateTime());
