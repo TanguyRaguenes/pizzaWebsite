@@ -1,51 +1,123 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{base}">
 <head>
   <meta charset="UTF-8">
-  <title>Modification de la commande</title>
-  <link rel="stylesheet" href="/css/pizza-theme.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Order</title>
 </head>
 <body>
 <main>
   <section layout:fragment="content">
-    <h1>Modification de la commande</h1>
+    <h1>Your Order</h1>
 
-    <div th:if="${order != null}">
-      <p>ID de la commande : <span th:text="${order.id_order}"></span></p>
-      <p>Client : <span th:text="${order.client.firstName} + ' ' + ${order.client.lastName}"></span></p>
+    <!-- Si la commande est vide -->
+    <div th:if="${#lists.isEmpty(order.orderDetails)}">
+      <p>Your order is empty.</p>
     </div>
 
+    <!-- Sinon -->
+    <div th:if="${!#lists.isEmpty(order.orderDetails)}">
+      <table>
+        <thead>
+        <tr>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Quantity</th>
+          <th>Size</th>
+          <th>Unit Price</th>
+          <th>Total Price</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${order.orderDetails}">
+          <td th:text="${item.product.name}"></td>
+          <td th:text="${item.product.description}"></td>
+          <td>
+            <!-- form modifier la qté -->
+            <form th:action="@{/cart/add/{id_product}(id_product=${item.product.id_product})}"
+                  method="post">
+              <input type="number" name="quantity" min="1" th:value="${item.quantity}">
+              <input type="hidden" name="id_product" th:value="${item.product.id_product}">
+              <input type="hidden" name="size" th:value="${item.size}">
+              <input type="hidden" name="id_order" th:value="${order.id_order}">
+              <button type="submit">Update Quantity</button>
+            </form>
+          </td>
+          <td>
+                          <span th:switch="${item.size}">
+                            <span th:case="'1'">Small</span>
+                            <span th:case="'2'">Medium</span>
+                            <span th:case="'3'">Large</span>
+                          </span>
+            <input type="hidden" name="size" th:value="${item.size}">
+          </td>
+          <td th:text="${#numbers.formatDecimal(item.product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
+          <td th:text="${#numbers.formatDecimal(item.quantity * item.product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
+          <td>
+            <form th:action="@{/cart/remove/{id_product}(id_product=${item.product.id_product})}" method="post">
+              <input type="hidden" name="size" th:value="${item.size}">
+              <input type="hidden" name="id_order" th:value="${order.id_order}">
+              <button type="submit">Remove</button>
+            </form>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <p th:text="'Total : '+${order.total_price} + ' €'"></p>
+
+      <div class="checkout-section">
+        <form th:action="@{/cart/checkout}" method="post">
+          <label for="deliveryDatetime">Choose delivery date and time:</label>
+          <input type="datetime-local" id="deliveryDatetime" name="deliveryDatetime" required
+                 min="[[${#dates.format(#dates.createNow(), 'yyyy-MM-dd\'T\'HH:mm')}]]">
+          <button type="submit" class="checkout-btn">Checkout</button>
+        </form>
+        <a class="clear-btn" th:href="@{/cart/clear}">Clear Order</a>
+      </div>
+    </div>
+
+    <h2>Add more products:</h2>
     <table>
       <thead>
       <tr>
-        <th>Produit</th>
-        <th>Quantité & Taille</th>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity & Size</th>
         <th>Action</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="product : ${products}">
+        <td th:text="${product.id_product}"></td>
         <td th:text="${product.name}"></td>
+        <td th:text="${product.description}"></td>
+        <td th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
         <td>
           <form th:action="@{/cart/add/{id_product}(id_product=${product.id_product})}" method="post">
-            <input type="number" name="quantity" min="1" value="1" required>
+            <input type="hidden" name="id_product" th:value="${product.id_product}">
+            <input type="number" name="quantity" min="1" value="1">
             <select name="size">
               <option value="1">Small</option>
               <option value="2">Medium</option>
               <option value="3">Large</option>
             </select>
             <input type="hidden" name="id_order" th:value="${order.id_order}">
-            <button type="submit">Ajouter à la commande</button>
+            <button type="submit">Add to order</button>
           </form>
+        </td>
+        <td>
+          <a th:href="@{/product-form/{id}(id=${product.id_product})}">Modify</a>
         </td>
       </tr>
       </tbody>
     </table>
 
     <div>
-      <a th:href="@{/orders-list}">Retour à la liste des commandes</a>
+      <a th:href="@{/orders-list}">Back to Orders List</a>
     </div>
   </section>
 </main>

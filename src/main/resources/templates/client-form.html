@@ -12,7 +12,7 @@
   <section layout:fragment="content">
     <form th:object="${client}" method="post" th:action="@{/client-form}">
 
-      <input th:field="*{id_client}">
+      <input th:field="*{id_client}" type="hidden">
 
       <div>
         <label for="firstName">First Name:</label>

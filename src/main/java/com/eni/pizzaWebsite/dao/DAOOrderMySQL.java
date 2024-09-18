@@ -248,5 +248,25 @@ public class DAOOrderMySQL implements IDAOOrder {
         return productSizes;
     }
 
+    @Override
+    public void clearOrderByIdOrder(Long id_order) {
+        String sql = "DELETE FROM order_details WHERE id_order=?";
+        jdbcTemplate.update(sql, id_order);
+
+        sql = "DELETE FROM `order` WHERE id_order=?";
+        jdbcTemplate.update(sql, id_order);
+    }
+
+    @Override
+    public void updateOrderState(Long id_order, Long id_state) {
+        String sql = "UPDATE `order` SET id_state=? WHERE id_order=?";
+        jdbcTemplate.update(sql, id_state, id_order);
+    }
+    @Override
+    public List<State> getStatesList() {
+        String sql = "SELECT * FROM state";
+        List<State> states = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(State.class));
+        return states;
+    }
 
 }

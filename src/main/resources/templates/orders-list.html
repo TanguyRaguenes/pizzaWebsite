@@ -23,7 +23,7 @@
             </form>
         </div>
 
-        <a th:href="@{/client-form}" class="btn btn-primary">Add New Client</a>
+        <a th:href="@{/client-form}">Add New Client</a>
 
         <div th:if="${#lists.isEmpty(orders)}">
             <p>No orders available</p>
@@ -56,12 +56,29 @@
                         <span th:case="*">Unknown</span>
                     </span>
                 </td>
+                <!--                update order state-->
+                <td>
+                <td>
+                    <form th:action="@{/orders-list/update-state/{id_order}(id_order=${order.id_order})}" method="post">
+                        <select name="id_state" id="id_state_select">
+                            <option th:each="state : ${states}" th:value="${state.id_state}" th:text="${state.name}" th:selected="${order.id_state == state.id_state}"></option>
+                        </select>
+                        <button type="submit">Update State</button>
+                    </form>
+                </td>
+
                 <td>
                     <a th:href="@{/orders/edit/{id_order}(id_order=${order.id_order})}">Modify</a>
 
-                    <!-- Bouton Checkout si la commande est dans l'état "Cart" -->
-                    <form th:if="${order.id_state == 1}" th:action="@{/orders/checkout/{id_order}(id_order=${order.id_order})}" method="post">
+                    <!-- Checkout si la commande est dans l'état "Cart" -->
+                    <form th:if="${order.id_state == 1}"
+                          th:action="@{/orders/checkout/{id_order}(id_order=${order.id_order})}" method="post">
                         <button type="submit">Checkout</button>
+                    </form>
+
+                    <!-- Delete -->
+                    <form th:action="@{/orders-list/delete/{id_order}(id_order=${order.id_order})}" method="post">
+                        <button type="submit">Delete</button>
                     </form>
                 </td>
             </tr>

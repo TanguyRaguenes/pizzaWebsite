@@ -63,10 +63,11 @@ public class securityConfig {
                                 .requestMatchers(HttpMethod.POST, "/client-form").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/clients-list").hasAnyAuthority("ROLE_MANAGER")
 
+
                                 .requestMatchers("/orders-list/create").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/orders/edit/{id_order}").hasAnyAuthority("ROLE_MANAGER")
-
-
+                                .requestMatchers("/orders-list/delete/{id_order}").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers("/orders-list/update-state/{id_order}").hasAnyAuthority("ROLE_MANAGER")
 
 
                                 .requestMatchers("/vendor/**").permitAll()

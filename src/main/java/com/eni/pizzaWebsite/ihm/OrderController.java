@@ -3,10 +3,7 @@ package com.eni.pizzaWebsite.ihm;
 import com.eni.pizzaWebsite.bll.IClientManager;
 import com.eni.pizzaWebsite.bll.IOrderManager;
 import com.eni.pizzaWebsite.bll.IProductManager;
-import com.eni.pizzaWebsite.bo.Client;
-import com.eni.pizzaWebsite.bo.Order;
-import com.eni.pizzaWebsite.bo.OrderDetail;
-import com.eni.pizzaWebsite.bo.Product;
+import com.eni.pizzaWebsite.bo.*;
 import com.eni.pizzaWebsite.configuration.PriceConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -91,6 +88,8 @@ public class OrderController {
         }
     }
 
+
+
     @GetMapping("/cart/remove/{id}")
     public String removeProductFromCart(@PathVariable("id") Long id_product,
                                         @RequestParam("size") Long size) {
@@ -136,6 +135,9 @@ public class OrderController {
         List<Client> clients = clientManager.getClientsList();
         model.addAttribute("clients", clients);
 
+        List<State> states = orderManager.getStatesList();
+        model.addAttribute("states", states);
+
         return "orders-list";
     }
 
@@ -143,6 +145,16 @@ public class OrderController {
     public String createOrder(@RequestParam("id_client") Long id_client) {
         Long id_user = 1L;
         orderManager.addProductToOrder(null, id_client, 0L, 0L);
+        return "redirect:/orders-list";
+    }
+    @PostMapping("/orders-list/delete/{id_order}")
+    public String deleteOrder(@PathVariable("id_order") Long id_order) {
+        orderManager.clearOrderByIdOrder(id_order);
+        return "redirect:/orders-list";
+    }
+    @PostMapping("/orders-list/update-state/{id_order}")
+    public String updateOrderState(@PathVariable("id_order") Long id_order, @RequestParam("id_state") Long id_state) {
+        orderManager.updateOrderState(id_order, id_state);
         return "redirect:/orders-list";
     }
 }
