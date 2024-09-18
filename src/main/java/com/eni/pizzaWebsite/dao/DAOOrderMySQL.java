@@ -27,23 +27,25 @@ public class DAOOrderMySQL implements IDAOOrder {
 
     @Override
     public Order getOrder(Long id_client, Long id_order) {
-        String baseSql = "SELECT `order`.id_order, `order`.id_client, `order`.id_user, `order`.id_state, `order`.is_in_delivery, `order`.delivery_datetime, `order`.total_price, `order`.is_paid, " +
-                "client.firstName, client.lastName, client.street, client.postalCode, client.city, " +
-                "user.firstName AS userFirstName, user.lastName AS userLastName, user.email, user.password " +
-                "FROM `order` " +
-                "INNER JOIN client ON `order`.id_client = client.id_client " +
-                "INNER JOIN user ON `order`.id_user = user.id_user ";
+//        String baseSql = "SELECT `order`.id_order, `order`.id_client, `order`.id_user, `order`.id_state, `order`.is_in_delivery, `order`.delivery_datetime, `order`.total_price, `order`.is_paid, " +
+//                "client.firstName, client.lastName, client.street, client.postalCode, client.city, " +
+//                "user.firstName AS userFirstName, user.lastName AS userLastName, user.email, user.password " +
+//                "FROM `order` " +
+//                "INNER JOIN client ON `order`.id_client = client.id_client " +
+//                "INNER JOIN user ON `order`.id_user = user.id_user ";
+
+        String baseSql = "SELECT * FROM `order` INNER JOIN client ON `order`.id_client = client.id_client INNER JOIN user ON `order`.id_user = user.id_user ";
 
         String sql;
         List<Order> orderList;
 
         if (id_order != null) {
             sql = baseSql + "WHERE `order`.id_order = ?";
+            System.out.println(sql);
             orderList = jdbcTemplate.query(sql, ORDER_ROW_MAPPER, id_order);
-        }
-
-        else if (id_client != null) {
+        } else if (id_client != null) {
             sql = baseSql + "WHERE `order`.id_client = ? AND `order`.id_state = ?";
+            System.out.println(sql);
             orderList = jdbcTemplate.query(sql, ORDER_ROW_MAPPER, id_client, 1); // 1 pour l'état "Cart"
         } else {
             return null;
@@ -92,7 +94,7 @@ public class DAOOrderMySQL implements IDAOOrder {
             orderMapSqlParameterSource.addValue("is_paid", false);
 
             namedParameterJdbcTemplate.update(sql, orderMapSqlParameterSource);
-            order = getOrder(id_client, null);  // Récupérer la commande nouvellement créée.
+            order = getOrder(id_client, null);
         }
 
         // Si aucun produit n'est fourni : commande vide

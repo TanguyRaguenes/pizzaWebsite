@@ -57,11 +57,11 @@
                     </span>
                 </td>
                 <!--                update order state-->
-                <td>
+
                 <td>
                     <form th:action="@{/orders-list/update-state/{id_order}(id_order=${order.id_order})}" method="post">
                         <select name="id_state" id="id_state_select">
-                            <option th:each="state : ${states}" th:value="${state.id_state}" th:text="${state.name}" th:selected="${order.id_state == state.id_state}"></option>
+                            <option th:each="state : ${states}" th:value="${state.id_state}" th:text="${state.state}" th:selected="${order.id_state == state.id_state}"></option>
                         </select>
                         <button type="submit">Update State</button>
                     </form>

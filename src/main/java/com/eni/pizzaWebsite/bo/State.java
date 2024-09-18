@@ -2,23 +2,23 @@ package com.eni.pizzaWebsite.bo;
 
 public class State {
     private Long id_state;
-    private String name;
+    private String state;
 
     public State() {
         super();
     }
 
-    public State(Long id_state, String name) {
+    public State(Long id_state, String state) {
         this.id_state = id_state;
-        this.name = name;
+        this.state = state;
     }
 
     public Long getId_state() {
         return id_state;
     }
 
-    public String getName() {
-        return name;
+    public String getState() {
+        return state;
     }
 
 
@@ -26,7 +26,7 @@ public class State {
         this.id_state = id_state;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setState(String state) {
+        this.state = state;
     }
 }
