@@ -70,23 +70,36 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/orders/edit/{id_order}")
-    public String editOrder(@PathVariable("id_order") Long id_order, Model model) {
-        List<Order> orders = orderManager.getOrdersList(0L);
-        Order selectedOrder = orders.stream()
-                .filter(order -> order.getId_order().equals(id_order))
-                .findFirst()
-                .orElse(null);
+//    @GetMapping("/orders/edit/{id_order}")
+//    public String editOrder(@PathVariable("id_order") Long id_order, Model model) {
+//        List<Order> orders = orderManager.getOrdersList(0L);
+//        Order selectedOrder = orders.stream()
+//                .filter(order -> order.getId_order().equals(id_order))
+//                .findFirst()
+//                .orElse(null);
+//
+//        if (selectedOrder != null) {
+//            model.addAttribute("order", selectedOrder);
+//            List<Product> products = productManager.getProductsList();
+//            model.addAttribute("products", products);
+//            return "edit-order-products";
+//        } else {
+//            return "redirect:/orders-list";
+//        }
+//    }
+@GetMapping("/orders/edit/{id_order}")
+public String editOrder(@PathVariable("id_order") Long id_client, Long id_order, Model model) {
+    Order selectedOrder = orderManager.getOrder(id_client, id_order);
 
-        if (selectedOrder != null) {
-            model.addAttribute("order", selectedOrder);
-            List<Product> products = productManager.getProductsList();
-            model.addAttribute("products", products);
-            return "edit-order-products";
-        } else {
-            return "redirect:/orders-list";
-        }
+    if (selectedOrder != null) {
+        model.addAttribute("order", selectedOrder);
+        List<Product> products = productManager.getProductsList();
+        model.addAttribute("products", products);
+        return "edit-order-products";
+    } else {
+        return "redirect:/orders-list";
     }
+}
 
 
 
