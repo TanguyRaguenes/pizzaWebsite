@@ -23,6 +23,16 @@ public class OrderManager implements IOrderManager {
     }
 
     @Override
+    public void addOrderDetailToOrder(Product product, Long id_order, Long size, Long quantity) {
+        orderDao.addOrderDetailToOrder(product, id_order, size, quantity);
+    }
+
+    @Override
+    public void removeOrderDetailToOrder(Long id_order, Long id_product, Long id_size) {
+        orderDao.removeOrderDetailToOrder(id_order, id_product, id_size);
+    }
+
+    @Override
     public List<OrderDetail> getOrderDetail(Long id_client) {
         return orderDao.getOrderDetail(id_client);
     }

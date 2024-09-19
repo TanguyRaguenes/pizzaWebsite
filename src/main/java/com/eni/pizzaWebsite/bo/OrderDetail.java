@@ -5,20 +5,18 @@ public class OrderDetail {
 
     private Long id_order;
     private Product product;
-    private int size;
+    private int id_size;
     private int quantity;
-    private float price_difference;
 
     public OrderDetail() {
         super();
     }
 
-    public OrderDetail(Long id_order, Product product, int size, int quantity, float price_difference) {
+    public OrderDetail(Long id_order, Product product, int size, int quantity) {
         this.id_order = id_order;
         this.product = product;
-        this.size = size;
+        this.id_size = size;
         this.quantity = quantity;
-        this.price_difference = price_difference;
     }
 
     public Long getId_order() {
@@ -51,19 +49,21 @@ public class OrderDetail {
         this.product = product;
     }
 
-    public int getSize() {
-        return size;
+    public int getId_size() {
+        return id_size;
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setId_size(int id_size) {
+        this.id_size = id_size;
     }
 
-    public float getPrice_difference() {
-        return price_difference;
-    }
-
-    public void setPrice_difference(float price_difference) {
-        this.price_difference = price_difference;
+    @Override
+    public String toString() {
+        return "OrderDetail{" +
+                "id_order=" + id_order +
+                ", product=" + product +
+                ", id_size=" + id_size +
+                ", quantity=" + quantity +
+                '}';
     }
 }

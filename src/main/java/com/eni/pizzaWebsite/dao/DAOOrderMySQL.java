@@ -124,6 +124,51 @@ public class DAOOrderMySQL implements IDAOOrder {
         jdbcTemplate.update(sql, total_price, order.getId_order());
     }
 
+    @Override
+    public void addOrderDetailToOrder(Product product, Long id_order, Long size, Long quantity) {
+        String sql = "INSERT INTO order_details (id_order, id_product, id_size, quantity) " +
+                "VALUES (:id_order, :id_product, :id_size, :quantity)";
+
+
+    MapSqlParameterSource orderDetailMapSqlParameterSource = new MapSqlParameterSource();
+        orderDetailMapSqlParameterSource.addValue("id_order", id_order);
+        orderDetailMapSqlParameterSource.addValue("id_product", product.getId_product());
+        orderDetailMapSqlParameterSource.addValue("id_size", size);
+        orderDetailMapSqlParameterSource.addValue("quantity", quantity);
+
+        namedParameterJdbcTemplate.update(sql, orderDetailMapSqlParameterSource);
+
+        Order order = getOrder(null, id_order);
+//        Float total_price = getOrderTotalPriceByOderId(id_order);
+        Float total_price =0F;
+        sql = "UPDATE `order` SET total_price = ? WHERE id_order = ?";
+            jdbcTemplate.update(sql, total_price, order.getId_order());
+
+    }
+
+//    @Override
+//    public Float getOrderTotalPriceByOderId(Long id_order) {
+//
+//
+//
+//
+//            String sql = "SELECT SUM((p.price+s.price_difference)*o.quantity) as total_price FROM order_details as o INNER JOIN product AS p ON o.id_product = p.id_product INNER JOIN product_size AS s ON o.id_size = s.id_size where id_order=?";
+//            Float total_price = jdbcTemplate.queryForObject(sql, new Object[]{order.getId_order()}, Float.class);
+//
+//            return total_price;
+//
+//    }
+
+    @Override
+    public void removeOrderDetailToOrder(Long id_order, Long id_product, Long id_size) {
+
+        String sql = "DELETE FROM order_details WHERE id_order=? AND id_product=? AND id_size=?";
+
+        jdbcTemplate.update(sql, id_order, id_product, id_size);
+
+
+    }
+
     static final RowMapper<Order> ORDER_ROW_MAPPER = new RowMapper<Order>() {
 
         public Order mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -162,9 +207,8 @@ public class DAOOrderMySQL implements IDAOOrder {
             OrderDetail orderDetail = new OrderDetail();
             orderDetail.setId_order(rs.getLong("id_order"));
             orderDetail.setProduct(new Product(rs.getLong("id_product"), rs.getString("name"), rs.getString("description"), rs.getFloat("price"), rs.getString("image_url")));
-            orderDetail.setSize(rs.getInt("id_size"));
+            orderDetail.setId_size(rs.getInt("id_size"));
             orderDetail.setQuantity(rs.getInt("quantity"));
-            orderDetail.setPrice_difference(rs.getFloat("price_difference"));
 
             return orderDetail;
         }

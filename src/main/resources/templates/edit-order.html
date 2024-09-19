@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/output.css">
+    <title>Your Order</title>
+
+</head>
+<body>
+<main>
+
+    <section layout:fragment="content" class="w-full">
+
+        <h1 class="w-full pt-60">Your Order</h1>
+
+
+<!--        Formulaire pour ajouter un produit à la commande-->
+
+        <form th:object="${orderDetail}" th:action="@{/add-orderDetail-to-order}"  class="w-full border-2 grid grid-cols-6 gap-2" method="post">
+
+            <!-- id_order-->
+            <input
+                    type="hidden"
+                    id="id_order"
+                    th:field="*{id_order}"
+            />
+
+            <!-- product -->
+            <div class="col-span-6">
+                <label for="product" class="block text-sm font-medium text-gray-900"> Product </label>
+
+                <select
+                        name="product"
+                        id="product"
+                        th:field="*{product}"
+                        class="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+
+                >
+                    <option value="">Please select a product</option>
+                    <option th:each="product:${products}" th:value="${product.id_product}" th:text="${product.name}"></option>
+                </select>
+
+            </div>
+
+            <!-- size -->
+            <div class="col-span-6">
+                <label for="id_size" class="block text-sm font-medium text-gray-900"> Size </label>
+
+                <select
+                        name="id_size"
+                        id="id_size"
+                        th:field="*{id_size}"
+                        class="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
+
+                >
+                    <option value="0">Please select a size</option>
+                    <option th:each="ps:${productsSizes}" th:value="${ps.id_size}" th:text="${ps.label}"></option>
+                </select>
+
+            </div>
+
+            <!-- quantity -->
+            <div class="col-span-3">
+
+                <label for="quantity" class="block text-sm font-medium text-gray-700">
+                    Quantity
+                </label>
+
+                <input
+                        type="number"
+                        id="quantity"
+                        th:field="*{quantity}"
+                        name="quantity"
+                        class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
+                />
+
+            </div>
+
+            <div class="col-span-6">
+
+                <button
+                        class="inline-block shrink-0 rounded-md border border-blue-300 bg-orange-400 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+                        type="submit"
+                >
+                    Add
+                </button>
+
+
+            </div>
+
+        </form>
+
+        <!--        Détail de la commande -->
+
+        <div th:object="${selectedOrderDetails}" class="overflow-x-auto">
+            <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
+                <thead class="ltr:text-left rtl:text-right">
+                    <tr>
+                        <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Name</th>
+                        <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Description</th>
+                        <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Quantity</th>
+                        <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Size</th>
+                        <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Unit price</th>
+                        <th class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">Total price</th>
+                        <th colspan="2" class="whitespace-nowrap px-4 py-2 font-medium text-gray-900 text-center">Action</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y divide-gray-200">
+                    <tr th:each="sod : ${selectedOrderDetails}" class="odd:bg-gray-50">
+
+                        <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="${sod.product.name}"></td>
+                        <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${sod.product.description}"></td>
+
+                        <!-- Input field for quantity -->
+                        <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+                            <input type="number" th:value="${sod.quantity}" class="border border-gray-300 p-1" />
+                        </td>
+
+                        <!-- Input field for size -->
+                        <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+                            <input type="text" th:value="${sod.id_size}" class="border border-gray-300 p-1" />
+                        </td>
+
+                        <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${sod.product.price + prices.getPrice(sod.id_size)}"></td>
+                        <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${(sod.product.price + prices.getPrice(sod.id_size)) * sod.quantity}"></td>
+
+
+                        <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+
+                            <form th:object="${orderDetail}" th:action="@{/add-orderDetail-to-order}" method="post">
+
+                                <input type="hidden" th:value="${sod.id_order}" name="id_order"/>
+                                <input type="hidden" th:value="${sod.product.id_product}" name="product"/>
+                                <input type="hidden" th:value="${sod.id_size}" name="id_size"/>
+                                <input type="hidden" th:value="${sod.quantity}" name="quantity"/>
+
+
+                                <button type="submit" class="text-blue-500 hover:text-blue-700">Modify</button>
+
+                            </form>
+                        </td>
+                        <!-- Action button (e.g., Remove) -->
+                        <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+<!--                            <button class="text-red-500 hover:text-red-700">Remove</button>-->
+                            <form th:object="${orderDetail}" th:action="@{/remove-product-from-order}" method="post">
+
+                                <input type="hidden" th:value="${sod.id_order}" name="id_order"/>
+                                <input type="hidden" th:value="${sod.product.id_product}" name="product"/>
+                                <input type="hidden" th:value="${sod.id_size}" name="id_size"/>
+                                <input type="hidden" th:value="${sod.quantity}" name="quantity"/>
+
+
+                                <button type="submit" class="text-red-500 hover:text-red-700">Remove</button>
+                            </form>
+
+                        </td>
+
+
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

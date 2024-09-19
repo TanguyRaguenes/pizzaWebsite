@@ -43,13 +43,17 @@ public class securityConfig {
                                 .requestMatchers("/logout").authenticated()
                                 .requestMatchers("/user").authenticated()
                                 .requestMatchers("/").authenticated()
-                                //.requestMatchers("/").hasAnyAuthority("ROLE_MANAGER", "ROLE_PIZZAMAKER", "ROLE_DELIVERYPERSON")
-                                .requestMatchers("/orders/checkout/{id_order}").hasAnyAuthority("ROLE_MANAGER")
+//                                .requestMatchers("/orders/checkout/{id_order}").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers("/orders-edit/{id_order}").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers("/cart/add/{id}").hasAnyAuthority("ROLE_MANAGER")
+
+                                .requestMatchers("/add-orderDetail-to-order").permitAll()
+                                .requestMatchers("/remove-product-from-order").permitAll()
 
 
 
                                 .requestMatchers("/products-list").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/cart/add/{id}").hasAnyAuthority("ROLE_MANAGER")
+
                                 .requestMatchers("/cart/remove/{id}").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers(HttpMethod.GET, "/cart/checkout").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers(HttpMethod.POST, "/cart/checkout").hasAnyAuthority("ROLE_MANAGER")
@@ -64,10 +68,10 @@ public class securityConfig {
                                 .requestMatchers("/clients-list").hasAnyAuthority("ROLE_MANAGER")
 
 
-                                .requestMatchers("/orders-list/create").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/orders/edit/{id_order}").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/orders-list/delete/{id_order}").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/orders-list/update-state/{id_order}").hasAnyAuthority("ROLE_MANAGER")
+//                                .requestMatchers("/orders-list/create").hasAnyAuthority("ROLE_MANAGER")
+//
+//                                .requestMatchers("/orders-list/delete/{id_order}").hasAnyAuthority("ROLE_MANAGER")
+//                                .requestMatchers("/orders-list/update-state/{id_order}").hasAnyAuthority("ROLE_MANAGER")
 
 
                                 .requestMatchers("/vendor/**").permitAll()
