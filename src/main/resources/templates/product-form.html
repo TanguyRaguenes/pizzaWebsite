@@ -1,45 +1,52 @@
-<!doctype html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{base}">
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{base}">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Add a product</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add a Product</title>
+    <link rel="stylesheet" href="../css/output.css">
 </head>
 <body>
-<main>
-    <section layout:fragment="content" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+
+<main layout:fragment="content" class="min-h-screen bg-cover bg-center flex items-center justify-center bg-[url('/images/pizzaDough.jpg')]">
+    <section class="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg bg-opacity-90">
         <h1 class="text-4xl font-bold text-center text-black py-4 mb-6">Add a Product</h1>
         <form th:object="${product}" method="post" th:action="@{/product-form}" class="space-y-4">
             <input th:field="*{id_product}" type="hidden">
 
+            <!-- Product Name -->
             <div>
                 <label for="name" class="block text-gray-700 font-medium mb-2">Product name:</label>
-                <input th:field="*{name}" name="name" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" type="text" placeholder="Enter pizza name">
+                <input th:field="*{name}" name="name" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" type="text" placeholder="Enter product name">
             </div>
 
+            <!-- Description -->
             <div>
-                <label for="description" class="block text-gray-700 font-medium mb-2">Description :</label>
-                <textarea th:field="*{description}" name="description" rows="3" maxlength="255" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" placeholder="Pizza description" required></textarea>
+                <label for="description" class="block text-gray-700 font-medium mb-2">Description (255 char. max):</label>
+                <textarea th:field="*{description}" name="description" rows="3" maxlength="255" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" placeholder="Product description" required></textarea>
             </div>
 
+            <!-- Price -->
             <div>
                 <label for="price" class="block text-gray-700 font-medium mb-2">Price (€):</label>
                 <input th:field="*{price}" name="price" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" placeholder="Price of the pizza" type="number" step="0.01">
             </div>
 
+            <!-- Image URL -->
             <div>
                 <label for="image_url" class="block text-gray-700 font-medium mb-2">Image URL:</label>
                 <input th:field="*{image_url}" name="image_url" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" type="url" placeholder="Image URL">
             </div>
 
+            <!-- Submit Button -->
             <div>
-                <button type="submit" class="w-full bg-orange-100 text-gray-700 py-2 rounded-lg hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-400">Send</button>
+                <button type="submit" class="w-full bg-orange-100 text-gray-700 py-2 rounded-lg hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-400">
+                    Send
+                </button>
             </div>
         </form>
     </section>
 </main>
+
 </body>
 </html>

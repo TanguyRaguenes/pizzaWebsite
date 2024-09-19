@@ -6,40 +6,59 @@
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
   <title>Client Form</title>
+  <link rel="stylesheet" href="../css/output.css">
 </head>
 <body>
-<main>
-  <section layout:fragment="content">
-    <form th:object="${client}" method="post" th:action="@{/client-form}">
+<main layout:fragment="content" class="min-h-screen flex items-center justify-center bg-[url('/images/pizzaDelivery.jpg')]">
+  <section class="max-w-lg w-full bg-white p-8 rounded-lg shadow-lg">
+    <h1 class="text-4xl font-bold text-center text-gray-800 mb-6">Client Form</h1>
+    <form th:object="${client}" method="post" th:action="@{/client-form}" class="space-y-4">
 
+      <!-- ID caché -->
       <input th:field="*{id_client}" type="hidden">
 
+      <!-- First Name -->
       <div>
-        <label for="firstName">First Name:</label>
-        <input th:field="*{firstName}" id="firstName" type="text" placeholder="Enter first name" required>
+        <label for="firstName" class="block text-gray-700 font-medium mb-2">First Name:</label>
+        <input th:field="*{firstName}" id="firstName" type="text" placeholder="Enter first name"
+               class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" required>
       </div>
 
+      <!-- Last Name -->
       <div>
-        <label for="lastName">Last Name:</label>
-        <input th:field="*{lastName}" id="lastName" type="text" placeholder="Enter last name" required>
+        <label for="lastName" class="block text-gray-700 font-medium mb-2">Last Name:</label>
+        <input th:field="*{lastName}" id="lastName" type="text" placeholder="Enter last name"
+               class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" required>
       </div>
 
+      <!-- Street -->
       <div>
-        <label for="street">Street:</label>
-        <input th:field="*{street}" id="street" type="text" placeholder="Enter street address">
+        <label for="street" class="block text-gray-700 font-medium mb-2">Street:</label>
+        <input th:field="*{street}" id="street" type="text" placeholder="Enter street address"
+               class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none">
       </div>
 
+      <!-- Postal Code -->
       <div>
-        <label for="postalCode">Postal Code:</label>
-        <input th:field="*{postalCode}" id="postalCode" type="text" placeholder="Enter postal code">
+        <label for="postalCode" class="block text-gray-700 font-medium mb-2">Postal Code:</label>
+        <input th:field="*{postalCode}" id="postalCode" type="text" placeholder="Enter postal code"
+               class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none">
       </div>
 
+      <!-- City -->
       <div>
-        <label for="city">City:</label>
-        <input th:field="*{city}" id="city" type="text" placeholder="Enter city">
+        <label for="city" class="block text-gray-700 font-medium mb-2">City:</label>
+        <input th:field="*{city}" id="city" type="text" placeholder="Enter city"
+               class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none">
       </div>
 
-      <button type="submit">Send</button>
+      <!-- Submit Button -->
+      <div>
+        <button type="submit"
+                class="w-full bg-orange-100 text-gray-700 py-2 rounded-lg hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-400">
+          Send
+        </button>
+      </div>
     </form>
   </section>
 </main>

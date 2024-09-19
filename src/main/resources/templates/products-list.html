@@ -1,47 +1,43 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{base}">
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{base}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Menu</title>
+    <link rel="stylesheet" href="../css/output.css">
 </head>
 <body>
-<main>
+<main layout:fragment="content">
 
-    <section layout:fragment="content">
-        <table>
-            <thead>
-            <tr>
-                <th  class="bg-orange-100">ID</th>
-                <th  class="bg-orange-100">Name</th>
-                <th  class="bg-orange-100">Description</th>
-                <th  class="bg-orange-100">Price</th>
-            </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200">
-            <tr th:each="product : ${products}">
-                <td th:text="${product.id_product}"></td>
-                <td  class="px-4 py-2 border border-gray-300 text-left font-semibold text-lg text-gray-800" th:text="${product.name}"></td>
-                <td class="px-4 py-2 border border-gray-300 max-w-md truncate" th:text="${product.description}"></td>
-                <td class="text-right font-semibold text-lg" th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
-
-
-                <td>
-                    <a class="text-white bg-blue-500 px-4 py-2 rounded hover:bg-blue-600"
-                       th:href="@{/product-form/{id}(id=${product.id_product})}">Modify</a>
-                </td>
-
-                <td>
-                    <a class="text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600"
-                       th:href="@{/products-list/delete/{id}(id=${product.id_product})}"
-                       onclick="return confirm('You are about to delete this item, confirm ?')">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-
+    <section class="container mx-auto p-6 bg-gray-50 rounded-lg shadow-md mt-12">
+        <h1 class="text-3xl font-semibold text-gray-700 mb-6">Product List</h1>
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y-2 divide-gray-200 bg-white rounded-lg shadow-sm">
+                <thead class="bg-orange-100">
+                <tr>
+                    <th class="px-4 py-2 font-medium text-gray-900 text-left">ID</th>
+                    <th class="px-4 py-2 font-medium text-gray-900 text-left">Name</th>
+                    <th class="px-4 py-2 font-medium text-gray-900 text-left">Description</th>
+                    <th class="px-4 py-2 font-medium text-gray-900 text-right">Price</th>
+                    <th class="px-4 py-2 font-medium text-gray-900 text-center">Actions</th>
+                </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                <tr th:each="product : ${products}" class="hover:bg-gray-100 transition-all ease-in-out duration-200">
+                    <td class="px-4 py-2 font-medium text-gray-700" th:text="${product.id_product}"></td>
+                    <td class="px-4 py-2 font-semibold text-lg text-gray-800" th:text="${product.name}"></td>
+                    <td class="px-4 py-2 text-gray-600 max-w-md truncate" th:text="${product.description}"></td>
+                    <td class="px-4 py-2 text-right font-semibold text-lg text-gray-800" th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
+                    <td class="px-4 py-2 text-center">
+                        <a class="inline-block bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-all duration-200" th:href="@{/product-form/{id}(id=${product.id_product})}">Modify</a>
+                        <a class="inline-block bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition-all duration-200 ml-2" th:href="@{/products-list/delete/{id}(id=${product.id_product})}" onclick="return confirm('You are about to delete this item, confirm ?')">Delete</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </section>
+
 </main>
 </body>
 </html>
