@@ -4,20 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Cart</title>
+    <title>Your Order</title>
 </head>
 <body>
-<main layout:fragment="content">
+<main  layout:fragment="content">
     <section>
         <h1>Your Order</h1>
 
         <!-- Si la commande est vide -->
-        <div th:if="${#lists.isEmpty(orderDetails)}">
-            <p>Your order is empty. <a th:href="@{/products-list}">Return</a>.</p>
+        <div th:if="${#lists.isEmpty(order.orderDetails)}">
+            <p>Your order is empty.</p>
         </div>
 
         <!-- Sinon -->
-        <div th:if="${!#lists.isEmpty(orderDetails)}">
+        <div th:if="${!#lists.isEmpty(order.orderDetails)}">
             <table>
                 <thead>
                 <tr>
@@ -31,7 +31,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="item : ${orderDetails}">
+                <tr th:each="item : ${order.orderDetails}">
                     <td th:text="${item.product.name}"></td>
                     <td th:text="${item.product.description}"></td>
                     <td>
@@ -41,10 +41,10 @@
                             <input type="number" name="quantity" min="1" th:value="${item.quantity}">
                             <input type="hidden" name="id_product" th:value="${item.product.id_product}">
                             <input type="hidden" name="size" th:value="${item.size}">
+                            <input type="hidden" name="id_order" th:value="${order.id_order}">
                             <button type="submit">Update Quantity</button>
                         </form>
                     </td>
-
                     <td>
                           <span th:switch="${item.size}">
                             <span th:case="'1'">Small</span>
@@ -53,19 +53,20 @@
                           </span>
                         <input type="hidden" name="size" th:value="${item.size}">
                     </td>
-                    <!--                    <td th:text="${item.product.price}">€</td>-->
                     <td th:text="${#numbers.formatDecimal(item.product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
-
                     <td th:text="${#numbers.formatDecimal(item.quantity * item.product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
                     <td>
-                        <a th:href="@{/cart/remove/{id}(id=${item.product.id_product}, size=${item.size})}">Remove</a>
+                        <form th:action="@{/cart/remove/{id_product}(id_product=${item.product.id_product})}"
+                              method="post">
+                            <input type="hidden" name="size" th:value="${item.size}">
+                            <input type="hidden" name="id_order" th:value="${order.id_order}">
+                            <button type="submit">Remove</button>
+                        </form>
                     </td>
-
                 </tr>
                 </tbody>
             </table>
-            <p th:text="'Total : '+${totalPrice} + ' €'"></p>
-
+            <p th:text="'Total : '+${order.total_price} + ' €'"></p>
 
             <div class="checkout-section">
                 <form th:action="@{/cart/checkout}" method="post">
@@ -76,10 +77,46 @@
                 </form>
                 <a class="clear-btn" th:href="@{/cart/clear}">Clear Order</a>
             </div>
-
         </div>
 
-        <a th:href="@{/products-list}">Keep Shopping</a>
+        <h2>Add more products:</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Quantity & Size</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="product : ${products}">
+                <td th:text="${product.id_product}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.description}"></td>
+                <td th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
+                <td>
+                    <form th:action="@{/cart/add/{id_product}(id_product=${product.id_product})}" method="post">
+                        <input type="hidden" name="id_product" th:value="${product.id_product}">
+                        <input type="number" name="quantity" min="1" value="1">
+                        <select name="size">
+                            <option value="1">Small</option>
+                            <option value="2">Medium</option>
+                            <option value="3">Large</option>
+                        </select>
+                        <input type="hidden" name="id_order" th:value="${order.id_order}">
+                        <button type="submit">Add to order</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div>
+            <a th:href="@{/orders-list}">Back to Orders List</a>
+        </div>
     </section>
 </main>
 </body>

@@ -1,28 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title th:fragment="title">Pizza Website</title>
+    <title>Pizza Website</title>
+    <link rel="icon" href="../images/favicon3.png" type="image/png">
     <link rel="stylesheet" href="../css/output.css">
-    <link rel="stylesheet" href="/css/pizza-theme.css">
-    <link rel="icon" th:href="@{/images/favicon3.png}">
 </head>
-<body>
+<body class="flex flex-col min-h-screen">
 
 <header>
-
-    <nav class="bg-white dark:bg-gray-900 fixed w-full z-20 top-0 start-0 border-b border-gray-200 dark:border-gray-600">
+    <nav class="bg-orange-100 dark:bg-gray-900 relative w-full z-20 top-0 start-0">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <a th:href="@{/}" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="/images/logoSimple.png" class="h-16" alt="Logo">
                 <span class="hidden lg:flex self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Welcome to PizzaFlow</span>
             </a>
             <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                <!--                <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Get started</button>-->
                 <button data-collapse-toggle="navbar-sticky" type="button"
-                        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-orange-200 focus:outline-none focus:ring-2 focus:ring-orange-300"
                         aria-controls="navbar-sticky" aria-expanded="false">
                     <span class="sr-only">Open main menu</span>
                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -33,114 +29,71 @@
                 </button>
             </div>
             <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-orange-100 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900">
                     <li>
-                        <a
-                                th:href="@{/}"
-                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                        >
-                            Home
-                        </a>
+                        <a th:href="@{/products-list}" class="block py-2 px-3 text-gray-900 rounded hover:bg-orange-200 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700">Menu</a>
                     </li>
                     <li>
-                        <a
-                                th:href="@{/products-list}"
-                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                        >
-                            Menu
-                        </a>
+                        <a th:href="@{/product-form}" class="block py-2 px-3 text-gray-900 rounded hover:bg-orange-200 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700">Add a Product</a>
                     </li>
                     <li>
-                        <a
-                                th:href="@{/product-form}"
-                                th:classappend="${page == 'product-form'} ? 'text-blue-700 bg-blue-100' : 'text-gray-900'"
-                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                        >
-                            Add a product
-                        </a>
+                        <a th:href="@{/clients-list}" class="block py-2 px-3 text-gray-900 rounded hover:bg-orange-200 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700">Clients</a>
                     </li>
                     <li>
-                        <a
-                                th:href="@{/client-form}"
-                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                        >
-                            Add a client
-                        </a>
+                        <a th:href="@{/client-form}" class="block py-2 px-3 text-gray-900 rounded hover:bg-orange-200 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700">Add a Client</a>
                     </li>
                     <li>
-                        <a
-                                th:href="@{/orders-list}"
-                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                        >
-                            Orders
-                        </a>
+                        <a th:href="@{/orders-list}" class="block py-2 px-3 text-gray-900 rounded hover:bg-orange-200 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700">Orders</a>
                     </li>
                     <li>
-                        <a
-                                th:href="@{/clients-list}"
-                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                        >
-                            Clients
-                        </a>
+                        <a th:href="@{/authForm}" class="block py-2 px-3 text-gray-900 rounded hover:bg-orange-200 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700">Add User</a>
                     </li>
                     <li>
-                        <a
-                                th:href="@{/authForm}"
-                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                        >
-                            Add user
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                                th:href="@{/logout}"
-                                class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-                        >
-                            Logout
-                        </a>
+                        <a th:href="@{/logout}" class="block py-2 px-3 text-gray-900 rounded hover:bg-orange-200 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700">Logout</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
-    <!--    <nav>-->
-    <!--        <ul class="navbar">-->
-    <!--            <li><a th:href="@{/}">Home</a></li>-->
-    <!--            <li><a th:href="@{/products-list}">Menu</a></li>-->
-    <!--            <li><a th:href="@{/product-form}">Add a product</a></li>-->
-    <!--            <li><a th:href="@{/client-form}">Add a client</a></li>-->
-    <!--            <li><a th:href="@{/orders-list}">Orders</a></li>-->
-    <!--            <li><a th:href="@{/clients-list}">Clients</a></li>-->
-    <!--            <li><a th:href="@{/authForm}">Add user</a></li>-->
-    <!--            <li><a th:href="@{/logout}">Logout</a></li>-->
-    <!--        </ul>-->
-    <!--    </nav>-->
 </header>
 
-<main class="pt-40 mb-16" >
+
+<main layout:fragment="content" class="flex-grow">
     <!-- Ici le contenu spécifique de chaque page -->
-    <section layout:fragment="content">
-        <!-- Contenu par défaut-->
+    <section>
         <h2>!Base Content!</h2>
     </section>
 </main>
 
-<footer class="bg-orange-100 text-white py-4 mt-8">
+<footer class="bg-orange-100 text-white py-4">
     <div class="max-w-screen-xl mx-auto px-4">
         <div class="flex justify-between items-center">
             <div class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="/images/logoSimple.png" class="h-14" alt="Logo">
-                               <span class="hidden lg:flex self-center text-2xl font-semibold whitespace-nowrap text-black mr-8">PizzaFlow</span>
-           <span> </span>
+                <span class="hidden lg:flex self-center text-2xl font-semibold whitespace-nowrap text-black mr-8">PizzaFlow</span>
             </div>
             <div class="flex space-x-4 rtl:space-x-reverse">
-                <a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a>
-                <a href="#" class="text-gray-400 hover:text-white">Terms of Service</a>
-                <a href="#" class="text-gray-400 hover:text-white">Contact</a>
+                <a href="#" class="text-gray-400 hover:text-gray-600">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-gray-600">Terms of Service</a>
+                <a href="#" class="text-gray-400 hover:text-gray-600">Contact</a>
             </div>
         </div>
         <p class="mt-4 text-center text-sm text-gray-500 lg:mt-0 lg:text-right">
-            &copy; 2024 Pizza Website. All rights reserved.
+            &copy; 2024 PizzaFlow. All rights reserved.
         </p>
     </div>
 </footer>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const toggleButton = document.querySelector('[data-collapse-toggle]');
+        const navbarMenu = document.getElementById('navbar-sticky');
+
+        toggleButton.addEventListener('click', function() {
+            navbarMenu.classList.toggle('hidden');
+        });
+    });
+</script>
+
+</body>
+</html>
