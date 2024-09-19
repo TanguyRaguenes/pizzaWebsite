@@ -6,39 +6,38 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Form</title>
+    <title>Add a product</title>
 </head>
 <body>
 <main>
-    <section layout:fragment="content">
-        <form th:object="${product}" method="post" th:action="@{/product-form}">
+    <section layout:fragment="content" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-4xl font-bold text-center text-black py-4 mb-6">Add a Product</h1>
+        <form th:object="${product}" method="post" th:action="@{/product-form}" class="space-y-4">
             <input th:field="*{id_product}" type="hidden">
-<!--            <div th:if="${product.id_product == null}">-->
-<!--                <label for="id_product">Product ID</label>-->
-<!--                <input th:field="*{id_product}" name="id_product" type="number" placeholder="Product ID if any">-->
-<!--            </div>-->
 
             <div>
-                <label for="name">Product name:</label>
-                <input th:field="*{name}" name="name" class="uk-input" type="text" placeholder="Enter pizza name">
+                <label for="name" class="block text-gray-700 font-medium mb-2">Product name:</label>
+                <input th:field="*{name}" name="name" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" type="text" placeholder="Enter pizza name">
             </div>
 
             <div>
-                <label for="description">Description :</label>
-                <textarea th:field="*{description}" name="description" rows="3" placeholder="Pizza description" required></textarea>
+                <label for="description" class="block text-gray-700 font-medium mb-2">Description :</label>
+                <textarea th:field="*{description}" name="description" rows="3" maxlength="255" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" placeholder="Pizza description" required></textarea>
             </div>
 
             <div>
-                <label for="price">Price (€):</label>
-                <input th:field="*{price}" name="price" placeholder="Price of the pizza" type="number" step="0.01">
+                <label for="price" class="block text-gray-700 font-medium mb-2">Price (€):</label>
+                <input th:field="*{price}" name="price" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" placeholder="Price of the pizza" type="number" step="0.01">
             </div>
 
             <div>
-                <label for="image_url">Image URL:</label>
-                <input th:field="*{image_url}" name="image_url" type="url" placeholder="Image URL">
+                <label for="image_url" class="block text-gray-700 font-medium mb-2">Image URL:</label>
+                <input th:field="*{image_url}" name="image_url" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:outline-none" type="url" placeholder="Image URL">
             </div>
 
-            <button type="submit">Send</button>
+            <div>
+                <button type="submit" class="w-full bg-orange-100 text-gray-700 py-2 rounded-lg hover:bg-orange-300 focus:outline-none focus:ring-2 focus:ring-orange-400">Send</button>
+            </div>
         </form>
     </section>
 </main>

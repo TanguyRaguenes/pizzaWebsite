@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Menu</title>
-    <link rel="stylesheet" href="/css/pizza-theme.css">
 </head>
 <body>
 <main>
@@ -14,28 +13,29 @@
         <table>
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Quantity & Size</th>
+                <th  class="bg-orange-100">ID</th>
+                <th  class="bg-orange-100">Name</th>
+                <th  class="bg-orange-100">Description</th>
+                <th  class="bg-orange-100">Price</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="divide-y divide-gray-200">
             <tr th:each="product : ${products}">
                 <td th:text="${product.id_product}"></td>
-                <td th:text="${product.name}"></td>
-                <td th:text="${product.description}"></td>
-                <td th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
+                <td  class="px-4 py-2 border border-gray-300 text-left font-semibold text-lg text-gray-800" th:text="${product.name}"></td>
+                <td class="px-4 py-2 border border-gray-300 max-w-md truncate" th:text="${product.description}"></td>
+                <td class="text-right font-semibold text-lg" th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
 
 
                 <td>
-                    <a th:href="@{/product-form/{id}(id=${product.id_product})}">Modify</a>
+                    <a class="text-white bg-blue-500 px-4 py-2 rounded hover:bg-blue-600"
+                       th:href="@{/product-form/{id}(id=${product.id_product})}">Modify</a>
                 </td>
 
                 <td>
-                    <a th:href="@{/products-list/delete/{id}(id=${product.id_product})}"
-                       onclick="return confirm('You are about to delete this item, confirm ?')">Delete item</a>
+                    <a class="text-white bg-red-500 px-4 py-2 rounded hover:bg-red-600"
+                       th:href="@{/products-list/delete/{id}(id=${product.id_product})}"
+                       onclick="return confirm('You are about to delete this item, confirm ?')">Delete</a>
                 </td>
             </tr>
             </tbody>
