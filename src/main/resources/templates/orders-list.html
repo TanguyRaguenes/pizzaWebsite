@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Orders List</title>
+    <link rel="stylesheet" href="../css/output.css">
     <link rel="stylesheet" href="/css/pizza-theme.css">
 </head>
 <body>
@@ -11,7 +12,7 @@
         <h1>Orders List</h1>
 
         <div>
-            <form th:action="@{/orders-list/create}" method="post">
+            <form class="w-full pt-20" th:action="@{/orders-list/create}" method="post">
                 <label for="client">Select Client for New Order:</label>
                 <select id="client" name="id_client" required>
                     <option value="" disabled selected>Select a client</option>
@@ -70,7 +71,7 @@
                 </td>
 
                 <td>
-                    <a th:href="@{/orders/edit/{id_order}(id_order=${order.id_order})}">Modify</a>
+                    <a th:href="@{/orders-edit/{id_order}(id_order=${order.id_order})}">Modify</a>
 
                     <!-- Delete -->
                     <form th:action="@{/orders-list/delete/{id_order}(id_order=${order.id_order})}" method="post">
