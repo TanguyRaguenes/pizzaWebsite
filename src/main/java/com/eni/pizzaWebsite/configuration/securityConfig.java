@@ -47,8 +47,10 @@ public class securityConfig {
                                 .requestMatchers("/orders-edit/{id_order}").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/cart/add/{id}").hasAnyAuthority("ROLE_MANAGER")
 
+//                              A corriger à la fin de la prod :
                                 .requestMatchers("/add-orderDetail-to-order").permitAll()
                                 .requestMatchers("/remove-product-from-order").permitAll()
+                                .requestMatchers("/create-order").permitAll()
 
 
 

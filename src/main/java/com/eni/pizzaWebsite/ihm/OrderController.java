@@ -43,8 +43,17 @@ public class OrderController {
         List<State> states = orderManager.getStatesList();
         model.addAttribute("states", states);
 
+        Client client=new Client();
+        model.addAttribute("client", client);
 
         return "orders-list";
+    }
+
+    @PostMapping("/create-order")
+    public String createOrder(@RequestParam("id_client") Long id_client) {
+        Long id_user = 1L;
+        orderManager.addProductToOrder(null, id_client, 0L, 0L);
+        return "redirect:/orders-list";
     }
 
     @GetMapping("/orders-edit/{id_order}")
@@ -208,13 +217,6 @@ public class OrderController {
         return "redirect:/cart";
     }
 
-
-    @PostMapping("/orders-list/create")
-    public String createOrder(@RequestParam("id_client") Long id_client) {
-        Long id_user = 1L;
-        orderManager.addProductToOrder(null, id_client, 0L, 0L);
-        return "redirect:/orders-list";
-    }
     @PostMapping("/orders-list/delete/{id_order}")
     public String deleteOrder(@PathVariable("id_order") Long id_order) {
         orderManager.clearOrderByIdOrder(id_order);
