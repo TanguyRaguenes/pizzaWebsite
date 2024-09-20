@@ -11,7 +11,6 @@ public interface IDAOOrder {
     public abstract void addOrderDetailToOrder(Product product, Long id_order, Long size,Long quantity );
     public abstract void removeOrderDetailToOrder(Long id_order, Long id_product, Long id_size) ;
     public abstract Float getOrderTotalPriceByOderId(Long id_order);
-    public abstract List<OrderDetail> getOrderDetailsByIdOrder(Long id_order);
 
     public abstract Order getOrder(Long id_client, Long id_order );
     public abstract OrderDetail getOrderDetail(Long id_order,Long id_product, Long id_size );

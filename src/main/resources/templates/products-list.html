@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{base}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6" layout:decorate="~{base}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +21,8 @@
                     <th class="px-4 py-2 font-medium text-gray-900 text-left">Name</th>
                     <th class="px-4 py-2 font-medium text-gray-900 text-left">Description</th>
                     <th class="px-4 py-2 font-medium text-gray-900 text-right">Price</th>
-                    <th class="px-4 py-2 font-medium text-gray-900 text-center">Actions</th>
+                    <!-- Masquer la colonne "Actions" pour ROLE_PIZZAMAKER -->
+                    <th class="px-4 py-2 font-medium text-gray-900 text-center" sec:authorize="!hasAuthority('ROLE_PIZZAMAKER')">Actions</th>
                 </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200">
@@ -28,7 +31,8 @@
                     <td class="px-4 py-2 font-semibold text-lg text-gray-800" th:text="${product.name}"></td>
                     <td class="px-4 py-2 text-gray-600 max-w-md truncate" th:text="${product.description}"></td>
                     <td class="px-4 py-2 text-right font-semibold text-lg text-gray-800" th:text="${#numbers.formatDecimal(product.price, 1, 'COMMA', 2, 'POINT')} + ' €'"></td>
-                    <td class="px-4 py-2 text-center">
+                    <!-- Masquer les boutons "Modify" et "Delete" pour ROLE_PIZZAMAKER -->
+                    <td class="px-4 py-2 text-center" sec:authorize="!hasAuthority('ROLE_PIZZAMAKER')">
                         <a class="inline-block bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition-all duration-200" th:href="@{/product-form/{id}(id=${product.id_product})}">Modify</a>
                         <a class="inline-block bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-red-500 transition-all duration-200 ml-2" th:href="@{/products-list/delete/{id}(id=${product.id_product})}" onclick="return confirm('You are about to delete this item, confirm ?')">Delete</a>
                     </td>

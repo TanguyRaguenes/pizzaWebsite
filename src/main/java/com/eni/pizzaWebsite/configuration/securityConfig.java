@@ -37,59 +37,36 @@ public class securityConfig {
         http
                 .authorizeHttpRequests((authorize) -> authorize
 
-                                .requestMatchers("/login").permitAll()
-                                .requestMatchers("/customLogin").permitAll()
-                                .requestMatchers("/authForm").permitAll()
-                                .requestMatchers("/logout").authenticated()
-                                .requestMatchers("/user").authenticated()
-                                .requestMatchers("/").authenticated()
-//                                .requestMatchers("/orders/checkout/{id_order}").hasAnyAuthority("ROLE_MANAGER")
+                        .requestMatchers("/login").permitAll()
+                        .requestMatchers("/customLogin").permitAll()
+                        .requestMatchers("/authForm").hasAuthority("ROLE_MANAGER")
+                        .requestMatchers("/vendor/**").permitAll()
+                        .requestMatchers("/images/**").permitAll()
+                        .requestMatchers("/css/**").permitAll()
 
-                                .requestMatchers("/cart/add/{id}").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/orders-list").hasAnyAuthority("ROLE_MANAGER")
+                        .requestMatchers("/logout").authenticated()
+                        .requestMatchers("/user").authenticated()
+                        .requestMatchers("/").authenticated()
 
-//                              A corriger à la fin de la prod :
-                                .requestMatchers("/add-orderDetail-to-order").permitAll()
-                                .requestMatchers("/remove-product-from-order").permitAll()
-                                .requestMatchers("/create-order").permitAll()
-                                .requestMatchers("/update-order-state/{id_order}").permitAll()
-                                .requestMatchers("/orders-edit/{id_order}").permitAll()
+                        .requestMatchers("/products-list").hasAnyAuthority("ROLE_MANAGER", "ROLE_PIZZAMAKER")
+                        .requestMatchers("/orders-list").hasAnyAuthority("ROLE_MANAGER", "ROLE_PIZZAMAKER", "ROLE_DELIVERYPERSON")
+                        .requestMatchers("/product-form").hasAuthority("ROLE_MANAGER")
+                        .requestMatchers("/product-form/{id}").hasAuthority("ROLE_MANAGER")
+                        .requestMatchers("/products-list/delete/{id}").hasAuthority("ROLE_MANAGER")
+                        .requestMatchers("/create-order").hasAnyAuthority("ROLE_MANAGER", "ROLE_PIZZAMAKER")
+                        .requestMatchers("/orders-list/delete/{id_order}").hasAuthority("ROLE_MANAGER")
+                        .requestMatchers("/clients-list").hasAnyAuthority("ROLE_MANAGER", "ROLE_PIZZAMAKER")
+                        .requestMatchers("/client-form").hasAnyAuthority("ROLE_MANAGER", "ROLE_PIZZAMAKER")
+                        .requestMatchers("/cart/remove/{id}").hasAuthority("ROLE_MANAGER")
+                        .requestMatchers("/cart/clear").hasAuthority("ROLE_MANAGER")
 
-
-
-                                .requestMatchers("/products-list").hasAnyAuthority("ROLE_MANAGER")
-
-                                .requestMatchers("/cart/remove/{id}").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers(HttpMethod.GET, "/cart/checkout").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers(HttpMethod.POST, "/cart/checkout").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/cart/clear").hasAnyAuthority("ROLE_MANAGER")
-
-                                .requestMatchers("/cart").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/product-form").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/product-form/**").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/products-list/delete/**").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/client-form").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers(HttpMethod.POST, "/client-form").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/clients-list").hasAnyAuthority("ROLE_MANAGER")
+                        .requestMatchers("/orders-edit/{id_order}").hasAnyAuthority("ROLE_MANAGER", "ROLE_PIZZAMAKER")
 
 
-//                                .requestMatchers("/orders-list/create").hasAnyAuthority("ROLE_MANAGER")
-//
-//                                .requestMatchers("/orders-list/delete/{id_order}").hasAnyAuthority("ROLE_MANAGER")
-//                                .requestMatchers("/orders-list/update-state/{id_order}").hasAnyAuthority("ROLE_MANAGER")
+                        .requestMatchers("/add-orderDetail-to-order").permitAll()
+                        .requestMatchers("/remove-product-from-order").permitAll()
 
-
-                                .requestMatchers("/vendor/**").permitAll()
-                                .requestMatchers("/images/**").permitAll()
-                                .requestMatchers("/css/**").permitAll()
-
-                                .anyRequest().denyAll()
-
-//                                .requestMatchers("/chocolatine").hasAuthority("ROLE_EMPLOYE")
-//                                .requestMatchers("/demo-debug").hasAnyAuthority("ROLE_EMPLOYE", "ROLE_FORMATEUR", "ROLE_ADMIN")
-//                                .requestMatchers(HttpMethod.GET,"/show-aliment-form").hasAnyAuthority("ROLE_EMPLOYE", "ROLE_FORMATEUR")
-//                                .requestMatchers(HttpMethod.POST,"/aliment-form").hasAnyAuthority("ROLE_EMPLOYE", "ROLE_FORMATEUR")
-
+                        .anyRequest().denyAll()
                 );
 
         //Pour utiliser le fonctionnement de login de Spring Security par défaut
