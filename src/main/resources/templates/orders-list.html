@@ -12,12 +12,11 @@
         <h1>Orders List</h1>
 
         <div>
-            <form class="w-full pt-20" th:action="@{/orders-list/create}" method="post">
+            <form th:object="${client}" class="w-full pt-20" th:action="@{/create-order}" method="post">
                 <label for="client">Select Client for New Order:</label>
                 <select id="client" name="id_client" required>
-                    <option value="" disabled selected>Select a client</option>
-                    <option th:each="client : ${clients}" th:value="${client.id_client}"
-                            th:text="${client.firstName} + ' ' + ${client.lastName}">
+                    <option value="0" disabled selected>Select a client</option>
+                    <option th:each="client : ${clients}" th:value="${client.id_client}" th:text="${client.firstName} + ' ' + ${client.lastName}">
                     </option>
                 </select>
                 <button type="submit">Create Order</button>

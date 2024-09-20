@@ -126,8 +126,17 @@ public class DAOOrderMySQL implements IDAOOrder {
 
     @Override
     public void addOrderDetailToOrder(Product product, Long id_order, Long size, Long quantity) {
-        String sql = "INSERT INTO order_details (id_order, id_product, id_size, quantity) " +
-                "VALUES (:id_order, :id_product, :id_size, :quantity)";
+
+
+        OrderDetail orderDetail = getOrderDetail(id_order, product.getId_product(), size);
+        String sql = "";
+
+        if (orderDetail == null) {
+            sql = "INSERT INTO order_details (id_order, id_product, id_size, quantity) " +
+                    "VALUES (:id_order, :id_product, :id_size, :quantity)";
+        } else {
+            sql = "UPDATE order_details SET quantity = :quantity WHERE id_order = :id_order AND id_product = :id_product AND id_size = :id_size";
+        }
 
 
     MapSqlParameterSource orderDetailMapSqlParameterSource = new MapSqlParameterSource();
@@ -139,25 +148,22 @@ public class DAOOrderMySQL implements IDAOOrder {
         namedParameterJdbcTemplate.update(sql, orderDetailMapSqlParameterSource);
 
         Order order = getOrder(null, id_order);
-//        Float total_price = getOrderTotalPriceByOderId(id_order);
-        Float total_price =0F;
+        Float total_price = getOrderTotalPriceByOderId(id_order);
+
         sql = "UPDATE `order` SET total_price = ? WHERE id_order = ?";
             jdbcTemplate.update(sql, total_price, order.getId_order());
 
     }
 
-//    @Override
-//    public Float getOrderTotalPriceByOderId(Long id_order) {
-//
-//
-//
-//
-//            String sql = "SELECT SUM((p.price+s.price_difference)*o.quantity) as total_price FROM order_details as o INNER JOIN product AS p ON o.id_product = p.id_product INNER JOIN product_size AS s ON o.id_size = s.id_size where id_order=?";
-//            Float total_price = jdbcTemplate.queryForObject(sql, new Object[]{order.getId_order()}, Float.class);
-//
-//            return total_price;
-//
-//    }
+    @Override
+    public Float getOrderTotalPriceByOderId(Long id_order) {
+
+        String sql = "SELECT SUM((p.price+s.price_difference)*o.quantity) as total_price FROM order_details as o INNER JOIN product AS p ON o.id_product = p.id_product INNER JOIN product_size AS s ON o.id_size = s.id_size where id_order=?";
+        Float total_price = jdbcTemplate.queryForObject(sql, new Object[]{id_order}, Float.class);
+
+        return total_price;
+
+    }
 
     @Override
     public void removeOrderDetailToOrder(Long id_order, Long id_product, Long id_size) {

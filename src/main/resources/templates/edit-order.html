@@ -109,39 +109,40 @@
                 </thead>
 
                 <tbody class="divide-y divide-gray-200">
+
                     <tr th:each="sod : ${selectedOrderDetails}" class="odd:bg-gray-50">
 
-                        <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="${sod.product.name}"></td>
-                        <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${sod.product.description}"></td>
+                        <form  th:object="${sod}" th:action="@{/add-orderDetail-to-order}" method="post">
 
-                        <!-- Input field for quantity -->
-                        <td class="whitespace-nowrap px-4 py-2 text-gray-700">
-                            <input type="number" th:value="${sod.quantity}" class="border border-gray-300 p-1" />
-                        </td>
+                            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900" th:text="${sod.product.name}"></td>
 
-                        <!-- Input field for size -->
-                        <td class="whitespace-nowrap px-4 py-2 text-gray-700">
-                            <input type="text" th:value="${sod.id_size}" class="border border-gray-300 p-1" />
-                        </td>
-
-                        <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${sod.product.price + prices.getPrice(sod.id_size)}"></td>
-                        <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${(sod.product.price + prices.getPrice(sod.id_size)) * sod.quantity}"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${sod.product.description}"></td>
 
 
-                        <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+                            <!-- Input field for quantity -->
+                            <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+                                <input type="number" th:value="${sod.quantity}" name="quantity" class="border border-gray-300 p-1" />
+                            </td>
 
-                            <form th:object="${orderDetail}" th:action="@{/add-orderDetail-to-order}" method="post">
+                            <!-- Input field for size -->
+                            <td class="whitespace-nowrap px-4 py-2 text-gray-700">
+                                <input type="text" th:value="${sod.id_size}" name="id_size" class="border border-gray-300 p-1" />
+                            </td>
+
+                            <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${sod.product.price + prices.getPrice(sod.id_size)}"></td>
+                            <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${(sod.product.price + prices.getPrice(sod.id_size)) * sod.quantity}"></td>
+
+                            <td class="whitespace-nowrap px-4 py-2 text-gray-700">
 
                                 <input type="hidden" th:value="${sod.id_order}" name="id_order"/>
                                 <input type="hidden" th:value="${sod.product.id_product}" name="product"/>
-                                <input type="hidden" th:value="${sod.id_size}" name="id_size"/>
-                                <input type="hidden" th:value="${sod.quantity}" name="quantity"/>
-
 
                                 <button type="submit" class="text-blue-500 hover:text-blue-700">Modify</button>
 
-                            </form>
-                        </td>
+                            </td>
+
+                        </form>
+
                         <!-- Action button (e.g., Remove) -->
                         <td class="whitespace-nowrap px-4 py-2 text-gray-700">
 <!--                            <button class="text-red-500 hover:text-red-700">Remove</button>-->
@@ -158,13 +159,12 @@
 
                         </td>
 
-
-
-
                     </tr>
+
                 </tbody>
             </table>
         </div>
+
     </section>
 </main>
 </body>
