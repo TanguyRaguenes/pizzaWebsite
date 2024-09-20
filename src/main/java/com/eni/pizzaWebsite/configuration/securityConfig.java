@@ -46,14 +46,20 @@ public class securityConfig {
 //                                .requestMatchers("/orders/checkout/{id_order}").hasAnyAuthority("ROLE_MANAGER")
 
                                 .requestMatchers("/cart/add/{id}").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/orders-list").hasAnyAuthority("ROLE_MANAGER")
+//                                .requestMatchers("/orders-list").hasAnyAuthority("ROLE_MANAGER")
+
 
 //                              A corriger à la fin de la prod :
+                                .requestMatchers("/orders-list").permitAll()
+                                .requestMatchers(HttpMethod.GET,"/orders-list/{id_state}").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/orders-list").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/update-order-delivery-date/{id_order}").permitAll()
                                 .requestMatchers("/add-orderDetail-to-order").permitAll()
                                 .requestMatchers("/remove-product-from-order").permitAll()
                                 .requestMatchers("/create-order").permitAll()
                                 .requestMatchers("/update-order-state/{id_order}").permitAll()
                                 .requestMatchers("/orders-edit/{id_order}").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/orders-list/delete/{id_order}").permitAll()
 
 
 

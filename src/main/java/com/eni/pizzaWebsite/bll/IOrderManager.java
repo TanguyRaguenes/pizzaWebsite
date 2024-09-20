@@ -15,6 +15,9 @@ public interface IOrderManager {
 
     public abstract List<OrderDetail> getOrderDetailsByIdOrder(Long id_order);
 
+    public abstract void updateOrderDeliveryDate(Long id_order, LocalDateTime delivery_datetime);
+
+
     public abstract List<OrderDetail> getOrderDetail(Long id_client);
 
     public abstract void removeProductFromOrder(Long id_product, Long id_client, Long id_size);

@@ -84,9 +84,11 @@ public class DAOOrderMySQL implements IDAOOrder {
 
     }
 
-
-
-
+    @Override
+    public void updateOrderDeliveryDate(Long id_order, LocalDateTime delivery_datetime) {
+        String sql = "UPDATE `order` SET delivery_datetime=? WHERE id_order=?";
+        jdbcTemplate.update(sql, delivery_datetime, id_order);
+    }
 
 
     @Override
@@ -135,6 +137,7 @@ public class DAOOrderMySQL implements IDAOOrder {
 
 
         Float total_price = getOrderTotalPrice(id_client);
+
         sql = "UPDATE `order` SET total_price = ? WHERE id_order = ?";
         jdbcTemplate.update(sql, total_price, order.getId_order());
     }
@@ -164,7 +167,6 @@ public class DAOOrderMySQL implements IDAOOrder {
 
         Order order = getOrder(null, id_order);
         Float total_price = getOrderTotalPriceByOderId(id_order);
-
         sql = "UPDATE `order` SET total_price = ? WHERE id_order = ?";
             jdbcTemplate.update(sql, total_price, order.getId_order());
 
@@ -175,7 +177,9 @@ public class DAOOrderMySQL implements IDAOOrder {
 
         String sql = "SELECT SUM((p.price+s.price_difference)*o.quantity) as total_price FROM order_details as o INNER JOIN product AS p ON o.id_product = p.id_product INNER JOIN product_size AS s ON o.id_size = s.id_size where id_order=?";
         Float total_price = jdbcTemplate.queryForObject(sql, new Object[]{id_order}, Float.class);
-
+        if(total_price ==null) {
+            total_price = 0f;
+        }
         return total_price;
 
     }
@@ -187,6 +191,11 @@ public class DAOOrderMySQL implements IDAOOrder {
 
         jdbcTemplate.update(sql, id_order, id_product, id_size);
 
+        Order order = getOrder(null, id_order);
+        Float total_price = getOrderTotalPriceByOderId(id_order);
+        sql = "UPDATE `order` SET total_price = ? WHERE id_order = ?";
+        jdbcTemplate.update(sql, total_price, order.getId_order());
+
 
     }
 
@@ -194,6 +203,22 @@ public class DAOOrderMySQL implements IDAOOrder {
     public void updateOrderState(Long id_order, Long id_state) {
         String sql = "UPDATE `order` SET id_state=? WHERE id_order=?";
         jdbcTemplate.update(sql, id_state, id_order);
+    }
+
+
+    @Override
+    public List<Order> getOrdersList(Long id_state) {
+        String sql = "";
+        List<Order> ordersList = null;
+        if (id_state == 0) {
+            sql = "SELECT * FROM `order` as o INNER JOIN client as c ON o.id_client = c.id_client INNER JOIN state as s ON o.id_state = s.id_state INNER JOIN user as u ON o.id_user=u.id_user ORDER BY o.delivery_datetime DESC";
+            ordersList = jdbcTemplate.query(sql, ORDER_ROW_MAPPER);
+        } else {
+            sql = "SELECT * FROM `order` as o INNER JOIN client as c ON o.id_client = c.id_client INNER JOIN state as s ON o.id_state = s.id_state INNER JOIN user as u ON o.id_user=u.id_user WHERE o.id_state=? ORDER BY o.delivery_datetime DESC";
+            ordersList = jdbcTemplate.query(sql, ORDER_ROW_MAPPER, id_state);
+        }
+
+        return ordersList;
     }
 
 //    __________________________________________________________________________________________________________________
@@ -213,23 +238,6 @@ public class DAOOrderMySQL implements IDAOOrder {
             return order;
         }
     };
-
-
-    @Override
-    public List<Order> getOrdersList(Long id_state) {
-        String sql = "";
-        List<Order> ordersList = null;
-        if (id_state == 0) {
-            sql = "SELECT * FROM `order` as o INNER JOIN client as c ON o.id_client = c.id_client INNER JOIN state as s ON o.id_state = s.id_state INNER JOIN user as u ON o.id_user=u.id_user ORDER BY o.delivery_datetime DESC";
-            ordersList = jdbcTemplate.query(sql, ORDER_ROW_MAPPER);
-        } else {
-            sql = "SELECT * FROM `order` as o INNER JOIN client as c ON o.id_client = c.id_client INNER JOIN state as s ON o.id_state = s.id_state INNER JOIN user as u ON o.id_user=u.id_user WHERE o.id_state=? ORDER BY o.delivery_datetime DESC";
-            ordersList = jdbcTemplate.query(sql, ORDER_ROW_MAPPER, id_state);
-        }
-
-        return ordersList;
-    }
-
 
 
     @Override

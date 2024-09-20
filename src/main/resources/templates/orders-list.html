@@ -12,6 +12,22 @@
         <h1>Orders List</h1>
 
         <div>
+            <form th:object="${state}" class="w-full pt-20" th:action="@{/orders-list}" method="post">
+
+                <label for="client">Filter on state:</label>
+
+                <select id="id_state" th:field="*{id_state}" required>
+                    <option value="0" >All</option>
+                    <option th:each="state : ${states}" th:value="${state.id_state}" th:text="${state.state}">
+                    </option>
+                </select>
+
+                <button type="submit">Filter on state</button>
+
+            </form>
+        </div>
+
+        <div>
             <form th:object="${client}" class="w-full pt-20" th:action="@{/create-order}" method="post">
                 <label for="client">Select Client for New Order:</label>
                 <select id="client" name="id_client" required>
@@ -35,6 +51,8 @@
                 <th>Order ID</th>
                 <th>Client</th>
                 <th>Delivery Date</th>
+                <th>Modify delivery Date</th>
+                <th>Total</th>
                 <th>Status</th>
                 <th>Change Status</th>
                 <th>Actions</th>
@@ -45,6 +63,15 @@
                 <td th:text="${order.id_order}"></td>
                 <td th:text="${order.client.firstName} + ' ' + ${order.client.lastName}"></td>
                 <td th:text="${#temporals.format(order.delivery_datetime, 'dd/MM/yyyy HH:mm')}"></td>
+                <td >
+
+                    <form th:action="@{/update-order-delivery-date/{id_order}(id_order=${order.id_order})}" method="post">
+                        <input type="datetime-local" name="delivery_datetime"/>
+                        <button type="submit">Update delivery date</button>
+                    </form>
+
+                </td>
+                <td th:text="${order.total_price}"></td>
                 <td>
                     <span th:switch="${order.id_state}">
                         <span th:case="1">Cart</span>
