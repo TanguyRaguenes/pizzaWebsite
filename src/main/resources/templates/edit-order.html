@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -14,30 +15,49 @@
 
     <section layout:fragment="content" class="w-full">
 
-        <a th:href="@{/orders-list/0}">back</a>
+        <a th:href="@{/orders-list/0}" class="text-blue-500 hover:text-blue-700">← Back to Orders</a>
 
-        <h1 class="w-full pt-60">Your Order</h1>
 
-        <div>
-            <p th:text="${selectedOrder.client.getFirstName() +' ' + selectedOrder.client.getLastName()}"></p>
-            <p th:text="${#temporals.format(selectedOrder.delivery_datetime, 'dd/MM/yyyy HH:mm')}"></p>
-            <p th:switch="${selectedOrder.id_state}">
-                        <span th:case="1">Cart</span>
-                        <span th:case="2">Confirmed</span>
-                        <span th:case="3">In Preparation</span>
-                        <span th:case="4">Ready</span>
-                        <span th:case="5">In Delivery</span>
-                        <span th:case="6">Delivered</span>
-                        <span th:case="7">Cancelled</span>
-                        <span th:case="*">Unknown</span>
+        <h1 class="text-3xl font-semibold text-gray-700 my-6">Order information :</h1>
+
+<!--        <div>-->
+<!--            <p th:text="${selectedOrder.client.getFirstName() +' ' + selectedOrder.client.getLastName()}"></p>-->
+<!--            <p th:text="${#temporals.format(selectedOrder.delivery_datetime, 'dd/MM/yyyy HH:mm')}"></p>-->
+<!--            <p th:switch="${selectedOrder.id_state}">-->
+<!--                        <span th:case="1">Cart</span>-->
+<!--                        <span th:case="2">Confirmed</span>-->
+<!--                        <span th:case="3">In Preparation</span>-->
+<!--                        <span th:case="4">Ready</span>-->
+<!--                        <span th:case="5">In Delivery</span>-->
+<!--                        <span th:case="6">Delivered</span>-->
+<!--                        <span th:case="7">Cancelled</span>-->
+<!--                        <span th:case="*">Unknown</span>-->
+<!--            </p>-->
+<!--            <p th:text="${selectedOrder.total_price}"></p>-->
+<!--        </div>-->
+        <div class="mb-6">
+            <p class="text-lg text-gray-700 font-medium" th:text="${selectedOrder.client.getFirstName() +' ' + selectedOrder.client.getLastName()}"></p>
+            <p class="text-gray-500" th:text="${#temporals.format(selectedOrder.delivery_datetime, 'dd/MM/yyyy HH:mm')}"></p>
+            <p class="text-gray-500">
+                Status:
+                <span th:switch="${selectedOrder.id_state}">
+                    <span th:case="1" class="text-yellow-500">Cart</span>
+                    <span th:case="2" class="text-blue-500">Confirmed</span>
+                    <span th:case="3" class="text-yellow-400">In Preparation</span>
+                    <span th:case="4" class="text-green-500">Ready</span>
+                    <span th:case="5" class="text-blue-500">In Delivery</span>
+                    <span th:case="6" class="text-green-500">Delivered</span>
+                    <span th:case="7" class="text-red-500">Cancelled</span>
+                    <span th:case="*" class="text-gray-500">Unknown</span>
+                </span>
             </p>
-            <p th:text="${selectedOrder.total_price}"></p>
+            <p class="text-lg font-semibold text-gray-900" th:text="${selectedOrder.total_price + ' €'}"></p>
         </div>
 
 
 <!--        Formulaire pour ajouter un produit à la commande-->
 
-        <form th:object="${orderDetail}" th:action="@{/add-orderDetail-to-order}"  class="w-full border-2 grid grid-cols-6 gap-2" method="post">
+        <form th:object="${orderDetail}" th:action="@{/add-orderDetail-to-order}"  class="grid grid-cols-6 gap-4 mb-6 p-4 border border-gray-200 rounded-lg bg-gray-50" method="post">
 
             <!-- id_order-->
             <input
