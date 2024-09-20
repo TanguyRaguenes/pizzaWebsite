@@ -24,7 +24,7 @@
 
         <!-- Boutons ou actions possibles en fonction du rôle -->
         <div class="mt-6 space-x-4">
-            <a th:href="@{/orders-list}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">View Orders</a>
+            <a th:href="@{/orders-list/0}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">View Orders</a>
             <a th:href="@{/product-form}" sec:authorize="hasAuthority('ROLE_MANAGER')" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Add Product</a>
             <a th:href="@{/logout}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Logout</a>
         </div>

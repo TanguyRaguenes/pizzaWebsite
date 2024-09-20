@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/pizza-theme.css">
 </head>
 <body>
-<main  layout:fragment="content">
+<main layout:fragment="content">
     <section>
         <h1>Orders List</h1>
 
@@ -19,7 +19,7 @@
                 <label for="client">Filter on state:</label>
 
                 <select id="id_state" th:field="*{id_state}" required>
-                    <option value="0" >All</option>
+                    <option value="0">All</option>
                     <option th:each="state : ${states}" th:value="${state.id_state}" th:text="${state.state}">
                     </option>
                 </select>
@@ -34,7 +34,8 @@
                 <label for="client">Select Client for New Order:</label>
                 <select id="client" name="id_client" required>
                     <option value="0" disabled selected>Select a client</option>
-                    <option th:each="client : ${clients}" th:value="${client.id_client}" th:text="${client.firstName} + ' ' + ${client.lastName}">
+                    <option th:each="client : ${clients}" th:value="${client.id_client}"
+                            th:text="${client.firstName} + ' ' + ${client.lastName}">
                     </option>
                 </select>
                 <button type="submit">Create Order</button>
@@ -65,9 +66,10 @@
                 <td th:text="${order.id_order}"></td>
                 <td th:text="${order.client.firstName} + ' ' + ${order.client.lastName}"></td>
                 <td th:text="${#temporals.format(order.delivery_datetime, 'dd/MM/yyyy HH:mm')}"></td>
-                <td >
+                <td>
 
-                    <form th:action="@{/update-order-delivery-date/{id_order}(id_order=${order.id_order})}" method="post">
+                    <form th:action="@{/update-order-delivery-date/{id_order}(id_order=${order.id_order})}"
+                          method="post">
                         <input type="datetime-local" name="delivery_datetime"/>
                         <button type="submit">Update delivery date</button>
                     </form>
@@ -89,7 +91,7 @@
 
                 <!--                update order state-->
                 <td>
-                    <form th:action="@{/orders-list/update-state/{id_order}(id_order=${order.id_order})}" method="post">
+                    <form th:action="@{/update-order-state/{id_order}(id_order=${order.id_order})}" method="post">
                         <select name="id_state" id="id_state_select">
                             <option th:each="state : ${states}" th:value="${state.id_state}" th:text="${state.state}"
                                     th:selected="${order.id_state == state.id_state}"></option>
