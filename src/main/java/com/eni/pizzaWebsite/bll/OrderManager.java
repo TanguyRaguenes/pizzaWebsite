@@ -33,6 +33,16 @@ public class OrderManager implements IOrderManager {
     }
 
     @Override
+    public List<OrderDetail> getOrderDetailsByIdOrder(Long id_order) {
+        return orderDao.getOrderDetailsByIdOrder(id_order);
+    }
+
+    @Override
+    public void updateOrderDeliveryDate(Long id_order, LocalDateTime delivery_datetime) {
+        orderDao.updateOrderDeliveryDate(id_order, delivery_datetime);
+    }
+
+    @Override
     public List<OrderDetail> getOrderDetail(Long id_client) {
         return orderDao.getOrderDetail(id_client);
     }

@@ -14,7 +14,25 @@
 
     <section layout:fragment="content" class="w-full">
 
+        <a th:href="@{/orders-list/0}">back</a>
+
         <h1 class="w-full pt-60">Your Order</h1>
+
+        <div>
+            <p th:text="${selectedOrder.client.getFirstName() +' ' + selectedOrder.client.getLastName()}"></p>
+            <p th:text="${#temporals.format(selectedOrder.delivery_datetime, 'dd/MM/yyyy HH:mm')}"></p>
+            <p th:switch="${selectedOrder.id_state}">
+                        <span th:case="1">Cart</span>
+                        <span th:case="2">Confirmed</span>
+                        <span th:case="3">In Preparation</span>
+                        <span th:case="4">Ready</span>
+                        <span th:case="5">In Delivery</span>
+                        <span th:case="6">Delivered</span>
+                        <span th:case="7">Cancelled</span>
+                        <span th:case="*">Unknown</span>
+            </p>
+            <p th:text="${selectedOrder.total_price}"></p>
+        </div>
 
 
 <!--        Formulaire pour ajouter un produit à la commande-->
@@ -39,7 +57,7 @@
                         class="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
 
                 >
-                    <option value="">Please select a product</option>
+                    <option value="" disabled selected>Please select a product</option>
                     <option th:each="product:${products}" th:value="${product.id_product}" th:text="${product.name}"></option>
                 </select>
 
@@ -56,7 +74,7 @@
                         class="mt-1.5 w-full rounded-lg border-gray-300 text-gray-700 sm:text-sm"
 
                 >
-                    <option value="0">Please select a size</option>
+                    <option value="0" disabled selected>Please select a size</option>
                     <option th:each="ps:${productsSizes}" th:value="${ps.id_size}" th:text="${ps.label}"></option>
                 </select>
 
@@ -125,9 +143,18 @@
                                 <input type="number" th:value="${sod.quantity}" name="quantity" class="border border-gray-300 p-1" />
                             </td>
 
-                            <!-- Input field for size -->
+<!--                            <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${sod.id_size}" th:name="${id_size}"></td>-->
+
+<!--                            <td th:switch="${sod.id_size}" class="whitespace-nowrap px-4 py-2 text-gray-700">-->
+<!--                                <span th:case="1">small</span>-->
+<!--                                <span th:case="2">medium</span>-->
+<!--                                <span th:case="3">large</span>-->
+
+<!--                            </td>-->
+
+<!--                             Input field for size -->
                             <td class="whitespace-nowrap px-4 py-2 text-gray-700">
-                                <input type="text" th:value="${sod.id_size}" name="id_size" class="border border-gray-300 p-1" />
+                                <input type="text" th:value="${sod.id_size}" name="id_size" class="border border-gray-300 p-1" readonly />
                             </td>
 
                             <td class="whitespace-nowrap px-4 py-2 text-gray-700" th:text="${sod.product.price + prices.getPrice(sod.id_size)}"></td>
