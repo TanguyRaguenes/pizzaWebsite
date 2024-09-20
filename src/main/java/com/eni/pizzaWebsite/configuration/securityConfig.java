@@ -44,13 +44,16 @@ public class securityConfig {
                                 .requestMatchers("/user").authenticated()
                                 .requestMatchers("/").authenticated()
 //                                .requestMatchers("/orders/checkout/{id_order}").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/orders-edit/{id_order}").hasAnyAuthority("ROLE_MANAGER")
+
                                 .requestMatchers("/cart/add/{id}").hasAnyAuthority("ROLE_MANAGER")
+                                .requestMatchers("/orders-list").hasAnyAuthority("ROLE_MANAGER")
 
 //                              A corriger à la fin de la prod :
                                 .requestMatchers("/add-orderDetail-to-order").permitAll()
                                 .requestMatchers("/remove-product-from-order").permitAll()
                                 .requestMatchers("/create-order").permitAll()
+                                .requestMatchers("/update-order-state/{id_order}").permitAll()
+                                .requestMatchers("/orders-edit/{id_order}").permitAll()
 
 
 
@@ -60,7 +63,7 @@ public class securityConfig {
                                 .requestMatchers(HttpMethod.GET, "/cart/checkout").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers(HttpMethod.POST, "/cart/checkout").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/cart/clear").hasAnyAuthority("ROLE_MANAGER")
-                                .requestMatchers("/orders-list").hasAnyAuthority("ROLE_MANAGER")
+
                                 .requestMatchers("/cart").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/product-form").hasAnyAuthority("ROLE_MANAGER")
                                 .requestMatchers("/product-form/**").hasAnyAuthority("ROLE_MANAGER")

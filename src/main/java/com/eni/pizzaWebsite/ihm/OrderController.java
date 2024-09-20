@@ -57,12 +57,12 @@ public class OrderController {
     }
 
     @GetMapping("/orders-edit/{id_order}")
-    public String editOrder(@PathVariable("id_order") Long id_client, Long id_order, Model model) {
+    public String editOrder(@PathVariable("id_order") Long id_order, Model model) {
 
-        Order selectedOrder = orderManager.getOrder(id_client, id_order);
+        Order selectedOrder = orderManager.getOrder(null, id_order);
         model.addAttribute("selectedOrder", selectedOrder);
 
-        List<OrderDetail> selectedOrderDetails = orderManager.getOrderDetail(id_client);
+        List<OrderDetail> selectedOrderDetails = orderManager.getOrderDetailsByIdOrder(id_order);
         model.addAttribute("selectedOrderDetails", selectedOrderDetails );
 
         List<Product> products = productManager.getProductsList();
@@ -112,7 +112,11 @@ public class OrderController {
         return "redirect:/orders-edit/" + orderDetail.getId_order();
     }
 
-
+    @PostMapping("/update-order-state/{id_order}")
+    public String updateOrderState(@PathVariable("id_order") Long id_order, @RequestParam("id_state") Long id_state) {
+        orderManager.updateOrderState(id_order, id_state);
+        return "redirect:/orders-list";
+    }
 
 
 
@@ -222,9 +226,9 @@ public class OrderController {
         orderManager.clearOrderByIdOrder(id_order);
         return "redirect:/orders-list";
     }
-    @PostMapping("/orders-list/update-state/{id_order}")
-    public String updateOrderState(@PathVariable("id_order") Long id_order, @RequestParam("id_state") Long id_state) {
-        orderManager.updateOrderState(id_order, id_state);
-        return "redirect:/orders-list";
-    }
+//    @PostMapping("/orders-list/update-state/{id_order}")
+//    public String updateOrderState(@PathVariable("id_order") Long id_order, @RequestParam("id_state") Long id_state) {
+//        orderManager.updateOrderState(id_order, id_state);
+//        return "redirect:/orders-list";
+//    }
 }

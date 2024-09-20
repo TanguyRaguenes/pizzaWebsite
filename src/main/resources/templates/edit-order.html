@@ -13,7 +13,24 @@
 
     <section layout:fragment="content" class="w-full">
 
+        <a th:href="@{/orders-list}">back</a>
+
         <h1 class="w-full pt-60">Your Order</h1>
+
+        <div>
+            <p th:text="${selectedOrder.client.getFirstName() +' ' + selectedOrder.client.getLastName()}"></p>
+            <p th:text="${selectedOrder.delivery_datetime}"></p>
+            <p th:switch="${selectedOrder.id_state}">
+                        <span th:case="1">Cart</span>
+                        <span th:case="2">Confirmed</span>
+                        <span th:case="3">In Preparation</span>
+                        <span th:case="4">Ready</span>
+                        <span th:case="5">In Delivery</span>
+                        <span th:case="6">Delivered</span>
+                        <span th:case="7">Cancelled</span>
+                        <span th:case="*">Unknown</span>
+            </p>
+        </div>
 
 
 <!--        Formulaire pour ajouter un produit à la commande-->

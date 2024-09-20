@@ -33,6 +33,11 @@ public class OrderManager implements IOrderManager {
     }
 
     @Override
+    public List<OrderDetail> getOrderDetailsByIdOrder(Long id_order) {
+        return orderDao.getOrderDetailsByIdOrder(id_order);
+    }
+
+    @Override
     public List<OrderDetail> getOrderDetail(Long id_client) {
         return orderDao.getOrderDetail(id_client);
     }

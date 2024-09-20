@@ -19,10 +19,12 @@ public class DAOOrderMySQL implements IDAOOrder {
 
     private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private IDAOProduct daoProduct;
 
-    public DAOOrderMySQL(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    public DAOOrderMySQL(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate, IDAOProduct daoProduct) {
         this.jdbcTemplate = jdbcTemplate;
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
+        this.daoProduct = daoProduct;
     }
 
     @Override
@@ -59,19 +61,32 @@ public class DAOOrderMySQL implements IDAOOrder {
     }
 
 
+    final RowMapper<OrderDetail> ORDERDETAIL_ROW_MAPPER = new RowMapper<OrderDetail>() {
+
+        public OrderDetail mapRow(ResultSet rs, int rowNum) throws SQLException {
+            OrderDetail orderDetail = new OrderDetail();
+            orderDetail.setId_order(rs.getLong("id_order"));
+            orderDetail.setProduct(daoProduct.getProductById(rs.getLong("id_product")));
+            orderDetail.setId_size(rs.getInt("id_size"));
+            orderDetail.setQuantity(rs.getInt("quantity"));
+
+            return orderDetail;
+        }
+    };
 
     @Override
-    public OrderDetail getOrderDetail(Long id_order, Long id_product, Long id_size) {
+    public List<OrderDetail> getOrderDetailsByIdOrder(Long id_order) {
 
-        List<OrderDetail> orderDetailList = jdbcTemplate.query("SELECT * FROM order_details WHERE id_order=? AND id_product=? AND id_size=?;", new BeanPropertyRowMapper<OrderDetail>(OrderDetail.class), id_order, id_product, id_size);
+        List<OrderDetail> orderDetailsList = jdbcTemplate.query("SELECT * FROM order_details WHERE id_order=?", ORDERDETAIL_ROW_MAPPER, id_order);
 
-        if (orderDetailList.size() > 0) {
-            return orderDetailList.get(0);
-        } else {
-            return null;
-        }
+        return orderDetailsList;
+
 
     }
+
+
+
+
 
 
     @Override
@@ -175,6 +190,14 @@ public class DAOOrderMySQL implements IDAOOrder {
 
     }
 
+    @Override
+    public void updateOrderState(Long id_order, Long id_state) {
+        String sql = "UPDATE `order` SET id_state=? WHERE id_order=?";
+        jdbcTemplate.update(sql, id_state, id_order);
+    }
+
+//    __________________________________________________________________________________________________________________
+
     static final RowMapper<Order> ORDER_ROW_MAPPER = new RowMapper<Order>() {
 
         public Order mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -197,28 +220,17 @@ public class DAOOrderMySQL implements IDAOOrder {
         String sql = "";
         List<Order> ordersList = null;
         if (id_state == 0) {
-            sql = "SELECT * FROM `order` as o INNER JOIN client as c ON o.id_client = c.id_client INNER JOIN state as s ON o.id_state = s.id_state INNER JOIN user as u ON o.id_user=u.id_user";
+            sql = "SELECT * FROM `order` as o INNER JOIN client as c ON o.id_client = c.id_client INNER JOIN state as s ON o.id_state = s.id_state INNER JOIN user as u ON o.id_user=u.id_user ORDER BY o.delivery_datetime DESC";
             ordersList = jdbcTemplate.query(sql, ORDER_ROW_MAPPER);
         } else {
-            sql = "SELECT * FROM `order` as o INNER JOIN client as c ON o.id_client = c.id_client INNER JOIN state as s ON o.id_state = s.id_state INNER JOIN user as u ON o.id_user=u.id_user WHERE o.id_state=?";
+            sql = "SELECT * FROM `order` as o INNER JOIN client as c ON o.id_client = c.id_client INNER JOIN state as s ON o.id_state = s.id_state INNER JOIN user as u ON o.id_user=u.id_user WHERE o.id_state=? ORDER BY o.delivery_datetime DESC";
             ordersList = jdbcTemplate.query(sql, ORDER_ROW_MAPPER, id_state);
         }
 
         return ordersList;
     }
 
-    static final RowMapper<OrderDetail> ORDERDETAIL_ROW_MAPPER = new RowMapper<OrderDetail>() {
 
-        public OrderDetail mapRow(ResultSet rs, int rowNum) throws SQLException {
-            OrderDetail orderDetail = new OrderDetail();
-            orderDetail.setId_order(rs.getLong("id_order"));
-            orderDetail.setProduct(new Product(rs.getLong("id_product"), rs.getString("name"), rs.getString("description"), rs.getFloat("price"), rs.getString("image_url")));
-            orderDetail.setId_size(rs.getInt("id_size"));
-            orderDetail.setQuantity(rs.getInt("quantity"));
-
-            return orderDetail;
-        }
-    };
 
     @Override
     public List<OrderDetail> getOrderDetail(Long id_client) {
@@ -309,16 +321,25 @@ public class DAOOrderMySQL implements IDAOOrder {
         jdbcTemplate.update(sql, id_order);
     }
 
-    @Override
-    public void updateOrderState(Long id_order, Long id_state) {
-        String sql = "UPDATE `order` SET id_state=? WHERE id_order=?";
-        jdbcTemplate.update(sql, id_state, id_order);
-    }
+
     @Override
     public List<State> getStatesList() {
         String sql = "SELECT * FROM state";
         List<State> states = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(State.class));
         return states;
+    }
+
+    @Override
+    public OrderDetail getOrderDetail(Long id_order, Long id_product, Long id_size) {
+
+        List<OrderDetail> orderDetailList = jdbcTemplate.query("SELECT * FROM order_details WHERE id_order=? AND id_product=? AND id_size=?;", new BeanPropertyRowMapper<OrderDetail>(OrderDetail.class), id_order, id_product, id_size);
+
+        if (orderDetailList.size() > 0) {
+            return orderDetailList.get(0);
+        } else {
+            return null;
+        }
+
     }
 
 }
