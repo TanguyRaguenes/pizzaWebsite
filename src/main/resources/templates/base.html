@@ -33,28 +33,28 @@
             <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
                 <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-orange-100 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900">
 
-                    <!-- Menu - visible pour ROLE_MANAGER -->
-                    <li sec:authorize="hasAuthority('ROLE_MANAGER')">
+                    <!-- Menu - visible pour ROLE_MANAGER et ROLE_PIZZAMAKER -->
+                    <li sec:authorize="hasAuthority('ROLE_MANAGER') or hasAuthority('ROLE_PIZZAMAKER')">
                         <a th:href="@{/products-list}" class="block py-2 px-3 text-gray-900 rounded hover:bg-orange-200 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700">Menu</a>
                     </li>
 
-                    <!-- Add a Product - visible pour ROLE_MANAGER -->
+                    <!-- Add a Product - visible pour ROLE_MANAGER et ROLE_PIZZAMAKER -->
                     <li sec:authorize="hasAuthority('ROLE_MANAGER')">
                         <a th:href="@{/product-form}" class="block py-2 px-3 text-gray-900 rounded hover:bg-orange-200 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700">Add a Product</a>
                     </li>
 
-                    <!-- Clients - visible pour ROLE_MANAGER -->
-                    <li sec:authorize="hasAuthority('ROLE_MANAGER')">
+                    <!-- Clients - visible pour ROLE_MANAGER et ROLE_PIZZAMAKER -->
+                    <li sec:authorize="hasAuthority('ROLE_MANAGER') or hasAuthority('ROLE_PIZZAMAKER')">
                         <a th:href="@{/clients-list}" class="block py-2 px-3 text-gray-900 rounded hover:bg-orange-200 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700">Clients</a>
                     </li>
 
-                    <!-- Add a Client - visible pour ROLE_MANAGER -->
-                    <li sec:authorize="hasAuthority('ROLE_MANAGER')">
+                    <!-- Add a Client - visible pour ROLE_MANAGER et ROLE_PIZZAMAKER -->
+                    <li sec:authorize="hasAuthority('ROLE_MANAGER') or hasAuthority('ROLE_PIZZAMAKER')">
                         <a th:href="@{/client-form}" class="block py-2 px-3 text-gray-900 rounded hover:bg-orange-200 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700">Add a Client</a>
                     </li>
 
-                    <!-- Orders - visible pour ROLE_MANAGER et ROLE_DELIVERYPERSON -->
-                    <li sec:authorize="hasAuthority('ROLE_MANAGER') or hasAuthority('ROLE_DELIVERYPERSON')">
+                    <!-- Orders - visible pour ROLE_MANAGER, ROLE_PIZZAMAKER et ROLE_DELIVERYPERSON -->
+                    <li sec:authorize="hasAuthority('ROLE_MANAGER') or hasAuthority('ROLE_PIZZAMAKER') or hasAuthority('ROLE_DELIVERYPERSON')">
                         <a th:href="@{/orders-list}" class="block py-2 px-3 text-gray-900 rounded hover:bg-orange-200 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 dark:text-white dark:hover:bg-gray-700">Orders</a>
                     </li>
 
